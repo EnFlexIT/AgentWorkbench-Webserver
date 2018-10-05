@@ -13,8 +13,8 @@
     </parent>
 
     <modules>
-        <module>org.agentgui.configuration</module>
-        <module>org.agentgui.update</module>
-        <module>org.agentgui.target</module>
+        <module>org.agentgui.webserver.configuration</module>
+        <module>org.agentgui.webserver.update</module>
+        <module>org.agentgui.webserver.target</module>
     </modules>
 </project>

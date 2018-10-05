@@ -3,12 +3,12 @@ Automatic-Module-Name: org.agentgui.core
 Bundle-ManifestVersion: 2
 Bundle-Name: Agent.Workbench - Web Server
 Bundle-SymbolicName: org.agentgui.webserver.core;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.0.1.qualifier
 Bundle-Vendor: EnFlex.IT
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Service-Component: OSGI-INF/classLoadService.xml, 
  OSGI-INF/dbStateVisualService.xml
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.agentgui.webserver.BundleActivatorWebServer
-Require-Bundle: org.eclipse.osgi;bundle-version="3.13.100",
- org.eclipse.equinox.http.jetty;bundle-version="3.6.100"
+Require-Bundle: org.eclipse.osgi,
+ org.eclipse.equinox.http.jetty

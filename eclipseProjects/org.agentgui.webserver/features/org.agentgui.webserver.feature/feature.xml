@@ -2,7 +2,7 @@
 <feature
       id="org.agentgui.webserver.feature"
       label="Agent.Workbench - Webserver"
-      version="1.0.0.qualifier"
+      version="0.0.1.qualifier"
       provider-name="EnFlex.IT"
       os="linux,macosx,win32"
       arch="x86,x86_64">
@@ -26,6 +26,11 @@
    <includes
          id="org.eclipse.equinox.server.jetty"
          version="0.0.0"/>
+
+   <requires>
+      <import plugin="org.eclipse.osgi" version="3.13.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.equinox.http.jetty" version="3.6.0" match="greaterOrEqual"/>
+   </requires>
 
    <plugin
          id="org.agentgui.webserver.core"
