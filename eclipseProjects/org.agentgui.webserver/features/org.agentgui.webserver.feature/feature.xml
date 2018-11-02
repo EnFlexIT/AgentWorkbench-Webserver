@@ -23,17 +23,21 @@
       <update label="Enflex.IT AWB-Web Server Update Site" url="https://p2.enflex.it/awbWebServer/snapshots/"/>
    </url>
 
-   <includes
-         id="org.eclipse.equinox.server.jetty"
-         version="0.0.0"/>
-
    <requires>
       <import plugin="org.eclipse.osgi" version="3.13.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.equinox.http.jetty" version="3.6.0" match="greaterOrEqual"/>
+      <import plugin="org.agentgui.core" version="2.1.6" match="greaterOrEqual"/>
+      <import plugin="org.agentgui.webserver.jetty" version="9.4.12" match="greaterOrEqual"/>
    </requires>
 
    <plugin
          id="org.agentgui.webserver.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.agentgui.webserver.jetty"
          download-size="0"
          install-size="0"
          version="0.0.0"
