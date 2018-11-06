@@ -50,7 +50,14 @@ public class JettyOsgiActivator implements BundleActivator, BundleListener {
 		if (bundle.getSymbolicName().equals(PlugInActivator.PLUGIN_ID) && event.getType()==BundleEvent.STARTED) {
 			try {
 				this.checkJettyConfigurationFiles();
+				
+				// --- TODO ---
+				// Have a look to https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-osgi-example/
+				// to ensure that the jetty-osgi-boot is properly located
+				
 				this.getJettyActivator().start(this.myBundleContext);
+				
+				
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
