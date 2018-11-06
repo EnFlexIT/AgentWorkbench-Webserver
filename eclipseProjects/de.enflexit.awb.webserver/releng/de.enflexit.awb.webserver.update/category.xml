@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature id="org.agentgui.webserver.feature" version="0.0.0" os="linux,macosx,win32" arch="x86,x86_64">
-      <category name="org.agentgui.webserver"/>
+   <feature id="de.enflexit.awb.webserver.feature" version="0.0.0" os="linux,macosx,win32" arch="x86,x86_64">
+      <category name="de.enflexit.awb.webserver"/>
    </feature>
-   <feature id="org.agentgui.webserver.feature.source" version="0.0.0">
-      <category name="org.agentgui.webserver"/>
+   <feature id="de.enflexit.awb.webserver.feature.source" version="0.0.0">
+      <category name="de.enflexit.awb.webserver"/>
    </feature>
-   <category-def name="org.agentgui.webserver" label="Agent.Workbench - Web Server"/>
+   <category-def name="de.enflexit.awb.webserver" label="Agent.Workbench - Web Server"/>
 </site>

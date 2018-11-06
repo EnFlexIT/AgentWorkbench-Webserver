@@ -13,7 +13,7 @@
 	</parent>
 
 	<modules>
-		<module>org.agentgui.webserver.feature</module>
+		<module>de.enflexit.awb.webserver.feature</module>
 	</modules>
 
 	<build>

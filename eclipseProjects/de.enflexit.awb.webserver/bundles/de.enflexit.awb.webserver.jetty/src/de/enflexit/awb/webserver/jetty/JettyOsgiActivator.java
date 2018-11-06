@@ -17,7 +17,6 @@ import de.enflexit.awb.webserver.jetty.install.JettyConfigurationProvider;
  */
 public class JettyOsgiActivator implements BundleActivator, BundleListener {
 
-	private BundleContext myBundleContext;
 	private JettyBootstrapActivator jettyActivator;
 	
 	/* (non-Javadoc)
@@ -25,8 +24,7 @@ public class JettyOsgiActivator implements BundleActivator, BundleListener {
 	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
-		this.myBundleContext = context;
-		this.myBundleContext.addBundleListener(this);
+		context.addBundleListener(this);
 	}
 
 	/* (non-Javadoc)
@@ -34,8 +32,7 @@ public class JettyOsgiActivator implements BundleActivator, BundleListener {
 	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		this.myBundleContext.removeBundleListener(this);
-		this.myBundleContext = null;
+		context.removeBundleListener(this);
 		this.getJettyActivator().stop(context);
 		this.setJettyActivator(null);
 	}
@@ -56,7 +53,7 @@ public class JettyOsgiActivator implements BundleActivator, BundleListener {
 				// Have a look to https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-osgi-example/
 				// to ensure that the jetty-osgi-boot is properly located
 				
-				this.getJettyActivator().start(this.myBundleContext);
+				this.getJettyActivator().start(bundle.getBundleContext());
 				
 				
 			} catch (Exception ex) {
