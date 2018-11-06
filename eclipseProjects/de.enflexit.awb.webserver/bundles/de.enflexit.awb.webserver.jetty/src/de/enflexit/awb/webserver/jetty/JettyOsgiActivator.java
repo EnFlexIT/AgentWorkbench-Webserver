@@ -1,13 +1,14 @@
-package org.agentgui.webserver.jetty;
+package de.enflexit.awb.webserver.jetty;
 
 import org.agentgui.PlugInActivator;
-import org.agentgui.webserver.jetty.install.JettyConfigurationProvider;
 import org.eclipse.jetty.osgi.boot.JettyBootstrapActivator;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
+
+import de.enflexit.awb.webserver.jetty.install.JettyConfigurationProvider;
 
 /**
  * The Class JettyOsgiActivator will bridges to the {@link JettyBootstrapActivator} and will activate it.

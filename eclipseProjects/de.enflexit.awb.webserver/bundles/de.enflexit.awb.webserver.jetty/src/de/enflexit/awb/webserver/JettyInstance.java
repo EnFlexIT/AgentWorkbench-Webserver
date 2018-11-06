@@ -1,12 +1,13 @@
-package org.agentgui.webserver;
+package de.enflexit.awb.webserver;
 
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import org.agentgui.webserver.jetty.JettyConfiguration;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.xml.XmlConfiguration;
+
+import de.enflexit.awb.webserver.jetty.JettyConfiguration;
 
 /**
  * The Class JettyInstance.

@@ -2,19 +2,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.agentgui.webserver</groupId>
-	<artifactId>org.agentgui.webserver.bundles</artifactId>
+	<groupId>de.enflexit.awb.webserver</groupId>
+	<artifactId>de.enflexit.awb.webserver.bundles</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
-		<groupId>org.agentgui.webserver</groupId>
-		<artifactId>org.agentgui.webserver.root</artifactId>
+		<groupId>de.enflexit.awb.webserver</groupId>
+		<artifactId>de.enflexit.awb.webserver.root</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<modules>
-		<module>org.agentgui.webserver.core</module>
-		<module>org.agentgui.webserver.help</module>
+		<module>de.enflexit.awb.webserver.jetty</module>
+		<module>de.enflexit.awb.webserver.help</module>
 	</modules>
 </project>

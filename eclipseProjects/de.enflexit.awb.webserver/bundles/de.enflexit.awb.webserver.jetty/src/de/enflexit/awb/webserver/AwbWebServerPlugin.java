@@ -1,4 +1,4 @@
-package org.agentgui.webserver;
+package de.enflexit.awb.webserver;
 
 import agentgui.core.application.Application;
 import agentgui.core.plugin.PlugIn;

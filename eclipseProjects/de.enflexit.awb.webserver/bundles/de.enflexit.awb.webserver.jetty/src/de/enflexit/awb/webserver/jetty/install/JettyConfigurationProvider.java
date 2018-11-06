@@ -1,4 +1,4 @@
-package org.agentgui.webserver.jetty.install;
+package de.enflexit.awb.webserver.jetty.install;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -7,10 +7,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Vector;
 
-import org.agentgui.webserver.jetty.JettyConfiguration;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.wiring.BundleWiring;
+
+import de.enflexit.awb.webserver.jetty.JettyConfiguration;
 
 /**
  * The Class JettyConfigurationProvider unpacks required files from 

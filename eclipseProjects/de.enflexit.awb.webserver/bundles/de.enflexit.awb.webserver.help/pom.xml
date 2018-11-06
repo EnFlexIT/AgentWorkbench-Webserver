@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>org.agentgui.webserver.help</artifactId>
+	<artifactId>de.enflexit.awb.webserver.help</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 	<parent>
-		<groupId>org.agentgui.webserver</groupId>
-		<artifactId>org.agentgui.webserver.configuration</artifactId>
+		<groupId>de.enflexit.awb.webserver</groupId>
+		<artifactId>de.enflexit.awb.webserver.configuration</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>../../releng/org.agentgui.webserver.configuration</relativePath>
+		<relativePath>../../releng/de.enflexit.awb.webserver.configuration</relativePath>
 	</parent>
 
 	<properties>
@@ -39,7 +39,7 @@
 								<ignoreError>true</ignoreError>
 								<encoding>UTF-8</encoding>
 								<includes>
-									<include>org.agentgui.webserver.*</include>
+									<include>de.enflexit.awb.webserver.*</include>
 								</includes>
 								<additionalArguments>
 									<additionalArgument>-windowtitle "Agent.Workbench - Webserver API"</additionalArgument>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.agentgui.webserver.feature"
+      id="de.enflexit.awb.webserver.feature"
       label="Agent.Workbench - Webserver"
-      version="0.0.1.qualifier"
+      version="9.4.12.qualifier"
       provider-name="EnFlex.IT"
       os="linux,macosx,win32"
       arch="x86,x86_64">
@@ -26,18 +26,18 @@
    <requires>
       <import plugin="org.eclipse.osgi" version="3.13.0" match="greaterOrEqual"/>
       <import plugin="org.agentgui.core" version="2.1.6" match="greaterOrEqual"/>
-      <import plugin="org.agentgui.webserver.jetty" version="9.4.12" match="greaterOrEqual"/>
+      <import plugin="de.enflexit.awb.webserver.jetty" version="9.4.12" match="greaterOrEqual"/>
    </requires>
 
    <plugin
-         id="org.agentgui.webserver.core"
+         id="de.enflexit.awb.webserver.jetty"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.agentgui.webserver.jetty"
+         id="de.enflexit.awb.webserver.help"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Agent.Workbench Jetty-Bundle
-Bundle-SymbolicName: de.enflexit.awb.webserver.jetty
+Bundle-SymbolicName: de.enflexit.awb.webserver.jetty;singleton:=true
 Bundle-Version: 9.4.12.qualifier
 Bundle-Vendor: EnFlex.IT
 Automatic-Module-Name: org.agentgui.webserver.jetty
@@ -844,6 +844,6 @@ Export-Package: com.sun.mail.handlers;uses:="javax.activation",
    org.eclipse.jetty.util.resource,
    javax.xml.parsers"
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.agentgui.webserver.jetty.JettyOsgiActivator
+Bundle-Activator: de.enflexit.awb.webserver.jetty.JettyOsgiActivator
 Require-Bundle: org.eclipse.osgi;bundle-version="3.13.0",
  org.agentgui.core

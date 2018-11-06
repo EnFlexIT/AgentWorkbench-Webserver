@@ -1,20 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.agentgui.webserver</groupId>
-    <artifactId>org.agentgui.webserver.releng</artifactId>
+    <groupId>de.enflexit.awb.webserver</groupId>
+    <artifactId>de.enflexit.awb.webserver.releng</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <parent>
-        <groupId>org.agentgui.webserver</groupId>
-        <artifactId>org.agentgui.webserver.root</artifactId>
+        <groupId>de.enflexit.awb.webserver</groupId>
+        <artifactId>de.enflexit.awb.webserver.root</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <modules>
-        <module>org.agentgui.webserver.configuration</module>
-        <module>org.agentgui.webserver.update</module>
-        <module>org.agentgui.webserver.target</module>
+        <module>de.enflexit.awb.webserver.configuration</module>
+        <module>de.enflexit.awb.webserver.update</module>
+        <module>de.enflexit.awb.webserver.target</module>
     </modules>
 </project>
