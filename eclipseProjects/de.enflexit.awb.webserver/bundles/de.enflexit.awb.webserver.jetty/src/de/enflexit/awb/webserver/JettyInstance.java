@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.xml.XmlConfiguration;
+//import org.eclipse.jetty.xml.XmlConfiguration;
 
 import de.enflexit.awb.webserver.jetty.JettyConfiguration;
 
@@ -56,22 +56,22 @@ public class JettyInstance {
 	 */
 	private Server loadServer(List<URL> xmlConfigUrls, Map<String, String> props) throws Exception {
 		
-		XmlConfiguration last = null;
+//		XmlConfiguration last = null;
 		// Hold list of configured objects
 		Object[] obj = new Object[xmlConfigUrls.size()];
-
-		// Configure everything
-		for (int i = 0; i < xmlConfigUrls.size(); i++) {
-			URL configURL = xmlConfigUrls.get(i);
-			XmlConfiguration configuration = new XmlConfiguration(configURL);
-			if (last != null) {
-				// Let configuration know about prior configured objects
-				configuration.getIdMap().putAll(last.getIdMap());
-			}
-			configuration.getProperties().putAll(props);
-			obj[i] = configuration.configure();
-			last = configuration;
-		}
+//
+//		// Configure everything
+//		for (int i = 0; i < xmlConfigUrls.size(); i++) {
+//			URL configURL = xmlConfigUrls.get(i);
+//			XmlConfiguration configuration = new XmlConfiguration(configURL);
+//			if (last != null) {
+//				// Let configuration know about prior configured objects
+//				configuration.getIdMap().putAll(last.getIdMap());
+//			}
+//			configuration.getProperties().putAll(props);
+//			obj[i] = configuration.configure();
+//			last = configuration;
+//		}
 
 		// Find Server Instance.
 		Server foundServer = null;

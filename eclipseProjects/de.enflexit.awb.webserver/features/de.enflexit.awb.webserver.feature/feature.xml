@@ -27,6 +27,16 @@
       <import plugin="org.eclipse.osgi" version="3.13.0" match="greaterOrEqual"/>
       <import plugin="org.agentgui.core" version="2.1.6" match="greaterOrEqual"/>
       <import plugin="de.enflexit.awb.webserver.jetty" version="9.4.12" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jetty.util" version="9.4.12" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jetty.http" version="9.4.12" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jetty.io" version="9.4.12" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jetty.security" version="9.4.12" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jetty.server" version="9.4.12" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jetty.servlet" version="9.4.12" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jetty.webapp" version="9.4.12" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jetty.deploy" version="9.4.12" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jetty.xml" version="9.4.12" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jetty.osgi-servlet-api" version="4.0.1" match="greaterOrEqual"/>
    </requires>
 
    <plugin
