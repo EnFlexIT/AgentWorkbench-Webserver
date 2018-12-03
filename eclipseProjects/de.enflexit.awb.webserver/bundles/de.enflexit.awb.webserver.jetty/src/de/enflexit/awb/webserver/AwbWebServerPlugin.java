@@ -6,7 +6,6 @@ import agentgui.core.application.Application;
 import agentgui.core.plugin.PlugIn;
 import agentgui.core.project.Project;
 import de.enflexit.awb.webserver.gui.JettyControlPanel;
-import de.enflexit.awb.webserver.jetty.JettyRuntime;
 
 /**
  * The Class AwbWebServerPlugin provides the web server control elements to Agent.Workbench.

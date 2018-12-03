@@ -1,17 +1,12 @@
-package de.enflexit.awb.webserver.jetty;
+package de.enflexit.awb.webserver;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Dictionary;
 
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IScopeContext;
-import org.eclipse.jetty.server.Server;
+import org.eclipse.equinox.http.jetty.JettyConfigurator;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.prefs.BackingStoreException;
@@ -26,14 +21,16 @@ import agentgui.core.application.Application;
  */
 public class JettyRuntime {
 
+	public static final String JETTY_SERVER_ID = "AWB-Jetty";
 	public static final String JETTY_SUB_PATH = "jetty"; 
-	public static final String JETTY_CONFIG_PORT = "JETTY_PORT";
 	public static final String JETTY_CONFIG_START_WITH_JADE = "JETTY_START_WITH_JADE";
-	
-	private static JettyRuntime jettyRuntime;
 
+
+	private static JettyRuntime jettyRuntime;
+	
+	private JettyConfiguration jettyConfiguration; 
 	private IEclipsePreferences eclipsePreferences;
-	private Server serverInstance;
+	private boolean isServerExecuted;
 
 	
 	/**
@@ -53,67 +50,68 @@ public class JettyRuntime {
 	
 	
 	/**
-	 * Start the Jetty server.
+	 * Start the Jetty server with the bundle configuration.
 	 * @return the server
 	 */
-	public Server startServer() {
+	public void startServer() {
+		this.startServer(null);
+	}
+	/**
+	 * Start the Jetty server with the specified configuration.
+	 *
+	 * @param jettyConfig the jetty configuration. If null, the local configuration will be used
+	 * @return the server
+	 * @see #getJettyConfiguration()
+	 */
+	public void startServer(Dictionary<String, ? extends Object> jettyConfig) {
 		
-		Server server = new Server(this.getEclipsePreferences().getInt(JETTY_CONFIG_PORT, 8080));
 		try {
-			server.start();
-//			server.join();
-			this.setServer(server);
-			
+			// --- Check configuration ----------
+			Dictionary<String, ? extends Object> jettyConfigToUse = jettyConfig;
+			if (jettyConfigToUse==null) {
+				jettyConfigToUse = this.getJettyConfiguration();
+			}
+			// --- Start the server -------------
+			if (jettyConfigToUse!=null) {
+				JettyConfigurator.startServer(JETTY_SERVER_ID, jettyConfigToUse);
+				this.isServerExecuted = true;
+			}
+			 
 		} catch (Exception ex) {
+			this.isServerExecuted = false;
 			ex.printStackTrace();
 		}
-		return this.getServer();
 	}
-	
 	/**
 	 * Stops the Jetty server.
 	 * @return true, if successful
 	 */
-	public boolean stopServer() {
-		
-		boolean stopped = false;
-		if (this.isServerExecuted()==true && this.getServer().isStopping()==false) {
-			try {
-				this.getServer().stop();
-				stopped = true;
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+	public void stopServer() {
+		try {
+			JettyConfigurator.stopServer(JETTY_SERVER_ID);
+			isServerExecuted = false;
 			
-		} else {
-			stopped = true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-		return stopped;
 	}
 	/**
 	 * Checks if the server is executed.
 	 * @return true, if the server is executed
 	 */
 	public boolean isServerExecuted() {
-		if (this.getServer()!=null) {
-			return this.getServer().isRunning();
-		}
-		return false;
+		return isServerExecuted;
 	}
 
 	/**
-	 * Returns the current Jetty server instance.
-	 * @return the server (may return <code>null</code>)
+	 * Returns the current jetty configuration.
+	 * @return the jetty configuration
 	 */
-	public Server getServer() {
-		return serverInstance;
-	}
-	/**
-	 * Sets the current server.
-	 * @param serverInstance the new server
-	 */
-	private void setServer(Server serverInstance) {
-		this.serverInstance = serverInstance;
+	public Dictionary<String, Object> getJettyConfiguration() {
+		if (jettyConfiguration==null) {
+			jettyConfiguration = new JettyConfiguration();
+		}
+		return jettyConfiguration;
 	}
 	
 	/**
@@ -152,38 +150,6 @@ public class JettyRuntime {
 			jettyHomeDir.mkdir();
 		}
 		return jettyHomeDir;
-	}
-	/**
-	 * Returns the available XML configuration files form the local jetty installation.
-	 * @return the XML configuration files
-	 */
-	public static List<URL> getXmlConfigurationFiles() {
-		
-		List<URL> xmlConfigFiles = new ArrayList<>();
-		
-		try {
-			// --- List all XML files from the etc directory -------- 
-			xmlConfigFiles.add(new File("jetty.xml").toURI().toURL());
-		
-		} catch (MalformedURLException mUrlEx) {
-			mUrlEx.printStackTrace();
-		}
-		return xmlConfigFiles;
-	}
-	/**
-	 * Returns the jetty properties. like 'jetty.home'.
-	 * @return the jetty properties
-	 */
-	public static Map<String, String> getJettyProperties() {
-		
-		Map<String, String> props = new HashMap<String, String>();
-		try {
-			props.put("jetty.home", getJettyHomeDirectory().getCanonicalPath());
-
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-		return props;
 	}
 	
 }

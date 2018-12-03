@@ -1,24 +1,19 @@
 package de.enflexit.awb.webserver.gui;
 
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-
-import agentgui.core.project.Project;
-import de.enflexit.awb.webserver.jetty.JettyRuntime;
-import de.enflexit.common.swing.KeyAdapter4Numbers;
-
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
@@ -26,7 +21,11 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.jetty.server.Server;
+import org.eclipse.equinox.http.jetty.JettyConstants;
+
+import agentgui.core.project.Project;
+import de.enflexit.awb.webserver.JettyRuntime;
+import de.enflexit.common.swing.KeyAdapter4Numbers;
 
 /**
  * The Class JettyControlPanel.
@@ -160,7 +159,7 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 					} catch (BadLocationException blEx) {
 						blEx.printStackTrace();
 					}
-					JettyRuntime.getInstance().getEclipsePreferences().putInt(JettyRuntime.JETTY_CONFIG_PORT, port);
+					JettyRuntime.getInstance().getEclipsePreferences().putInt(JettyConstants.HTTP_PORT, port);
 					JettyControlPanel.this.setProjectUnsaved();
 				}
 			});
@@ -203,6 +202,7 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 		if (jButtonStartJetty == null) {
 			jButtonStartJetty = new JButton("Start Jetty");
 			jButtonStartJetty.setFont(new Font("Dialog", Font.BOLD, 12));
+			jButtonStartJetty.setForeground(new Color(0, 153, 0));
 			jButtonStartJetty.addActionListener(this);
 		}
 		return jButtonStartJetty;
@@ -238,7 +238,7 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 		
 		IEclipsePreferences prefs = JettyRuntime.getInstance().getEclipsePreferences();
 		
-		int port = prefs.getInt(JettyRuntime.JETTY_CONFIG_PORT, 8080);
+		int port = prefs.getInt(JettyConstants.HTTP_PORT, 8080);
 		this.getJTextFieldJettyPort().setText("" + port);
 
 		boolean isStartWithJade = prefs.getBoolean(JettyRuntime.JETTY_CONFIG_START_WITH_JADE, false);
@@ -255,18 +255,18 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 
 		if (ae.getSource()==this.getJButtonStartJetty()) {
 			// --- Start or Stop Jetty -------------------- 
-			JettyRuntime jettyRuntime = JettyRuntime.getInstance();
-			if (jettyRuntime.isServerExecuted()==false) {
+			if (JettyRuntime.getInstance().isServerExecuted()==false) {
 				// --- Start Jetty ------------------------
-				Server server = JettyRuntime.getInstance().startServer();
-				if (server!=null) {
+				JettyRuntime.getInstance().startServer();
+				if (JettyRuntime.getInstance().isServerExecuted()==true) {
 					this.getJButtonStartJetty().setText("Stop Jetty");
 					this.getJButtonStartJetty().setForeground(new Color(153, 0, 0));
 				}
 				
 			} else {
 				// --- Stop Jetty -------------------------
-				if (JettyRuntime.getInstance().stopServer()==true) {
+				JettyRuntime.getInstance().stopServer();
+				if (JettyRuntime.getInstance().isServerExecuted()==false) {
 					this.getJButtonStartJetty().setText("Start Jetty");
 					this.getJButtonStartJetty().setForeground(new Color(0, 153, 0));
 				}

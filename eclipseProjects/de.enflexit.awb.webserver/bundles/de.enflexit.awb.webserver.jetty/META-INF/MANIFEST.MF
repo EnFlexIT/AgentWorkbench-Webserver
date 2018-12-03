@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Agent.Workbench Jetty-Bundle
 Bundle-SymbolicName: de.enflexit.awb.webserver.jetty
-Bundle-Version: 9.4.12.qualifier
+Bundle-Version: 9.4.11.qualifier
 Bundle-Vendor: EnFlex.IT
 Automatic-Module-Name: org.agentgui.webserver.jetty
 Service-Component: OSGI-INF/classLoadService.xml
@@ -10,8 +10,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.enflexit.awb.webserver,
  de.enflexit.awb.webserver.classLoadService,
- de.enflexit.awb.webserver.gui,
- de.enflexit.awb.webserver.jetty
+ de.enflexit.awb.webserver.gui
 Require-Bundle: org.eclipse.osgi;bundle-version="3.13.100",
  de.enflexit.common;bundle-version="1.0.0",
  org.agentgui.core;bundle-version="2.1.6",
