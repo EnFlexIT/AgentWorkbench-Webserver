@@ -10,12 +10,12 @@ import de.enflexit.awb.webserver.gui.JettyControlPanel;
 /**
  * The Class AwbWebServerPlugin provides the web server control elements to Agent.Workbench.
  * 
- * -Dorg.osgi.service.http.port=8080
- * 
  * @author Christian Derksen - DAWIS - ICB - University of Duisburg - Essen
  */
 public class AwbWebServerPlugin extends PlugIn {
 
+	private static JettyRuntime jettyRuntime;
+	
 	/**
 	 * Instantiates the AWB web server plugin.
 	 * @param currProject the current project
@@ -32,13 +32,28 @@ public class AwbWebServerPlugin extends PlugIn {
 		return Application.getApplicationTitle() + " - Jetty PlugIn";
 	}
 
+	
 	/* (non-Javadoc)
 	 * @see agentgui.core.plugin.PlugIn#onPlugIn()
 	 */
 	@Override
 	public void onPlugIn() {
+		AwbWebServerPlugin.getJettyRuntime();
 		this.addJettyTab();
+		super.onPlugIn();
 	}
+	
+	/* (non-Javadoc)
+	 * @see agentgui.core.plugin.PlugIn#onPlugOut()
+	 */
+	@Override
+	public void onPlugOut() {
+		AwbWebServerPlugin.getJettyRuntime().stopServer();
+		AwbWebServerPlugin.setJettyRuntime(null);
+		super.onPlugOut();
+	}
+	
+	
 	/**
 	 * Adds the Jetty control panel tab.
 	 */
@@ -53,7 +68,25 @@ public class AwbWebServerPlugin extends PlugIn {
 	 */
 	@Override
 	protected void onProjectSaved(boolean isExcludeSetup) {
-		JettyRuntime.getInstance().saveEclipsePreferences();
+		AwbWebServerPlugin.getJettyRuntime().getJettyConfiguration().save();
 	}
 	
+	
+	/**
+	 * Return the current {@link JettyRuntime} instance.
+	 * @return the jetty runtime
+	 */
+	public static JettyRuntime getJettyRuntime() {
+		if (jettyRuntime==null) {
+			jettyRuntime = new JettyRuntime();
+		}
+		return jettyRuntime;
+	}
+	/**
+	 * Sets the jetty runtime instance.
+	 * @param jettyRuntime the new jetty runtime
+	 */
+	private static void setJettyRuntime(JettyRuntime jettyRuntime) {
+		AwbWebServerPlugin.jettyRuntime = jettyRuntime;
+	}
 }

@@ -3,6 +3,7 @@ package de.enflexit.awb.webserver;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -14,10 +15,12 @@ import org.eclipse.equinox.http.jetty.JettyConstants;
  * 
  * @author Christian Derksen - DAWIS - ICB - University of Duisburg - Essen
  */
-public class JettyConfiguration extends Hashtable<String, Object> {
+public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>> {
 
 	private static final long serialVersionUID = 1098203559452315494L;
 
+	private static final Boolean[] valueRangeBoolean = new Boolean[] {true, false};
+	
 	private List<String> jettyConfigurationKeys;
 	private List<String> jettyExcludeConstants;
 
@@ -41,80 +44,80 @@ public class JettyConfiguration extends Hashtable<String, Object> {
 		for (int i = 0; i < jettyConfigKeys.size(); i++) {
 
 			String jettyConfigKey = jettyConfigKeys.get(i);
-			Object jettyConfigValue = null;
+			JettyParameterValue<?> jettyParamValue = null;
 			
 			switch (jettyConfigKey) {
 			case JettyConstants.HTTP_ENABLED:
-				jettyConfigValue = bundlePrefs.getBoolean(jettyConfigKey, true);
+				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, true), valueRangeBoolean);
 				break;
 			case JettyConstants.HTTP_PORT:
-				jettyConfigValue = bundlePrefs.getInt(jettyConfigKey, 8080);
+				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 8080), null);
 				break;
 			case JettyConstants.HTTP_HOST:
-				jettyConfigValue = bundlePrefs.get(jettyConfigKey, "0.0.0.0");
+				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, "0.0.0.0"), null);
 				break;
 			case JettyConstants.HTTP_NIO:
-				jettyConfigValue = bundlePrefs.getBoolean(jettyConfigKey, true);
-				break;
-				
-			case JettyConstants.HTTPS_ENABLED:
-				jettyConfigValue = bundlePrefs.getBoolean(jettyConfigKey, false);
-				break;
-			case JettyConstants.HTTPS_PORT:
-				jettyConfigValue = bundlePrefs.getInt(jettyConfigKey, 8443);
-				break;
-			case JettyConstants.HTTPS_HOST:
-				jettyConfigValue = bundlePrefs.get(jettyConfigKey, "0.0.0.0");
+				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, true), valueRangeBoolean);
 				break;
 				
 			case JettyConstants.HTTP_MINTHREADS:
-				jettyConfigValue = bundlePrefs.getInt(jettyConfigKey, 8);
+				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 8), null);
 				break;				
 			case JettyConstants.HTTP_MAXTHREADS:
-				jettyConfigValue = bundlePrefs.getInt(jettyConfigKey, 200);
+				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 200), null);
+				break;
+				
+			case JettyConstants.HTTPS_ENABLED:
+				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, false), valueRangeBoolean);
+				break;
+			case JettyConstants.HTTPS_PORT:
+				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 8443), null);
+				break;
+			case JettyConstants.HTTPS_HOST:
+				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, "0.0.0.0"), null);
 				break;
 				
 			case JettyConstants.SSL_KEYSTORE:
-				jettyConfigValue = bundlePrefs.get(jettyConfigKey, "");
+				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
 				break;
 			case JettyConstants.SSL_PASSWORD:
-				jettyConfigValue = bundlePrefs.get(jettyConfigKey, "");
+				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
 				break;
 			case JettyConstants.SSL_KEYPASSWORD:
-				jettyConfigValue = bundlePrefs.get(jettyConfigKey, "");
+				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
 				break;
 
 			case JettyConstants.SSL_NEEDCLIENTAUTH:
-				jettyConfigValue = bundlePrefs.get(jettyConfigKey, "");
+				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, false), valueRangeBoolean);
 				break;
 			case JettyConstants.SSL_WANTCLIENTAUTH:
-				jettyConfigValue = bundlePrefs.get(jettyConfigKey, "");
+				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, false), valueRangeBoolean);
 				break;
 				
 			case JettyConstants.SSL_PROTOCOL:
-				jettyConfigValue = bundlePrefs.get(jettyConfigKey, "");
+				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
 				break;
 			case JettyConstants.SSL_ALGORITHM:
-				jettyConfigValue = bundlePrefs.get(jettyConfigKey, "");
+				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
 				break;
 			case JettyConstants.SSL_KEYSTORETYPE:
-				jettyConfigValue = bundlePrefs.get(jettyConfigKey, "");
+				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
 				break;
 				
 			case JettyConstants.CONTEXT_PATH:
-				jettyConfigValue = bundlePrefs.get(jettyConfigKey, "");
+				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
 				break;
 			case JettyConstants.CONTEXT_SESSIONINACTIVEINTERVAL:
-				jettyConfigValue = bundlePrefs.getInt(jettyConfigKey, 300);
+				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 300), null);
 				break;
 			}
 
 			// --- save in local hash table ---------------
-			if (jettyConfigValue==null) continue;
+			if (jettyParamValue==null) continue;
 			try {
-				this.put(jettyConfigKey, jettyConfigValue);
+				this.put(jettyConfigKey, jettyParamValue);
 			} catch (Exception ex) {
-				System.err.println("[" + this.getClass().getSimpleName() + "] Error setting jetty configuration! -  key: " + jettyConfigKey + ", value: " + jettyConfigValue);
+				System.err.println("[" + this.getClass().getSimpleName() + "] Error setting jetty configuration! -  key: " + jettyConfigKey + ", value: " + jettyParamValue.getValue());
 			}
 		}
 		
@@ -129,7 +132,7 @@ public class JettyConfiguration extends Hashtable<String, Object> {
 		for (int i = 0; i < jettyConfigKeys.size(); i++) {
 
 			String jettyConfigKey = jettyConfigKeys.get(i);
-			Object jettyConfigValue = this.get(jettyConfigKey);
+			Object jettyConfigValue = this.get(jettyConfigKey).getValue();
 			if (jettyConfigValue==null) continue;
 			
 			switch (jettyConfigKey) {
@@ -146,6 +149,13 @@ public class JettyConfiguration extends Hashtable<String, Object> {
 				this.putBoolean(jettyConfigKey, jettyConfigValue);
 				break;
 				
+			case JettyConstants.HTTP_MINTHREADS:
+				this.putInt(jettyConfigKey, jettyConfigValue);
+				break;				
+			case JettyConstants.HTTP_MAXTHREADS:
+				this.putInt(jettyConfigKey, jettyConfigValue);
+				break;
+				
 			case JettyConstants.HTTPS_ENABLED:
 				this.putBoolean(jettyConfigKey, jettyConfigValue);
 				break;
@@ -154,13 +164,6 @@ public class JettyConfiguration extends Hashtable<String, Object> {
 				break;
 			case JettyConstants.HTTPS_HOST:
 				this.putString(jettyConfigKey, jettyConfigValue);
-				break;
-				
-			case JettyConstants.HTTP_MINTHREADS:
-				this.putInt(jettyConfigKey, jettyConfigValue);
-				break;				
-			case JettyConstants.HTTP_MAXTHREADS:
-				this.putInt(jettyConfigKey, jettyConfigValue);
 				break;
 				
 			case JettyConstants.SSL_KEYSTORE:
@@ -200,10 +203,16 @@ public class JettyConfiguration extends Hashtable<String, Object> {
 		} // end for 
 	
 		// --- Save the overall eclipse preferences -------
-		JettyRuntime.getInstance().saveEclipsePreferences();
+		AwbWebServerPlugin.getJettyRuntime().saveEclipsePreferences();
 	}
 	
 	
+	/**
+	 * Puts a string value to the bundle preferences.
+	 *
+	 * @param jettyConfigKey the jetty configuration key
+	 * @param value the value
+	 */
 	private void putString(String jettyConfigKey, Object value) {
 		if (value!=null) {
 			if (value instanceof String) {
@@ -213,6 +222,12 @@ public class JettyConfiguration extends Hashtable<String, Object> {
 			}
 		}
 	}
+	/**
+	 * Puts a Integer value to the bundle preferences.
+	 *
+	 * @param jettyConfigKey the jetty configuration key
+	 * @param value the value
+	 */
 	private void putInt(String jettyConfigKey, Object value) {
 		if (value!=null) {
 			if (value instanceof Integer) {
@@ -220,6 +235,12 @@ public class JettyConfiguration extends Hashtable<String, Object> {
 			}
 		}
 	}
+	/**
+	 * Puts a Boolean value to the bundle preferences.
+	 *
+	 * @param jettyConfigKey the jetty configuration key
+	 * @param value the value
+	 */
 	private void putBoolean(String jettyConfigKey, Object value) {
 		if (value!=null) {
 			if (value instanceof Boolean) {
@@ -227,10 +248,13 @@ public class JettyConfiguration extends Hashtable<String, Object> {
 			}
 		}
 	}
-
+	/**
+	 * Gets the bundle preferences.
+	 * @return the bundle preferences
+	 */
 	private IEclipsePreferences getBundlePreferences() {
 		if (bundlePreferences==null) {
-			bundlePreferences = JettyRuntime.getInstance().getEclipsePreferences();
+			bundlePreferences = AwbWebServerPlugin.getJettyRuntime().getEclipsePreferences();
 		}
 		return bundlePreferences;
 	}
@@ -240,7 +264,7 @@ public class JettyConfiguration extends Hashtable<String, Object> {
 	 * Gets the jetty configuration keys.
 	 * @return the jetty configuration keys
 	 */
-	private List<String> getJettyConfigurationKeys() {
+	public List<String> getJettyConfigurationKeys() {
 		if (jettyConfigurationKeys==null) {
 			jettyConfigurationKeys = new ArrayList<>();
 			
@@ -281,6 +305,23 @@ public class JettyConfiguration extends Hashtable<String, Object> {
 			jettyExcludeConstants.add("PROPERTY_PREFIX");
 		}
 		return jettyExcludeConstants;
+	}
+	
+	
+	/**
+	 * Return a jetty activator conform configuration dictionary.
+	 * @return the jetty activator configuration
+	 */
+	public Dictionary<String, Object> getJettyActivatorConfiguration() {
+		
+		Dictionary<String, Object> jettyDictionary = new Hashtable<String, Object>();
+		List<String> keys = new ArrayList<>(this.keySet());
+		for (int i = 0; i < keys.size(); i++) {
+			String key = keys.get(i);
+			Object value = this.get(key).getValue();
+			jettyDictionary.put(key, value);
+		}
+		return jettyDictionary;
 	}
 	
 }

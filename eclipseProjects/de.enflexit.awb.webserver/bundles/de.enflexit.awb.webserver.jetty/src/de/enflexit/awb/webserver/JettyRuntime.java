@@ -25,29 +25,10 @@ public class JettyRuntime {
 	public static final String JETTY_SUB_PATH = "jetty"; 
 	public static final String JETTY_CONFIG_START_WITH_JADE = "JETTY_START_WITH_JADE";
 
-
-	private static JettyRuntime jettyRuntime;
-	
 	private JettyConfiguration jettyConfiguration; 
 	private IEclipsePreferences eclipsePreferences;
 	private boolean isServerExecuted;
 
-	
-	/**
-	 * Instantiates a new jetty runtime.
-	 */
-	private JettyRuntime() { }
-	/**
-	 * Returns the single instance of JettyRuntime.
-	 * @return single instance of JettyRuntime
-	 */
-	public static JettyRuntime getInstance() {
-		if (jettyRuntime==null) {
-			jettyRuntime = new JettyRuntime();
-		}
-		return jettyRuntime;
-	}
-	
 	
 	/**
 	 * Start the Jetty server with the bundle configuration.
@@ -69,7 +50,7 @@ public class JettyRuntime {
 			// --- Check configuration ----------
 			Dictionary<String, ? extends Object> jettyConfigToUse = jettyConfig;
 			if (jettyConfigToUse==null) {
-				jettyConfigToUse = this.getJettyConfiguration();
+				jettyConfigToUse = this.getJettyConfiguration().getJettyActivatorConfiguration();
 			}
 			// --- Start the server -------------
 			if (jettyConfigToUse!=null) {
@@ -79,6 +60,7 @@ public class JettyRuntime {
 			 
 		} catch (Exception ex) {
 			this.isServerExecuted = false;
+			this.stopServer();
 			ex.printStackTrace();
 		}
 	}
@@ -107,7 +89,7 @@ public class JettyRuntime {
 	 * Returns the current jetty configuration.
 	 * @return the jetty configuration
 	 */
-	public Dictionary<String, Object> getJettyConfiguration() {
+	public JettyConfiguration getJettyConfiguration() {
 		if (jettyConfiguration==null) {
 			jettyConfiguration = new JettyConfiguration();
 		}

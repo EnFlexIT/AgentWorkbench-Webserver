@@ -1,31 +1,31 @@
 package de.enflexit.awb.webserver.gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
+import javax.swing.JTable;
 import javax.swing.border.EtchedBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
+import javax.swing.table.DefaultTableModel;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.equinox.http.jetty.JettyConstants;
 
 import agentgui.core.project.Project;
+import de.enflexit.awb.webserver.AwbWebServerPlugin;
+import de.enflexit.awb.webserver.JettyConfiguration;
+import de.enflexit.awb.webserver.JettyParameterValue;
 import de.enflexit.awb.webserver.JettyRuntime;
-import de.enflexit.common.swing.KeyAdapter4Numbers;
 
 /**
  * The Class JettyControlPanel.
@@ -37,16 +37,16 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 5025152245197566098L;
 
 	private Project project;
-
-	private JPanel jPanelJettyConfig;
 	private JLabel jLabelJettyHeader;
-	private JLabel jLabelPort;
-	private JTextField jTextFieldJettyPort;
 
 	private JPanel jPanelControl;
 	private JButton jButtonStartJetty;
 	private JSeparator jSeparatorControl;
 	private JCheckBox jCheckBoxStartWithJade;
+	
+	private JScrollPane jScrollPaneConfigTable;
+	private JTable jTableJettyConfiguration;
+	private DefaultTableModel tableModel;
 	
 	
 	/**
@@ -65,9 +65,9 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		this.setLayout(gridBagLayout);
 		
 		GridBagConstraints gbc_jLabelJettyHeader = new GridBagConstraints();
@@ -77,12 +77,12 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 		gbc_jLabelJettyHeader.gridy = 0;
 		this.add(getJLabelJettyHeader(), gbc_jLabelJettyHeader);
 
-		GridBagConstraints gbc_jPanelJettyConfig = new GridBagConstraints();
-		gbc_jPanelJettyConfig.anchor = GridBagConstraints.NORTHWEST;
-		gbc_jPanelJettyConfig.insets = new Insets(10, 10, 0, 0);
-		gbc_jPanelJettyConfig.gridx = 0;
-		gbc_jPanelJettyConfig.gridy = 1;
-		this.add(getJPanelJettyConfig(), gbc_jPanelJettyConfig);
+		GridBagConstraints gbc_jScrollPaneConfigTable = new GridBagConstraints();
+		gbc_jScrollPaneConfigTable.insets = new Insets(10, 10, 0, 0);
+		gbc_jScrollPaneConfigTable.fill = GridBagConstraints.BOTH;
+		gbc_jScrollPaneConfigTable.gridx = 0;
+		gbc_jScrollPaneConfigTable.gridy = 1;
+		add(getJScrollPaneConfigTable(), gbc_jScrollPaneConfigTable);
 		
 		GridBagConstraints gbc_jPanelControl = new GridBagConstraints();
 		gbc_jPanelControl.insets = new Insets(10, 10, 0, 10);
@@ -99,74 +99,51 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 		}
 		return jLabelJettyHeader;
 	}
-	private JPanel getJPanelJettyConfig() {
-		if (jPanelJettyConfig == null) {
-			jPanelJettyConfig = new JPanel();
-			GridBagLayout gbl_jPanelJettyConfig = new GridBagLayout();
-			gbl_jPanelJettyConfig.columnWidths = new int[]{0, 0, 0};
-			gbl_jPanelJettyConfig.rowHeights = new int[]{0, 0, 0};
-			gbl_jPanelJettyConfig.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-			gbl_jPanelJettyConfig.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-			jPanelJettyConfig.setLayout(gbl_jPanelJettyConfig);
-			GridBagConstraints gbc_jLabelPort = new GridBagConstraints();
-			gbc_jLabelPort.anchor = GridBagConstraints.WEST;
-			gbc_jLabelPort.gridx = 0;
-			gbc_jLabelPort.gridy = 0;
-			jPanelJettyConfig.add(getJLabelPort(), gbc_jLabelPort);
-			GridBagConstraints gbc_jTextFieldJettyPort = new GridBagConstraints();
-			gbc_jTextFieldJettyPort.insets = new Insets(0, 10, 0, 0);
-			gbc_jTextFieldJettyPort.gridx = 1;
-			gbc_jTextFieldJettyPort.gridy = 0;
-			jPanelJettyConfig.add(getJTextFieldJettyPort(), gbc_jTextFieldJettyPort);
+	
+	private JScrollPane getJScrollPaneConfigTable() {
+		if (jScrollPaneConfigTable == null) {
+			jScrollPaneConfigTable = new JScrollPane();
+			jScrollPaneConfigTable.setViewportView(this.getJTableJettyConfiguration());
 		}
-		return jPanelJettyConfig;
+		return jScrollPaneConfigTable;
 	}
-	private JLabel getJLabelPort() {
-		if (jLabelPort == null) {
-			jLabelPort = new JLabel("Jetty-Port:");
-			jLabelPort.setFont(new Font("Dialog", Font.BOLD, 12));
+	private JTable getJTableJettyConfiguration() {
+		if (jTableJettyConfiguration == null) {
+			jTableJettyConfiguration = new JTable(this.getTableModel());
+			jTableJettyConfiguration.setFillsViewportHeight(true);
+			jTableJettyConfiguration.setFont(new Font("Dialog", Font.PLAIN, 12));
+			jTableJettyConfiguration.getTableHeader().setReorderingAllowed(false);
+			for (int i=0; i<=1; i++) {
+				jTableJettyConfiguration.getColumnModel().getColumn(i).setCellRenderer(new JettyTableCellRender());
+				jTableJettyConfiguration.getColumnModel().getColumn(i).setCellEditor(new JettyTableCellEditor(this.project));
+			}
 		}
-		return jLabelPort;
+		return jTableJettyConfiguration;
 	}
-	private JTextField getJTextFieldJettyPort() {
-		if (jTextFieldJettyPort == null) {
-			jTextFieldJettyPort = new JTextField();
-			jTextFieldJettyPort.setFont(new Font("Dialog", Font.PLAIN, 12));
-			jTextFieldJettyPort.setPreferredSize(new Dimension(80, 26));
-			jTextFieldJettyPort.addKeyListener(new KeyAdapter4Numbers(false));
-			jTextFieldJettyPort.getDocument().addDocumentListener(new DocumentListener() {
+	private DefaultTableModel getTableModel() {
+		if (tableModel==null) {
+			Vector<String> header = new Vector<>();
+			header.add("Property");
+			header.add("Value");
+			tableModel = new DefaultTableModel(header, 0) {
+				private static final long serialVersionUID = 149099724841552026L;
 				@Override
-				public void removeUpdate(DocumentEvent de) {
-					this.setPortToPreferences(de);
-				}
-				@Override
-				public void insertUpdate(DocumentEvent de) {
-					this.setPortToPreferences(de);
-				}
-				@Override
-				public void changedUpdate(DocumentEvent de) {
-					this.setPortToPreferences(de);
-				}
-				private void setPortToPreferences(DocumentEvent de) {
-					
-					Integer port = 8080; // as default
-					try {
-						String portString = de.getDocument().getText(0, de.getDocument().getLength());
-						if (portString!=null && portString.isEmpty()==false) {
-							port = Integer.parseInt(portString);
-						}
-						
-					} catch (BadLocationException blEx) {
-						blEx.printStackTrace();
+				public boolean isCellEditable(int row, int column) {
+					if (column==1) {
+						return true;
 					}
-					JettyRuntime.getInstance().getEclipsePreferences().putInt(JettyConstants.HTTP_PORT, port);
-					JettyControlPanel.this.setProjectUnsaved();
+					return false;
 				}
-			});
+			};
 		}
-		return jTextFieldJettyPort;
+		return tableModel;
 	}
-
+	private void addTableRow(JettyParameterValue<?> jettyParameterValue) {
+		Vector<Object> row = new Vector<>();
+		row.add(jettyParameterValue.getParameterKey());
+		row.add(jettyParameterValue);
+		this.getTableModel().addRow(row);
+	}
 	
 	private JPanel getJPanelControl() {
 		if (jPanelControl == null) {
@@ -232,20 +209,35 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 	}
 	
 	/**
+	 * Returns the current {@link JettyRuntime} instance.
+	 * @return the jetty runtime
+	 */
+	private JettyRuntime getJettyRuntime() {
+		return AwbWebServerPlugin.getJettyRuntime();
+	}
+	
+	/**
 	 * Loads the settings from the eclipse preferences.
 	 */
 	private void loadSettingsFromPreferences() {
 		
-		IEclipsePreferences prefs = JettyRuntime.getInstance().getEclipsePreferences();
-		
-		int port = prefs.getInt(JettyConstants.HTTP_PORT, 8080);
-		this.getJTextFieldJettyPort().setText("" + port);
+		JettyRuntime jRun = this.getJettyRuntime();
+		if (jRun!=null) {
+			// --- Load the eclipse preferences ---------------------
+			IEclipsePreferences prefs = jRun.getEclipsePreferences();
+			
+			// --- Get start with JADE parameter --------------------
+			boolean isStartWithJade = prefs.getBoolean(JettyRuntime.JETTY_CONFIG_START_WITH_JADE, false);
+			this.getJCheckBoxStartWithJade().setSelected(isStartWithJade);
 
-		boolean isStartWithJade = prefs.getBoolean(JettyRuntime.JETTY_CONFIG_START_WITH_JADE, false);
-		this.getJCheckBoxStartWithJade().setSelected(isStartWithJade);
-		
+			// --- Load the jetty configuration to the table --------
+			JettyConfiguration jConfig = jRun.getJettyConfiguration();
+			for (int i = 0; i < jConfig.getJettyConfigurationKeys().size(); i++) {
+				String jettyKey = jConfig.getJettyConfigurationKeys().get(i);
+				this.addTableRow(jConfig.get(jettyKey));
+			}	
+		}
 	}
-	
 	
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
@@ -253,33 +245,36 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 
-		if (ae.getSource()==this.getJButtonStartJetty()) {
-			// --- Start or Stop Jetty -------------------- 
-			if (JettyRuntime.getInstance().isServerExecuted()==false) {
-				// --- Start Jetty ------------------------
-				JettyRuntime.getInstance().startServer();
-				if (JettyRuntime.getInstance().isServerExecuted()==true) {
-					this.getJButtonStartJetty().setText("Stop Jetty");
-					this.getJButtonStartJetty().setForeground(new Color(153, 0, 0));
+		JettyRuntime jRun = this.getJettyRuntime();
+		if (jRun!=null) {
+			
+			if (ae.getSource()==this.getJButtonStartJetty()) {
+				// --- Start or Stop Jetty ---------------- 
+				if (jRun.isServerExecuted()==false) {
+					// --- Start Jetty --------------------
+					jRun.startServer();
+					if (jRun.isServerExecuted()==true) {
+						this.getJButtonStartJetty().setText("Stop Jetty");
+						this.getJButtonStartJetty().setForeground(new Color(153, 0, 0));
+					}
+					
+				} else {
+					// --- Stop Jetty ---------------------
+					jRun.stopServer();
+					if (jRun.isServerExecuted()==false) {
+						this.getJButtonStartJetty().setText("Start Jetty");
+						this.getJButtonStartJetty().setForeground(new Color(0, 153, 0));
+					}
+					
 				}
 				
-			} else {
-				// --- Stop Jetty -------------------------
-				JettyRuntime.getInstance().stopServer();
-				if (JettyRuntime.getInstance().isServerExecuted()==false) {
-					this.getJButtonStartJetty().setText("Start Jetty");
-					this.getJButtonStartJetty().setForeground(new Color(0, 153, 0));
-				}
+			} else if (ae.getSource()==this.getJCheckBoxStartWithJade()) {
+				// --- Set Configuration ------------------
+				jRun.getEclipsePreferences().putBoolean(JettyRuntime.JETTY_CONFIG_START_WITH_JADE, this.getJCheckBoxStartWithJade().isSelected());
+				this.setProjectUnsaved();
 				
 			}
-			
-		} else if (ae.getSource()==this.getJCheckBoxStartWithJade()) {
-			// --- Set Configuration ----------------------
-			JettyRuntime.getInstance().getEclipsePreferences().putBoolean(JettyRuntime.JETTY_CONFIG_START_WITH_JADE, this.getJCheckBoxStartWithJade().isSelected());
-			this.setProjectUnsaved();
-			
 		}
-		
 	}
 	
 }
