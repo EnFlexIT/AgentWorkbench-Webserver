@@ -68,7 +68,7 @@ public class AwbWebServerPlugin extends PlugIn {
 	 */
 	@Override
 	protected void onProjectSaved(boolean isExcludeSetup) {
-		AwbWebServerPlugin.getJettyRuntime().getJettyConfiguration().save();
+		AwbWebServerPlugin.getJettyRuntime().getJettyConfiguration().save();		
 	}
 	
 	
