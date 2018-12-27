@@ -139,6 +139,9 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 		return tableModel;
 	}
 	private void addTableRow(JettyParameterValue<?> jettyParameterValue) {
+		
+		if (jettyParameterValue==null) return;
+		
 		Vector<Object> row = new Vector<>();
 		row.add(jettyParameterValue.getParameterKey());
 		row.add(jettyParameterValue);

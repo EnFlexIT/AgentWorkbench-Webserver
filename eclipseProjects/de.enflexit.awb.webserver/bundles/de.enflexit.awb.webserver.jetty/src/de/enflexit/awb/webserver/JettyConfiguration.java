@@ -110,6 +110,10 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 			case JettyConstants.CONTEXT_SESSIONINACTIVEINTERVAL:
 				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 300), null);
 				break;
+				
+			case JettyConstants.CUSTOMIZER_CLASS:
+				// TODO
+				break;
 			}
 
 			// --- save in local hash table ---------------
@@ -198,6 +202,10 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 				break;
 			case JettyConstants.CONTEXT_SESSIONINACTIVEINTERVAL:
 				this.putInt(jettyConfigKey, jettyConfigValue);
+				break;
+				
+			case JettyConstants.CUSTOMIZER_CLASS:
+				// TODO
 				break;
 			}
 		} // end for 
@@ -300,7 +308,7 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 			jettyExcludeConstants.add("MULTIPART_LOCATION");
 			jettyExcludeConstants.add("MULTIPART_MAXFILESIZE");
 			jettyExcludeConstants.add("MULTIPART_MAXREQUESTSIZE");
-			jettyExcludeConstants.add("CUSTOMIZER_CLASS");
+			//jettyExcludeConstants.add("CUSTOMIZER_CLASS");
 			jettyExcludeConstants.add("OTHER_INFO");
 			jettyExcludeConstants.add("PROPERTY_PREFIX");
 		}
