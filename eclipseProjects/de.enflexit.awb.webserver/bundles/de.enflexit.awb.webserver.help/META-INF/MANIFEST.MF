@@ -1,7 +1,7 @@
 Automatic-Module-Name: org.a gentgui.help
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Agent.Workbench - API Help
+Bundle-Name: Agent.Workbench - Webserver API Help
 Bundle-SymbolicName: de.enflexit.awb.webserver.help;singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

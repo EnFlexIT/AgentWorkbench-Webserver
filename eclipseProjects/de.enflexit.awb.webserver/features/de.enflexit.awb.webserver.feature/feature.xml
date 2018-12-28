@@ -24,7 +24,6 @@
    </url>
 
    <requires>
-      <import plugin="de.enflexit.awb.webserver.jetty" version="9.4.11" match="greaterOrEqual"/>
       <import plugin="org.eclipse.osgi" version="3.13.100" match="greaterOrEqual"/>
       <import plugin="de.enflexit.common" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.agentgui.core" version="2.1.6" match="greaterOrEqual"/>
@@ -39,17 +38,11 @@
       <import plugin="org.eclipse.jetty.server" version="9.4.11" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jetty.servlet" version="9.4.11" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jetty.util" version="9.4.11" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.equinox.preferences"/>
    </requires>
 
    <plugin
          id="de.enflexit.awb.webserver.jetty"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.enflexit.awb.webserver.help"
          download-size="0"
          install-size="0"
          version="0.0.0"

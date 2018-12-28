@@ -39,7 +39,7 @@
 								<ignoreError>true</ignoreError>
 								<encoding>UTF-8</encoding>
 								<includes>
-									<include>de.enflexit.awb.webserver.*</include>
+									<include>de.enflexit.awb.webserver*</include>
 								</includes>
 								<additionalArguments>
 									<additionalArgument>-windowtitle "Agent.Workbench - Webserver API"</additionalArgument>
