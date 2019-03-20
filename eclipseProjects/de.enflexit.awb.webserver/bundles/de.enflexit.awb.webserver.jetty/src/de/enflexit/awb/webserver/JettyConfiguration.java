@@ -136,7 +136,11 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 		for (int i = 0; i < jettyConfigKeys.size(); i++) {
 
 			String jettyConfigKey = jettyConfigKeys.get(i);
-			Object jettyConfigValue = this.get(jettyConfigKey).getValue();
+			
+			Object jettyConfigValue = null;
+			JettyParameterValue<?> jpv = this.get(jettyConfigKey);
+			if (jpv!=null) jettyConfigValue = jpv.getValue();
+
 			if (jettyConfigValue==null) continue;
 			
 			switch (jettyConfigKey) {
