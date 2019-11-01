@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?>
-<target includeMode="feature" name="de.enflexit.awb.webserver.target" sequenceNumber="70">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target includeMode="feature" name="de.enflexit.awb.webserver.target" sequenceNumber="70">
 <locations>
 	<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="0.0.0"/>
@@ -23,17 +21,7 @@
 		<unit id="org.slf4j.api.source" version="0.0.0"/>
 		<unit id="org.slf4j.apis.jcl" version="0.0.0"/>
 		<unit id="org.slf4j.apis.jcl.source" version="0.0.0"/>
-		<unit id="javax.annotation" version="0.0.0"/>
-		<unit id="javax.annotation.source" version="0.0.0"/>
 		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20190827152740/repository"/>
 	</location>
-	<!--
-	<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x"/>
-		<unit id="org.eclipse.jetty.bundles.f.feature.group" version="0.0.0"/>
-		<unit id="org.eclipse.jetty.bundles.f.source.feature.group" version="0.0.0"/>
-	</location>
-	-->
-	<location path="${project_loc}/jettyLibs" type="Directory"/>
 </locations>
 </target>
