@@ -1,4 +1,4 @@
-package de.enflexit.awb.webserver.gui;
+package de.enflexit.awb.webserver.config.ui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -23,9 +23,9 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 
 import agentgui.core.project.Project;
 import de.enflexit.awb.webserver.AwbWebServerPlugin;
-import de.enflexit.awb.webserver.JettyConfiguration;
-import de.enflexit.awb.webserver.JettyParameterValue;
 import de.enflexit.awb.webserver.JettyRuntime;
+import de.enflexit.awb.webserver.config.JettyConfiguration;
+import de.enflexit.awb.webserver.config.JettyParameterValue;
 
 /**
  * The Class JettyControlPanel.
@@ -227,7 +227,7 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 		JettyRuntime jRun = this.getJettyRuntime();
 		if (jRun!=null) {
 			// --- Load the eclipse preferences ---------------------
-			IEclipsePreferences prefs = jRun.getEclipsePreferences();
+			IEclipsePreferences prefs = jRun.getJettyConfiguration().getEclipsePreferences();
 			
 			// --- Get start with JADE parameter --------------------
 			boolean isStartWithJade = prefs.getBoolean(JettyRuntime.JETTY_CONFIG_START_WITH_JADE, false);
@@ -273,7 +273,7 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 				
 			} else if (ae.getSource()==this.getJCheckBoxStartWithJade()) {
 				// --- Set Configuration ------------------
-				jRun.getEclipsePreferences().putBoolean(JettyRuntime.JETTY_CONFIG_START_WITH_JADE, this.getJCheckBoxStartWithJade().isSelected());
+				jRun.getJettyConfiguration().getEclipsePreferences().putBoolean(JettyRuntime.JETTY_CONFIG_START_WITH_JADE, this.getJCheckBoxStartWithJade().isSelected());
 				this.setProjectUnsaved();
 				
 			}

@@ -2,7 +2,7 @@
 <feature
       id="de.enflexit.awb.webserver.feature"
       label="Agent.Workbench - Webserver"
-      version="9.4.12.qualifier"
+      version="9.4.20.qualifier"
       provider-name="EnFlex.IT"
       os="linux,macosx,win32"
       arch="x86,x86_64">

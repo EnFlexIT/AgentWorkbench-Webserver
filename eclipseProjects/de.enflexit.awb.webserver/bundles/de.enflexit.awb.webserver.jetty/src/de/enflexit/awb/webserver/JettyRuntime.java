@@ -3,15 +3,10 @@ package de.enflexit.awb.webserver;
 import java.io.File;
 import java.util.Dictionary;
 
-import org.eclipse.core.runtime.preferences.ConfigurationScope;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.equinox.http.jetty.JettyConfigurator;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.prefs.BackingStoreException;
 
 import agentgui.core.application.Application;
+import de.enflexit.awb.webserver.config.JettyConfiguration;
 
 /**
  * The Class JettyRuntime serves as central (singleton) instance to access runtime information
@@ -26,9 +21,31 @@ public class JettyRuntime {
 	public static final String JETTY_CONFIG_START_WITH_JADE = "JETTY_START_WITH_JADE";
 
 	private JettyConfiguration jettyConfiguration; 
-	private IEclipsePreferences eclipsePreferences;
 	private boolean isServerExecuted;
 
+	
+	/**
+	 * Returns the current jetty configuration.
+	 * @return the jetty configuration
+	 */
+	public JettyConfiguration getJettyConfiguration() {
+		if (jettyConfiguration==null) {
+			jettyConfiguration = new JettyConfiguration();
+		}
+		return jettyConfiguration;
+	}
+	
+	
+//	public void startTest() {
+//		
+//		Server server = new Server();
+//		server.getConnectors()[0].getConnectionFactory(HttpConnectionFactory.class);
+//		server.setHandler(new HelloHttpRequestHandler());
+//
+//        server.start();
+//        server.join();
+//	}
+	
 	
 	/**
 	 * Start the Jetty server with the bundle configuration.
@@ -41,17 +58,19 @@ public class JettyRuntime {
 	 * Start the Jetty server with the specified configuration.
 	 *
 	 * @param jettyConfig the jetty configuration. If null, the local configuration will be used
-	 * @return the server
 	 * @see #getJettyConfiguration()
 	 */
 	public void startServer(Dictionary<String, ? extends Object> jettyConfig) {
 		
 		try {
-			// --- Check configuration ----------
+			
 			Dictionary<String, ? extends Object> jettyConfigToUse = jettyConfig;
+
+			// --- Check configuration ----------
 			if (jettyConfigToUse==null) {
-				jettyConfigToUse = this.getJettyConfiguration().getJettyActivatorConfiguration();
+				jettyConfigToUse = this.getJettyConfiguration().getConfigurationDictionary();
 			}
+			
 			// --- Start the server -------------
 			if (jettyConfigToUse!=null) {
 				JettyConfigurator.startServer(JETTY_SERVER_ID, jettyConfigToUse);
@@ -64,19 +83,7 @@ public class JettyRuntime {
 			ex.printStackTrace();
 		}
 	}
-	/**
-	 * Stops the Jetty server.
-	 * @return true, if successful
-	 */
-	public void stopServer() {
-		try {
-			JettyConfigurator.stopServer(JETTY_SERVER_ID);
-			isServerExecuted = false;
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
+	
 	/**
 	 * Checks if the server is executed.
 	 * @return true, if the server is executed
@@ -84,41 +91,25 @@ public class JettyRuntime {
 	public boolean isServerExecuted() {
 		return isServerExecuted;
 	}
-
-	/**
-	 * Returns the current jetty configuration.
-	 * @return the jetty configuration
-	 */
-	public JettyConfiguration getJettyConfiguration() {
-		if (jettyConfiguration==null) {
-			jettyConfiguration = new JettyConfiguration();
-		}
-		return jettyConfiguration;
-	}
 	
 	/**
-	 * Returns the eclipse preferences.
-	 * @return the eclipse preferences
+	 * Stops the Jetty server.
+	 * @return true, if successful
 	 */
-	public IEclipsePreferences getEclipsePreferences() {
-		if (eclipsePreferences==null) {
-			IScopeContext iScopeContext = ConfigurationScope.INSTANCE;
-			Bundle bundle = FrameworkUtil.getBundle(this.getClass());
-			eclipsePreferences = iScopeContext.getNode(bundle.getSymbolicName());
-		}
-		return eclipsePreferences;
-	}
-	/**
-	 * Saves the bundle properties.
-	 */
-	public void saveEclipsePreferences() {
+	public void stopServer() {
 		try {
-			this.getEclipsePreferences().flush();
-		} catch (BackingStoreException bsEx) {
-			bsEx.printStackTrace();
+			JettyConfigurator.stopServer(JETTY_SERVER_ID);
+			this.isServerExecuted = false;
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 	
+	
+	
+	
+
 	
 	/**
 	 * Returns (and creates if needed) the jetty home directory.

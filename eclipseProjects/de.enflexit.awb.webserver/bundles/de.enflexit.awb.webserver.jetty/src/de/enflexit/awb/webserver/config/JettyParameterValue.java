@@ -1,4 +1,4 @@
-package de.enflexit.awb.webserver;
+package de.enflexit.awb.webserver.config;
 
 /**
  * The Class JettyParameterValue.

@@ -5,7 +5,7 @@ import org.agentgui.gui.swing.project.ProjectWindowTab;
 import agentgui.core.application.Application;
 import agentgui.core.plugin.PlugIn;
 import agentgui.core.project.Project;
-import de.enflexit.awb.webserver.gui.JettyControlPanel;
+import de.enflexit.awb.webserver.config.ui.JettyControlPanel;
 
 /**
  * The Class AwbWebServerPlugin provides the web server control elements to Agent.Workbench.
@@ -23,7 +23,6 @@ public class AwbWebServerPlugin extends PlugIn {
 	public AwbWebServerPlugin(Project currProject) {
 		super(currProject);
 	}
-
 	/* (non-Javadoc)
 	 * @see agentgui.core.plugin.PlugIn#getName()
 	 */

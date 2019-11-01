@@ -1,4 +1,4 @@
-package de.enflexit.awb.webserver;
+package de.enflexit.awb.webserver.config;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -7,8 +7,13 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.equinox.http.jetty.JettyConstants;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * The Class JettyConfiguration .
@@ -24,8 +29,7 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 	private List<String> jettyConfigurationKeys;
 	private List<String> jettyExcludeConstants;
 
-	private IEclipsePreferences bundlePreferences;
-
+	private IEclipsePreferences eclipsePreferences;
 	
 	/**
 	 * Instantiates a new jetty configuration.
@@ -40,7 +44,7 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 	public void load() {
 		
 		List<String> jettyConfigKeys = this.getJettyConfigurationKeys();
-		IEclipsePreferences bundlePrefs = this.getBundlePreferences();
+		IEclipsePreferences bundlePrefs = this.getEclipsePreferences();
 		for (int i = 0; i < jettyConfigKeys.size(); i++) {
 
 			String jettyConfigKey = jettyConfigKeys.get(i);
@@ -215,7 +219,7 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 		} // end for 
 	
 		// --- Save the overall eclipse preferences -------
-		AwbWebServerPlugin.getJettyRuntime().saveEclipsePreferences();
+		this.saveEclipsePreferences();
 	}
 	
 	
@@ -228,9 +232,9 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 	private void putString(String jettyConfigKey, Object value) {
 		if (value!=null) {
 			if (value instanceof String) {
-				this.getBundlePreferences().put(jettyConfigKey, (String)value);
+				this.getEclipsePreferences().put(jettyConfigKey, (String)value);
 			} else {
-				this.getBundlePreferences().put(jettyConfigKey, value.toString());
+				this.getEclipsePreferences().put(jettyConfigKey, value.toString());
 			}
 		}
 	}
@@ -241,10 +245,8 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 	 * @param value the value
 	 */
 	private void putInt(String jettyConfigKey, Object value) {
-		if (value!=null) {
-			if (value instanceof Integer) {
-				this.getBundlePreferences().putInt(jettyConfigKey, (int)value);
-			}
+		if (value instanceof Integer) {
+			this.getEclipsePreferences().putInt(jettyConfigKey, (int)value);
 		}
 	}
 	/**
@@ -254,23 +256,34 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 	 * @param value the value
 	 */
 	private void putBoolean(String jettyConfigKey, Object value) {
-		if (value!=null) {
-			if (value instanceof Boolean) {
-				this.getBundlePreferences().putBoolean(jettyConfigKey, (boolean)value);
-			}
+		if (value instanceof Boolean) {
+			this.getEclipsePreferences().putBoolean(jettyConfigKey, (boolean)value);
 		}
-	}
-	/**
-	 * Gets the bundle preferences.
-	 * @return the bundle preferences
-	 */
-	private IEclipsePreferences getBundlePreferences() {
-		if (bundlePreferences==null) {
-			bundlePreferences = AwbWebServerPlugin.getJettyRuntime().getEclipsePreferences();
-		}
-		return bundlePreferences;
 	}
 
+	/**
+	 * Returns the eclipse preferences.
+	 * @return the eclipse preferences
+	 */
+	public IEclipsePreferences getEclipsePreferences() {
+		if (eclipsePreferences==null) {
+			IScopeContext iScopeContext = ConfigurationScope.INSTANCE;
+			Bundle bundle = FrameworkUtil.getBundle(this.getClass());
+			eclipsePreferences = iScopeContext.getNode(bundle.getSymbolicName());
+		}
+		return eclipsePreferences;
+	}
+	/**
+	 * Saves the bundle properties.
+	 */
+	public void saveEclipsePreferences() {
+		try {
+			this.getEclipsePreferences().flush();
+		} catch (BackingStoreException bsEx) {
+			bsEx.printStackTrace();
+		}
+	}
+	
 	
 	/**
 	 * Gets the jetty configuration keys.
@@ -302,7 +315,7 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 		return jettyConfigurationKeys;
 	}
 	/**
-	 * Gets the jetty exclude constants.
+	 * Returns the jetty configuration constants to exclude with the local handling.
 	 * @return the jetty exclude constants
 	 */
 	private List<String> getJettyExcludeConstants() {
@@ -321,10 +334,10 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 	
 	
 	/**
-	 * Return a jetty activator conform configuration dictionary.
+	 * Return the jetty configuration as dictionary.
 	 * @return the jetty activator configuration
 	 */
-	public Dictionary<String, Object> getJettyActivatorConfiguration() {
+	public Dictionary<String, Object> getConfigurationDictionary() {
 		
 		Dictionary<String, Object> jettyDictionary = new Hashtable<String, Object>();
 		List<String> keys = new ArrayList<>(this.keySet());
