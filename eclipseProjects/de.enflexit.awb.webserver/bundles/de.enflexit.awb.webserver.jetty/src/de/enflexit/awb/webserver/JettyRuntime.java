@@ -2,12 +2,11 @@ package de.enflexit.awb.webserver;
 
 import java.io.File;
 import java.util.Dictionary;
-import java.util.Hashtable;
 
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IScopeContext;
-import org.eclipse.jetty.server.Server;
+import org.eclipse.equinox.http.jetty.JettyConfigurator;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.prefs.BackingStoreException;
@@ -54,22 +53,8 @@ public class JettyRuntime {
 				jettyConfigToUse = this.getJettyConfiguration().getJettyActivatorConfiguration();
 			}
 			// --- Start the server -------------
-			
-			Server server = new Server();
-	        //do any setup on Server in here
-	        String serverName = "fooServer";
-	        Dictionary serverProps = new Hashtable();
-	        //define the unique name of the server instance
-	        serverProps.put("managedServerName", serverName);
-	        serverProps.put("jetty.http.port", "9999");
-	        //let Jetty apply some configuration files to the Server instance
-	        serverProps.put("jetty.etc.config.urls", "file:/opt/jetty/etc/jetty.xml,file:/opt/jetty/etc/jetty-selector.xml,file:/opt/jetty/etc/jetty-deployer.xml");
-	        //register as an OSGi Service for Jetty to find
-	        this.getBundle().getBundleContext().registerService(Server.class.getName(), server, serverProps);
-
-			
 			if (jettyConfigToUse!=null) {
-//				JettyConfigurator.startServer(JETTY_SERVER_ID, jettyConfigToUse);
+				JettyConfigurator.startServer(JETTY_SERVER_ID, jettyConfigToUse);
 				this.isServerExecuted = true;
 			}
 			 
@@ -85,7 +70,7 @@ public class JettyRuntime {
 	 */
 	public void stopServer() {
 		try {
-//			JettyConfigurator.stopServer(JETTY_SERVER_ID);
+			JettyConfigurator.stopServer(JETTY_SERVER_ID);
 			isServerExecuted = false;
 			
 		} catch (Exception ex) {
@@ -112,20 +97,14 @@ public class JettyRuntime {
 	}
 	
 	/**
-	 * Returns the current bundle.
-	 * @return the bundle
-	 */
-	public Bundle getBundle() {
-		return FrameworkUtil.getBundle(this.getClass());
-	}
-	/**
 	 * Returns the eclipse preferences.
 	 * @return the eclipse preferences
 	 */
 	public IEclipsePreferences getEclipsePreferences() {
 		if (eclipsePreferences==null) {
 			IScopeContext iScopeContext = ConfigurationScope.INSTANCE;
-			eclipsePreferences = iScopeContext.getNode(this.getBundle().getSymbolicName());
+			Bundle bundle = FrameworkUtil.getBundle(this.getClass());
+			eclipsePreferences = iScopeContext.getNode(bundle.getSymbolicName());
 		}
 		return eclipsePreferences;
 	}
