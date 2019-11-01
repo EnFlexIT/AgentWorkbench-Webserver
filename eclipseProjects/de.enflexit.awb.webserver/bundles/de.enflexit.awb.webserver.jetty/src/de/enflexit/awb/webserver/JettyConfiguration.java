@@ -8,7 +8,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.equinox.http.jetty.JettyConstants;
+import org.eclipse.jetty.osgi.boot.OSGiServerConstants;
 
 /**
  * The Class JettyConfiguration .
@@ -46,75 +46,77 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 			String jettyConfigKey = jettyConfigKeys.get(i);
 			JettyParameterValue<?> jettyParamValue = null;
 			
-			switch (jettyConfigKey) {
-			case JettyConstants.HTTP_ENABLED:
-				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, true), valueRangeBoolean);
-				break;
-			case JettyConstants.HTTP_PORT:
-				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 8080), null);
-				break;
-			case JettyConstants.HTTP_HOST:
-				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, "0.0.0.0"), null);
-				break;
-			case JettyConstants.HTTP_NIO:
-				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, true), valueRangeBoolean);
-				break;
-				
-			case JettyConstants.HTTP_MINTHREADS:
-				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 8), null);
-				break;				
-			case JettyConstants.HTTP_MAXTHREADS:
-				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 200), null);
-				break;
-				
-			case JettyConstants.HTTPS_ENABLED:
-				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, false), valueRangeBoolean);
-				break;
-			case JettyConstants.HTTPS_PORT:
-				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 8443), null);
-				break;
-			case JettyConstants.HTTPS_HOST:
-				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, "0.0.0.0"), null);
-				break;
-				
-			case JettyConstants.SSL_KEYSTORE:
-				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
-				break;
-			case JettyConstants.SSL_PASSWORD:
-				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
-				break;
-			case JettyConstants.SSL_KEYPASSWORD:
-				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
-				break;
-
-			case JettyConstants.SSL_NEEDCLIENTAUTH:
-				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, false), valueRangeBoolean);
-				break;
-			case JettyConstants.SSL_WANTCLIENTAUTH:
-				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, false), valueRangeBoolean);
-				break;
-				
-			case JettyConstants.SSL_PROTOCOL:
-				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
-				break;
-			case JettyConstants.SSL_ALGORITHM:
-				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
-				break;
-			case JettyConstants.SSL_KEYSTORETYPE:
-				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
-				break;
-				
-			case JettyConstants.CONTEXT_PATH:
-				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
-				break;
-			case JettyConstants.CONTEXT_SESSIONINACTIVEINTERVAL:
-				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 300), null);
-				break;
-				
-			case JettyConstants.CUSTOMIZER_CLASS:
-				// TODO
-				break;
-			}
+			//OSGiServerConstants.JETTY_BASE
+			
+//			switch (jettyConfigKey) {
+//			case JettyConstants.HTTP_ENABLED:
+//				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, true), valueRangeBoolean);
+//				break;
+//			case JettyConstants.HTTP_PORT:
+//				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 8080), null);
+//				break;
+//			case JettyConstants.HTTP_HOST:
+//				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, "0.0.0.0"), null);
+//				break;
+//			case JettyConstants.HTTP_NIO:
+//				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, true), valueRangeBoolean);
+//				break;
+//				
+//			case JettyConstants.HTTP_MINTHREADS:
+//				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 8), null);
+//				break;				
+//			case JettyConstants.HTTP_MAXTHREADS:
+//				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 200), null);
+//				break;
+//				
+//			case JettyConstants.HTTPS_ENABLED:
+//				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, false), valueRangeBoolean);
+//				break;
+//			case JettyConstants.HTTPS_PORT:
+//				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 8443), null);
+//				break;
+//			case JettyConstants.HTTPS_HOST:
+//				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, "0.0.0.0"), null);
+//				break;
+//				
+//			case JettyConstants.SSL_KEYSTORE:
+//				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
+//				break;
+//			case JettyConstants.SSL_PASSWORD:
+//				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
+//				break;
+//			case JettyConstants.SSL_KEYPASSWORD:
+//				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
+//				break;
+//
+//			case JettyConstants.SSL_NEEDCLIENTAUTH:
+//				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, false), valueRangeBoolean);
+//				break;
+//			case JettyConstants.SSL_WANTCLIENTAUTH:
+//				jettyParamValue = new JettyParameterValue<Boolean>(jettyConfigKey, bundlePrefs.getBoolean(jettyConfigKey, false), valueRangeBoolean);
+//				break;
+//				
+//			case JettyConstants.SSL_PROTOCOL:
+//				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
+//				break;
+//			case JettyConstants.SSL_ALGORITHM:
+//				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
+//				break;
+//			case JettyConstants.SSL_KEYSTORETYPE:
+//				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
+//				break;
+//				
+//			case JettyConstants.CONTEXT_PATH:
+//				jettyParamValue = new JettyParameterValue<String>(jettyConfigKey, bundlePrefs.get(jettyConfigKey, ""), null);
+//				break;
+//			case JettyConstants.CONTEXT_SESSIONINACTIVEINTERVAL:
+//				jettyParamValue = new JettyParameterValue<Integer>(jettyConfigKey, bundlePrefs.getInt(jettyConfigKey, 300), null);
+//				break;
+//				
+//			case JettyConstants.CUSTOMIZER_CLASS:
+//				// TODO
+//				break;
+//			}
 
 			// --- save in local hash table ---------------
 			if (jettyParamValue==null) continue;
@@ -143,75 +145,75 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 
 			if (jettyConfigValue==null) continue;
 			
-			switch (jettyConfigKey) {
-			case JettyConstants.HTTP_ENABLED:
-				this.putBoolean(jettyConfigKey, jettyConfigValue);
-				break;
-			case JettyConstants.HTTP_PORT:
-				this.putInt(jettyConfigKey, jettyConfigValue);
-				break;
-			case JettyConstants.HTTP_HOST:
-				this.putString(jettyConfigKey, jettyConfigValue);
-				break;
-			case JettyConstants.HTTP_NIO:
-				this.putBoolean(jettyConfigKey, jettyConfigValue);
-				break;
-				
-			case JettyConstants.HTTP_MINTHREADS:
-				this.putInt(jettyConfigKey, jettyConfigValue);
-				break;				
-			case JettyConstants.HTTP_MAXTHREADS:
-				this.putInt(jettyConfigKey, jettyConfigValue);
-				break;
-				
-			case JettyConstants.HTTPS_ENABLED:
-				this.putBoolean(jettyConfigKey, jettyConfigValue);
-				break;
-			case JettyConstants.HTTPS_PORT:
-				this.putInt(jettyConfigKey, jettyConfigValue);
-				break;
-			case JettyConstants.HTTPS_HOST:
-				this.putString(jettyConfigKey, jettyConfigValue);
-				break;
-				
-			case JettyConstants.SSL_KEYSTORE:
-				this.putString(jettyConfigKey, jettyConfigValue);
-				break;
-			case JettyConstants.SSL_PASSWORD:
-				this.putString(jettyConfigKey, jettyConfigValue);
-				break;
-			case JettyConstants.SSL_KEYPASSWORD:
-				this.putString(jettyConfigKey, jettyConfigValue);
-				break;
-
-			case JettyConstants.SSL_NEEDCLIENTAUTH:
-				this.putBoolean(jettyConfigKey, jettyConfigValue);
-				break;
-			case JettyConstants.SSL_WANTCLIENTAUTH:
-				this.putBoolean(jettyConfigKey, jettyConfigValue);
-				break;
-				
-			case JettyConstants.SSL_PROTOCOL:
-				this.putString(jettyConfigKey, jettyConfigValue);
-				break;
-			case JettyConstants.SSL_ALGORITHM:
-				this.putString(jettyConfigKey, jettyConfigValue);
-				break;
-			case JettyConstants.SSL_KEYSTORETYPE:
-				this.putString(jettyConfigKey, jettyConfigValue);
-				break;
-				
-			case JettyConstants.CONTEXT_PATH:
-				this.putString(jettyConfigKey, jettyConfigValue);
-				break;
-			case JettyConstants.CONTEXT_SESSIONINACTIVEINTERVAL:
-				this.putInt(jettyConfigKey, jettyConfigValue);
-				break;
-				
-			case JettyConstants.CUSTOMIZER_CLASS:
-				// TODO
-				break;
-			}
+//			switch (jettyConfigKey) {
+//			case JettyConstants.HTTP_ENABLED:
+//				this.putBoolean(jettyConfigKey, jettyConfigValue);
+//				break;
+//			case JettyConstants.HTTP_PORT:
+//				this.putInt(jettyConfigKey, jettyConfigValue);
+//				break;
+//			case JettyConstants.HTTP_HOST:
+//				this.putString(jettyConfigKey, jettyConfigValue);
+//				break;
+//			case JettyConstants.HTTP_NIO:
+//				this.putBoolean(jettyConfigKey, jettyConfigValue);
+//				break;
+//				
+//			case JettyConstants.HTTP_MINTHREADS:
+//				this.putInt(jettyConfigKey, jettyConfigValue);
+//				break;				
+//			case JettyConstants.HTTP_MAXTHREADS:
+//				this.putInt(jettyConfigKey, jettyConfigValue);
+//				break;
+//				
+//			case JettyConstants.HTTPS_ENABLED:
+//				this.putBoolean(jettyConfigKey, jettyConfigValue);
+//				break;
+//			case JettyConstants.HTTPS_PORT:
+//				this.putInt(jettyConfigKey, jettyConfigValue);
+//				break;
+//			case JettyConstants.HTTPS_HOST:
+//				this.putString(jettyConfigKey, jettyConfigValue);
+//				break;
+//				
+//			case JettyConstants.SSL_KEYSTORE:
+//				this.putString(jettyConfigKey, jettyConfigValue);
+//				break;
+//			case JettyConstants.SSL_PASSWORD:
+//				this.putString(jettyConfigKey, jettyConfigValue);
+//				break;
+//			case JettyConstants.SSL_KEYPASSWORD:
+//				this.putString(jettyConfigKey, jettyConfigValue);
+//				break;
+//
+//			case JettyConstants.SSL_NEEDCLIENTAUTH:
+//				this.putBoolean(jettyConfigKey, jettyConfigValue);
+//				break;
+//			case JettyConstants.SSL_WANTCLIENTAUTH:
+//				this.putBoolean(jettyConfigKey, jettyConfigValue);
+//				break;
+//				
+//			case JettyConstants.SSL_PROTOCOL:
+//				this.putString(jettyConfigKey, jettyConfigValue);
+//				break;
+//			case JettyConstants.SSL_ALGORITHM:
+//				this.putString(jettyConfigKey, jettyConfigValue);
+//				break;
+//			case JettyConstants.SSL_KEYSTORETYPE:
+//				this.putString(jettyConfigKey, jettyConfigValue);
+//				break;
+//				
+//			case JettyConstants.CONTEXT_PATH:
+//				this.putString(jettyConfigKey, jettyConfigValue);
+//				break;
+//			case JettyConstants.CONTEXT_SESSIONINACTIVEINTERVAL:
+//				this.putInt(jettyConfigKey, jettyConfigValue);
+//				break;
+//				
+//			case JettyConstants.CUSTOMIZER_CLASS:
+//				// TODO
+//				break;
+//			}
 		} // end for 
 	
 		// --- Save the overall eclipse preferences -------
@@ -280,7 +282,8 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 		if (jettyConfigurationKeys==null) {
 			jettyConfigurationKeys = new ArrayList<>();
 			
-			Field[] fields = JettyConstants.class.getDeclaredFields();
+//			Field[] fields = JettyConstants.class.getDeclaredFields();
+			Field[] fields = OSGiServerConstants.class.getDeclaredFields();
 			for (int i = 0; i < fields.length; i++) {
 				
 				Field field = fields[i];
