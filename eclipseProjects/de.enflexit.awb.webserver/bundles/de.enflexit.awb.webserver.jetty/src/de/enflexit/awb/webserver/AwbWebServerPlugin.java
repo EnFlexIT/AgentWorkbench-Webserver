@@ -14,7 +14,7 @@ import de.enflexit.awb.webserver.config.ui.JettyControlPanel;
  */
 public class AwbWebServerPlugin extends PlugIn {
 
-	private static JettyRuntime jettyRuntime;
+	private static JettyManager jettyManager;
 	
 	/**
 	 * Instantiates the AWB web server plugin.
@@ -37,7 +37,7 @@ public class AwbWebServerPlugin extends PlugIn {
 	 */
 	@Override
 	public void onPlugIn() {
-		AwbWebServerPlugin.getJettyRuntime();
+		AwbWebServerPlugin.getJettyManager();
 		this.addJettyTab();
 		super.onPlugIn();
 	}
@@ -47,8 +47,8 @@ public class AwbWebServerPlugin extends PlugIn {
 	 */
 	@Override
 	public void onPlugOut() {
-		AwbWebServerPlugin.getJettyRuntime().stopServer();
-		AwbWebServerPlugin.setJettyRuntime(null);
+		AwbWebServerPlugin.getJettyManager().stopServer();
+		AwbWebServerPlugin.setJettyManager(null);
 		super.onPlugOut();
 	}
 	
@@ -67,25 +67,26 @@ public class AwbWebServerPlugin extends PlugIn {
 	 */
 	@Override
 	protected void onProjectSaved(boolean isExcludeSetup) {
-		AwbWebServerPlugin.getJettyRuntime().getJettyConfiguration().save();		
+		AwbWebServerPlugin.getJettyManager().getJettyConfiguration().save();		
 	}
 	
 	
 	/**
-	 * Return the current {@link JettyRuntime} instance.
+	 * Return the current {@link JettyManager} instance.
 	 * @return the jetty runtime
 	 */
-	public static JettyRuntime getJettyRuntime() {
-		if (jettyRuntime==null) {
-			jettyRuntime = new JettyRuntime();
+	public static JettyManager getJettyManager() {
+		if (jettyManager==null) {
+			jettyManager = new JettyManager();
 		}
-		return jettyRuntime;
+		return jettyManager;
 	}
 	/**
-	 * Sets the jetty runtime instance.
-	 * @param jettyRuntime the new jetty runtime
+	 * Sets the JettyManager instance.
+	 * @param jettyManager the new JettyManager
 	 */
-	private static void setJettyRuntime(JettyRuntime jettyRuntime) {
-		AwbWebServerPlugin.jettyRuntime = jettyRuntime;
+	private static void setJettyManager(JettyManager jettyManager) {
+		AwbWebServerPlugin.jettyManager = jettyManager;
 	}
+	
 }

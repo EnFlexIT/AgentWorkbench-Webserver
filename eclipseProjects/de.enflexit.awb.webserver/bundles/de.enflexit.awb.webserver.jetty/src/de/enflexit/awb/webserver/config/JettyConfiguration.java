@@ -3,7 +3,6 @@ package de.enflexit.awb.webserver.config;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -149,67 +148,67 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 			
 			switch (jettyConfigKey) {
 			case JettyConstants.HTTP_ENABLED:
-				this.putBoolean(jettyConfigKey, jettyConfigValue);
+				this.putBooleanToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 			case JettyConstants.HTTP_PORT:
-				this.putInt(jettyConfigKey, jettyConfigValue);
+				this.putIntToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 			case JettyConstants.HTTP_HOST:
-				this.putString(jettyConfigKey, jettyConfigValue);
+				this.putStringToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 			case JettyConstants.HTTP_NIO:
-				this.putBoolean(jettyConfigKey, jettyConfigValue);
+				this.putBooleanToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 				
 			case JettyConstants.HTTP_MINTHREADS:
-				this.putInt(jettyConfigKey, jettyConfigValue);
+				this.putIntToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;				
 			case JettyConstants.HTTP_MAXTHREADS:
-				this.putInt(jettyConfigKey, jettyConfigValue);
+				this.putIntToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 				
 			case JettyConstants.HTTPS_ENABLED:
-				this.putBoolean(jettyConfigKey, jettyConfigValue);
+				this.putBooleanToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 			case JettyConstants.HTTPS_PORT:
-				this.putInt(jettyConfigKey, jettyConfigValue);
+				this.putIntToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 			case JettyConstants.HTTPS_HOST:
-				this.putString(jettyConfigKey, jettyConfigValue);
+				this.putStringToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 				
 			case JettyConstants.SSL_KEYSTORE:
-				this.putString(jettyConfigKey, jettyConfigValue);
+				this.putStringToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 			case JettyConstants.SSL_PASSWORD:
-				this.putString(jettyConfigKey, jettyConfigValue);
+				this.putStringToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 			case JettyConstants.SSL_KEYPASSWORD:
-				this.putString(jettyConfigKey, jettyConfigValue);
+				this.putStringToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 
 			case JettyConstants.SSL_NEEDCLIENTAUTH:
-				this.putBoolean(jettyConfigKey, jettyConfigValue);
+				this.putBooleanToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 			case JettyConstants.SSL_WANTCLIENTAUTH:
-				this.putBoolean(jettyConfigKey, jettyConfigValue);
+				this.putBooleanToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 				
 			case JettyConstants.SSL_PROTOCOL:
-				this.putString(jettyConfigKey, jettyConfigValue);
+				this.putStringToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 			case JettyConstants.SSL_ALGORITHM:
-				this.putString(jettyConfigKey, jettyConfigValue);
+				this.putStringToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 			case JettyConstants.SSL_KEYSTORETYPE:
-				this.putString(jettyConfigKey, jettyConfigValue);
+				this.putStringToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 				
 			case JettyConstants.CONTEXT_PATH:
-				this.putString(jettyConfigKey, jettyConfigValue);
+				this.putStringToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 			case JettyConstants.CONTEXT_SESSIONINACTIVEINTERVAL:
-				this.putInt(jettyConfigKey, jettyConfigValue);
+				this.putIntToBundlePreferences(jettyConfigKey, jettyConfigValue);
 				break;
 				
 			case JettyConstants.CUSTOMIZER_CLASS:
@@ -224,42 +223,60 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 	
 	
 	/**
-	 * Puts a string value to the bundle preferences.
+	 * Returns the configured string that can be found in the local instance.
 	 *
-	 * @param jettyConfigKey the jetty configuration key
-	 * @param value the value
+	 * @param configKey the configuration key
+	 * @param defaultValue the default value
+	 * @return the configured or default string 
 	 */
-	private void putString(String jettyConfigKey, Object value) {
-		if (value!=null) {
-			if (value instanceof String) {
-				this.getEclipsePreferences().put(jettyConfigKey, (String)value);
-			} else {
-				this.getEclipsePreferences().put(jettyConfigKey, value.toString());
-			}
+	public String getConfiguredString(String configKey, String defaultValue) {
+		String value = null;
+		Object valueObject = this.get(configKey)!=null ? this.get(configKey).getValue() : null;
+		if (valueObject instanceof String) {
+			value = (String) valueObject;
 		}
+		if (value==null) {
+			value = defaultValue;
+		}
+		return value;
 	}
 	/**
-	 * Puts a Integer value to the bundle preferences.
+	 * Returns the configured boolean that can be found in the local instance.
 	 *
-	 * @param jettyConfigKey the jetty configuration key
-	 * @param value the value
+	 * @param configKey the configuration key
+	 * @param defaultValue the default value
+	 * @return the configured or default boolean value 
 	 */
-	private void putInt(String jettyConfigKey, Object value) {
-		if (value instanceof Integer) {
-			this.getEclipsePreferences().putInt(jettyConfigKey, (int)value);
+	public boolean getConfiguredBoolean(String configKey, boolean defaultValue) {
+		Boolean value = null;
+		Object valueObject = this.get(configKey)!=null ? this.get(configKey).getValue() : null;
+		if (valueObject instanceof Boolean) {
+			value = (Boolean) valueObject;
 		}
+		if (value==null) {
+			value = defaultValue;
+		}
+		return value;
 	}
 	/**
-	 * Puts a Boolean value to the bundle preferences.
+	 * Returns the configured Integer that can be found in the local instance.
 	 *
-	 * @param jettyConfigKey the jetty configuration key
-	 * @param value the value
+	 * @param configKey the configuration key
+	 * @param defaultValue the default value
+	 * @return the configured or default int value 
 	 */
-	private void putBoolean(String jettyConfigKey, Object value) {
-		if (value instanceof Boolean) {
-			this.getEclipsePreferences().putBoolean(jettyConfigKey, (boolean)value);
+	public int getConfiguredInt(String configKey, int defaultValue) {
+		Integer value = null;
+		Object valueObject = this.get(configKey)!=null ? this.get(configKey).getValue() : null;
+		if (valueObject instanceof Integer) {
+			value = (Integer) valueObject;
 		}
+		if (value==null) {
+			value = defaultValue;
+		}
+		return value;
 	}
+	
 
 	/**
 	 * Returns the eclipse preferences.
@@ -281,6 +298,44 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 			this.getEclipsePreferences().flush();
 		} catch (BackingStoreException bsEx) {
 			bsEx.printStackTrace();
+		}
+	}
+
+	/**
+	 * Puts a string value to the bundle preferences.
+	 *
+	 * @param jettyConfigKey the jetty configuration key
+	 * @param value the value
+	 */
+	private void putStringToBundlePreferences(String jettyConfigKey, Object value) {
+		if (value!=null) {
+			if (value instanceof String) {
+				this.getEclipsePreferences().put(jettyConfigKey, (String)value);
+			} else {
+				this.getEclipsePreferences().put(jettyConfigKey, value.toString());
+			}
+		}
+	}
+	/**
+	 * Puts a Integer value to the bundle preferences.
+	 *
+	 * @param jettyConfigKey the jetty configuration key
+	 * @param value the value
+	 */
+	private void putIntToBundlePreferences(String jettyConfigKey, Object value) {
+		if (value instanceof Integer) {
+			this.getEclipsePreferences().putInt(jettyConfigKey, (int)value);
+		}
+	}
+	/**
+	 * Puts a Boolean value to the bundle preferences.
+	 *
+	 * @param jettyConfigKey the jetty configuration key
+	 * @param value the value
+	 */
+	private void putBooleanToBundlePreferences(String jettyConfigKey, Object value) {
+		if (value instanceof Boolean) {
+			this.getEclipsePreferences().putBoolean(jettyConfigKey, (boolean)value);
 		}
 	}
 	
@@ -330,23 +385,6 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 			jettyExcludeConstants.add("PROPERTY_PREFIX");
 		}
 		return jettyExcludeConstants;
-	}
-	
-	
-	/**
-	 * Return the jetty configuration as dictionary.
-	 * @return the jetty activator configuration
-	 */
-	public Dictionary<String, Object> getConfigurationDictionary() {
-		
-		Dictionary<String, Object> jettyDictionary = new Hashtable<String, Object>();
-		List<String> keys = new ArrayList<>(this.keySet());
-		for (int i = 0; i < keys.size(); i++) {
-			String key = keys.get(i);
-			Object value = this.get(key).getValue();
-			jettyDictionary.put(key, value);
-		}
-		return jettyDictionary;
 	}
 	
 }

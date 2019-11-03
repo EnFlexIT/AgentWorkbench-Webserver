@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 
 import agentgui.core.project.Project;
 import de.enflexit.awb.webserver.AwbWebServerPlugin;
-import de.enflexit.awb.webserver.JettyRuntime;
+import de.enflexit.awb.webserver.JettyManager;
 import de.enflexit.awb.webserver.config.JettyConfiguration;
 import de.enflexit.awb.webserver.config.JettyParameterValue;
 
@@ -212,11 +212,11 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 	}
 	
 	/**
-	 * Returns the current {@link JettyRuntime} instance.
+	 * Returns the current {@link JettyManager} instance.
 	 * @return the jetty runtime
 	 */
-	private JettyRuntime getJettyRuntime() {
-		return AwbWebServerPlugin.getJettyRuntime();
+	private JettyManager getJettyManager() {
+		return AwbWebServerPlugin.getJettyManager();
 	}
 	
 	/**
@@ -224,17 +224,17 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 	 */
 	private void loadSettingsFromPreferences() {
 		
-		JettyRuntime jRun = this.getJettyRuntime();
-		if (jRun!=null) {
+		JettyManager jManager = this.getJettyManager();
+		if (jManager!=null) {
 			// --- Load the eclipse preferences ---------------------
-			IEclipsePreferences prefs = jRun.getJettyConfiguration().getEclipsePreferences();
+			IEclipsePreferences prefs = jManager.getJettyConfiguration().getEclipsePreferences();
 			
 			// --- Get start with JADE parameter --------------------
-			boolean isStartWithJade = prefs.getBoolean(JettyRuntime.JETTY_CONFIG_START_WITH_JADE, false);
+			boolean isStartWithJade = prefs.getBoolean(JettyManager.JETTY_CONFIG_START_WITH_JADE, false);
 			this.getJCheckBoxStartWithJade().setSelected(isStartWithJade);
 
 			// --- Load the jetty configuration to the table --------
-			JettyConfiguration jConfig = jRun.getJettyConfiguration();
+			JettyConfiguration jConfig = jManager.getJettyConfiguration();
 			for (int i = 0; i < jConfig.getJettyConfigurationKeys().size(); i++) {
 				String jettyKey = jConfig.getJettyConfigurationKeys().get(i);
 				this.addTableRow(jConfig.get(jettyKey));
@@ -248,32 +248,27 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 
-		JettyRuntime jRun = this.getJettyRuntime();
-		if (jRun!=null) {
+		JettyManager jManager = this.getJettyManager();
+		if (jManager!=null) {
 			
 			if (ae.getSource()==this.getJButtonStartJetty()) {
 				// --- Start or Stop Jetty ---------------- 
-				if (jRun.isServerExecuted()==false) {
+				if (jManager.getServer()==null || jManager.getServer().isRunning()==false) {
 					// --- Start Jetty --------------------
-					jRun.startServer();
-					if (jRun.isServerExecuted()==true) {
-						this.getJButtonStartJetty().setText("Stop Jetty");
-						this.getJButtonStartJetty().setForeground(new Color(153, 0, 0));
-					}
+					jManager.startServer();
+					this.getJButtonStartJetty().setText("Stop Jetty");
+					this.getJButtonStartJetty().setForeground(new Color(153, 0, 0));
 					
 				} else {
 					// --- Stop Jetty ---------------------
-					jRun.stopServer();
-					if (jRun.isServerExecuted()==false) {
-						this.getJButtonStartJetty().setText("Start Jetty");
-						this.getJButtonStartJetty().setForeground(new Color(0, 153, 0));
-					}
-					
+					jManager.stopServer();
+					this.getJButtonStartJetty().setText("Start Jetty");
+					this.getJButtonStartJetty().setForeground(new Color(0, 153, 0));
 				}
 				
 			} else if (ae.getSource()==this.getJCheckBoxStartWithJade()) {
 				// --- Set Configuration ------------------
-				jRun.getJettyConfiguration().getEclipsePreferences().putBoolean(JettyRuntime.JETTY_CONFIG_START_WITH_JADE, this.getJCheckBoxStartWithJade().isSelected());
+				jManager.getJettyConfiguration().getEclipsePreferences().putBoolean(JettyManager.JETTY_CONFIG_START_WITH_JADE, this.getJCheckBoxStartWithJade().isSelected());
 				this.setProjectUnsaved();
 				
 			}
