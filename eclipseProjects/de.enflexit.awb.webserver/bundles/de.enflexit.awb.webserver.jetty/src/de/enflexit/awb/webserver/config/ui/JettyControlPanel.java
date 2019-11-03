@@ -1,6 +1,7 @@
 package de.enflexit.awb.webserver.config.ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,15 +17,19 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.jetty.util.component.LifeCycle;
+import org.eclipse.jetty.util.component.LifeCycle.Listener;
 
 import agentgui.core.project.Project;
 import de.enflexit.awb.webserver.AwbWebServerPlugin;
 import de.enflexit.awb.webserver.JettyManager;
 import de.enflexit.awb.webserver.config.JettyConfiguration;
+import de.enflexit.awb.webserver.config.JettyConfiguration.JettyLifeCycleState;
 import de.enflexit.awb.webserver.config.JettyParameterValue;
 
 /**
@@ -32,7 +37,7 @@ import de.enflexit.awb.webserver.config.JettyParameterValue;
  * 
  * @author Christian Derksen - DAWIS - ICB - University of Duisburg - Essen
  */
-public class JettyControlPanel extends JPanel implements ActionListener {
+public class JettyControlPanel extends JPanel implements ActionListener, Listener {
 
 	private static final long serialVersionUID = 5025152245197566098L;
 
@@ -168,7 +173,7 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 			gbc_jSeparatorControl.fill = GridBagConstraints.HORIZONTAL;
 			gbc_jSeparatorControl.gridx = 0;
 			gbc_jSeparatorControl.gridy = 1;
-			jPanelControl.add(getJSeparator02(), gbc_jSeparatorControl);
+			jPanelControl.add(getJSeparatorControl(), gbc_jSeparatorControl);
 			GridBagConstraints gbc_jCheckBoxStartWithJade = new GridBagConstraints();
 			gbc_jCheckBoxStartWithJade.insets = new Insets(5, 5, 10, 5);
 			gbc_jCheckBoxStartWithJade.anchor = GridBagConstraints.WEST;
@@ -183,11 +188,28 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 			jButtonStartJetty = new JButton("Start Jetty");
 			jButtonStartJetty.setFont(new Font("Dialog", Font.BOLD, 12));
 			jButtonStartJetty.setForeground(new Color(0, 153, 0));
+			jButtonStartJetty.setPreferredSize(new Dimension(140, 28));
 			jButtonStartJetty.addActionListener(this);
 		}
 		return jButtonStartJetty;
 	}
-	private JSeparator getJSeparator02() {
+	/**
+	 * Sets the caption and the fore color of the jetty button.
+	 *
+	 * @param buttonText the button text
+	 * @param foregroundColor the foreground color
+	 */
+	private void setJettyButton(final String buttonText, final JettyLifeCycleState lifeCycle) {
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				JettyControlPanel.this.getJButtonStartJetty().setText(buttonText);
+				JettyControlPanel.this.getJButtonStartJetty().setForeground(lifeCycle.getColor());
+			}
+		});
+	}
+	
+	private JSeparator getJSeparatorControl() {
 		if (jSeparatorControl==null) {
 			jSeparatorControl = new JSeparator();
 		}
@@ -216,7 +238,9 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 	 * @return the jetty runtime
 	 */
 	private JettyManager getJettyManager() {
-		return AwbWebServerPlugin.getJettyManager();
+		JettyManager jManager = AwbWebServerPlugin.getJettyManager();
+		jManager.addLifeCycleListener(this);
+		return jManager;
 	}
 	
 	/**
@@ -253,26 +277,62 @@ public class JettyControlPanel extends JPanel implements ActionListener {
 			
 			if (ae.getSource()==this.getJButtonStartJetty()) {
 				// --- Start or Stop Jetty ---------------- 
-				if (jManager.getServer()==null || jManager.getServer().isRunning()==false) {
+				if (jManager.getServer()==null || jManager.getServer().isStopped()==true) {
 					// --- Start Jetty --------------------
 					jManager.startServer();
-					this.getJButtonStartJetty().setText("Stop Jetty");
-					this.getJButtonStartJetty().setForeground(new Color(153, 0, 0));
-					
-				} else {
+				} else if (jManager.getServer().isStarting()==true || jManager.getServer().isStopping()==true) {
+					// --- Nothing to do here -------------
+				} else if (jManager.getServer().isRunning()==true) {
 					// --- Stop Jetty ---------------------
 					jManager.stopServer();
-					this.getJButtonStartJetty().setText("Start Jetty");
-					this.getJButtonStartJetty().setForeground(new Color(0, 153, 0));
 				}
 				
 			} else if (ae.getSource()==this.getJCheckBoxStartWithJade()) {
 				// --- Set Configuration ------------------
 				jManager.getJettyConfiguration().getEclipsePreferences().putBoolean(JettyManager.JETTY_CONFIG_START_WITH_JADE, this.getJCheckBoxStartWithJade().isSelected());
 				this.setProjectUnsaved();
-				
 			}
 		}
+	}
+	
+
+	// ----------------------------------------------------------------------------------
+	// --- From here, the life cycle listener methods for the server are located -------- 
+	// ----------------------------------------------------------------------------------
+	/* (non-Javadoc)
+	 * @see org.eclipse.jetty.util.component.LifeCycle.Listener#lifeCycleStarting(org.eclipse.jetty.util.component.LifeCycle)
+	 */
+	@Override
+	public void lifeCycleStarting(LifeCycle event) {
+		this.setJettyButton("Starting Jetty ...", JettyLifeCycleState.Starting);
+	}
+	/* (non-Javadoc)
+	 * @see org.eclipse.jetty.util.component.LifeCycle.Listener#lifeCycleStarted(org.eclipse.jetty.util.component.LifeCycle)
+	 */
+	@Override
+	public void lifeCycleStarted(LifeCycle event) {
+		this.setJettyButton("Stop Jetty", JettyLifeCycleState.Started);
+	}
+	/* (non-Javadoc)
+	 * @see org.eclipse.jetty.util.component.LifeCycle.Listener#lifeCycleStopping(org.eclipse.jetty.util.component.LifeCycle)
+	 */
+	@Override
+	public void lifeCycleStopping(LifeCycle event) {
+		this.setJettyButton("Stopping Jetty ...", JettyLifeCycleState.Stopping);
+	}
+	/* (non-Javadoc)
+	 * @see org.eclipse.jetty.util.component.LifeCycle.Listener#lifeCycleStopped(org.eclipse.jetty.util.component.LifeCycle)
+	 */
+	@Override
+	public void lifeCycleStopped(LifeCycle event) {
+		this.setJettyButton("Start Jetty", JettyLifeCycleState.Stopped);
+	}
+	/* (non-Javadoc)
+	 * @see org.eclipse.jetty.util.component.LifeCycle.Listener#lifeCycleFailure(org.eclipse.jetty.util.component.LifeCycle, java.lang.Throwable)
+	 */
+	@Override
+	public void lifeCycleFailure(LifeCycle event, Throwable cause) {
+		
 	}
 	
 }

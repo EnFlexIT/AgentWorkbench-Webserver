@@ -1,5 +1,6 @@
 package de.enflexit.awb.webserver.config;
 
+import java.awt.Color;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
- * The Class JettyConfiguration .
+ * The Class JettyConfiguration.
  * 
  * @author Christian Derksen - DAWIS - ICB - University of Duisburg - Essen
  */
@@ -23,7 +24,27 @@ public class JettyConfiguration extends Hashtable<String, JettyParameterValue<?>
 
 	private static final long serialVersionUID = 1098203559452315494L;
 
+	public enum JettyLifeCycleState {
+		Stopped(new Color(0, 153, 0)),
+		Stopping(new Color(153, 153, 0)),
+		Started(new Color(153, 0, 0)),
+		Starting(new Color(153, 153, 0));
+		
+		private final Color color;
+		private JettyLifeCycleState(final Color color) {
+			this.color = color;
+		}
+		/**
+		 * Returns the color for the current Jetty state.
+		 * @return the color
+		 */
+		public Color getColor() {
+			return this.color;
+		}
+	}
+	
 	private static final Boolean[] valueRangeBoolean = new Boolean[] {true, false};
+
 	
 	private List<String> jettyConfigurationKeys;
 	private List<String> jettyExcludeConstants;
