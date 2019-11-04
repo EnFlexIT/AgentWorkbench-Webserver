@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target includeMode="feature" name="de.enflexit.awb.webserver.target" sequenceNumber="70">
+	<locations>
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="http://download.eclipse.org/rt/rap/3.10/e4"/>
+			<unit id="org.eclipse.rap.e4.equinox.target.feature.feature.group" version="0.0.0"/>
+			<unit id="org.eclipse.rap.e4.examples.feature.feature.group" version="0.0.0"/>
+			<unit id="org.eclipse.rap.e4.feature.feature.group" version="0.0.0"/>
+			<unit id="org.eclipse.rap.e4.sdk.feature.feature.group" version="0.0.0"/>
+		</location>
+	</locations>
+</target>

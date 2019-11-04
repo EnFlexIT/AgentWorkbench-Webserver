@@ -212,7 +212,7 @@ public class JettyManager {
 			
 			
 			// --- Try to add *.war to the server -----------------------------
-			//this.addWebApp("D:/async-rest.war", "/async");
+			this.addWebApp("D:/async-rest.war", "/async");
 			//this.addWebApp("D:/enflexit-licensor.war", "/eom");
 			//this.addWebApp("D:/javadoc-proxy.war", "/jdoc");
 			this.addWebApp("D:/rapDemo.war", "/");
@@ -221,7 +221,7 @@ public class JettyManager {
 			// --- Start the server -------------------------------------------
 			this.server.setHandler(this.getHandlerList());
 			this.server.start();
-			this.server.join();
+			//this.server.join();
 			 
 		} catch (Exception ex) {
 			ex.printStackTrace();
