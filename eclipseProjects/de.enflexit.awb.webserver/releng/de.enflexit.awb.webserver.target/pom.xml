@@ -16,8 +16,11 @@
 
 	<properties>
 		<jetty-directory>jettyJars</jetty-directory>
+		<jetty-version>9.4.27.v20200227</jetty-version>
+		<!--  
 		<jetty-version>9.4.24.v20191120</jetty-version>
-		<!--  <jetty-version>9.4.20.v20190813</jetty-version> -->
+		<jetty-version>9.4.20.v20190813</jetty-version> 
+		-->
 	</properties>
 
 	<build>
