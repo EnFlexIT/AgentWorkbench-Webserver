@@ -1,4 +1,4 @@
-# Execution of the projects pom.xml 
+# Jetty OSGI for Target Platforms / Execution of the projects pom.xml 
 
 ### Problem Description
 Integrating Jetty in an Eclipse RCP / OSGI environment (or application) seems to be not trivial. Simply integrating the 
@@ -9,12 +9,24 @@ in your target platform definition results to errors that say that required pack
 
 The reason seems to be that only the Jetty bundles are provided but not the required pure java *.jar files like **javax.annotation-api_1.2.0.jar** 
 and others (?) or that they are available but not as OSGI bundles. However, to use Jetty in your RCP / OSGI application, it would be preferable 
-to have all Jetty bundles as a single feature in your target platform.
+to have all Jetty parts as OSGI bundles concluded in a single feature for the usage within a target platform definition in Eclipse.
 
 
-### Things tried
+### Things we tried
+Searching Google, Stack Overflow and the Eclipse Community Forum. Asking in the issue section of the [jetty.project](https://github.com/eclipse/jetty.project)
+at GitHub and finally, giving up the search for several month. 
+
+In the meantime we used the Jetty bundles that are provides by the current release in the Eclipse repository (e.g. https://download.eclipse.org/releases/2020-03/), but
+here not all Jetty bundles are available, such as the XML, WebApp bundles and other. Those bundles we downloaded from the maven repository or used the bundles
+that are provided with the Jetty distribution (see <https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/>).      
+Unfortunately, we end up in an unsightly mixture of repository files and local files that were manually copied to a project directory.
+This directory again were used within the target platform definition, which always resulted to errors when starting Eclipse and resolving the target platform bundles - ugly!   
+
+### The current apporach 
 
 
+### Execution of the projects pom 
+ 
  
 
 The projects local pom-file basically serves as an **example** file for later use in different projects and 
