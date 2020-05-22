@@ -1,4 +1,4 @@
-# Jetty OSGI for Target Platforms / Execution of the projects pom.xml 
+# Jetty OSGI - Feature for Target Platforms 
 
 ### Problem Description
 Integrating Jetty in an Eclipse RCP / OSGI environment (or application) seems to be not trivial. Simply integrating the 
