@@ -54,7 +54,7 @@ type **clean p2:site** into the *Goals* section.
 
 
 
-**2. To build the repository locally and upload the repository, run Maven by uisng ** 
+**2. To build the repository locally and upload the repository, run Maven by uisng** 
 
 ```
 mvn clean p2:site install -P p2DeployClean
