@@ -23,6 +23,10 @@
 		<unit id="org.slf4j.apis.jcl.source" version="0.0.0"/>
 		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository"/>
 	</location>
-	<location path="${project_loc}/jettyJars" type="Directory"/>
+	<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<unit id="org.eclipse.jetty.osgi.feature.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.jetty.osgi.feature.source.feature.group" version="0.0.0"/>
+		<repository location="https://p2.enflex.it/awbWebserver/jetty/9.4.27.v20200227"/>
+	</location>
 </locations>
 </target>
