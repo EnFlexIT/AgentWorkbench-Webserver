@@ -11,7 +11,10 @@
 	<packaging>pom</packaging>
 
 	<properties>
+		<jettyGroupID>org.eclipse.jetty</jettyGroupID>
+		<jettyVersion>9.4.27.v20200227</jettyVersion>
 		<mortbayJasperVersion>8.5.49</mortbayJasperVersion>
+		
 		<orbitVersion>R20191115185527</orbitVersion>
 		
 		<tychoVersion>1.3.0</tychoVersion>
@@ -53,34 +56,99 @@
 							    	<source>true</source>
 							    </artifact>
 							</p2>
+							
+							<categoryFileURL>category.xml</categoryFileURL>
+							<featureDefinitions>
+								<feature>
+									<id>org.eclipse.jetty.osgi.feature</id>
+									<version>${jettyVersion}</version>
+									<label>Jetty OSGI - Feature</label>
+									<providerName>EnFlex.IT</providerName>
+									<copyright>EnFlex.IT</copyright>
+									<description>Summary of the Jetty OSGI bundle as feature</description>
+									<license>Apache License 2.0, Eclipse Public License 1.0</license>
+									<generateSourceFeature>true</generateSourceFeature>
 									
-							<artifacts>
-								
-								<!-- SPI Fly Bundles -->
-								<artifact><id>org.apache.aries.spifly:org.apache.aries.spifly.dynamic.bundle:1.2</id><source>true</source></artifact>
-								
-								<!-- Jars Required for Annotations -->
-								<artifact><id>org.ow2.asm:asm:7.2</id><source>true</source></artifact>
-								<artifact><id>org.ow2.asm:asm-commons:7.2</id><source>true</source></artifact>
-								<artifact><id>org.ow2.asm:asm-tree:7.2</id><source>true</source></artifact>
-								<artifact><id>javax.annotation:javax.annotation-api:1.3</id><source>true</source></artifact>
-								
-								<artifact><id>org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1</id><source>true</source></artifact>
-								<artifact><id>org.eclipse.jetty.orbit:javax.mail.glassfish:1.4.1.v201005082020</id><source>true</source></artifact>
-								
-								<!-- From here jars for using JSP -->
-								<artifact><id>org.mortbay.jasper:apache-el:${mortbayJasperVersion}</id><source>true</source></artifact>
-								<artifact><id>org.mortbay.jasper:apache-jsp:${mortbayJasperVersion}</id><source>true</source></artifact>
-								<artifact><id>org.eclipse.jetty.orbit:org.eclipse.jdt.core:3.8.2.v20130121</id><source>true</source></artifact>
-								
-								<!-- Jars Required for Glassfish JSTL -->
-								<artifact><id>org.eclipse.jetty.orbit:javax.servlet.jsp.jstl:1.2.0.v201105211821</id><source>true</source></artifact>
-								
-								<!-- Jars Required for Apache JSTL -->
-								<artifact><id>org.apache.taglibs:taglibs-standard-spec:1.2.1</id><source>true</source></artifact>
-								<artifact><id>org.apache.taglibs:taglibs-standard-impl:1.2.1</id><source>true</source></artifact>
-							</artifacts>
+									
+									<artifacts>
 
+										<!-- Minimal Bundles -->
+										<artifact><id>${jettyGroupID}:jetty-util:${jettyVersion}</id><source>true</source></artifact>
+										<artifact><id>${jettyGroupID}:jetty-http:${jettyVersion}</id><source>true</source></artifact>
+										<artifact><id>${jettyGroupID}:jetty-io:${jettyVersion}</id><source>true</source></artifact>
+										<artifact><id>${jettyGroupID}:jetty-security:${jettyVersion}</id><source>true</source></artifact>
+										<artifact><id>${jettyGroupID}:jetty-server:${jettyVersion}</id><source>true</source></artifact>
+										<artifact><id>${jettyGroupID}:jetty-servlet:${jettyVersion}</id><source>true</source></artifact>
+										<artifact><id>${jettyGroupID}:jetty-webapp:${jettyVersion}</id><source>true</source></artifact>
+										<artifact><id>${jettyGroupID}:jetty-deploy:${jettyVersion}</id><source>true</source></artifact>
+										<artifact><id>${jettyGroupID}:jetty-xml:${jettyVersion}</id><source>true</source></artifact>
+										
+										<!-- The jetty-osgi-boot jar -->
+										<artifact>
+											<id>${jettyGroupID}.osgi:jetty-osgi-boot:${jettyVersion}</id>
+											<source>true</source>
+											<transitive>false</transitive>
+										</artifact>
+										
+										<!-- SPI Fly Bundles -->
+										<artifact><id>org.apache.aries.spifly:org.apache.aries.spifly.dynamic.bundle:1.2</id><source>true</source></artifact>
+										
+										<!-- Jars Required for Annotations -->
+										<artifact><id>org.ow2.asm:asm:7.2</id><source>true</source></artifact>
+										<artifact><id>org.ow2.asm:asm-commons:7.2</id><source>true</source></artifact>
+										<artifact><id>org.ow2.asm:asm-tree:7.2</id><source>true</source></artifact>
+										<artifact><id>javax.annotation:javax.annotation-api:1.3</id><source>true</source></artifact>
+										
+										<artifact><id>org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1</id><source>true</source></artifact>
+										<artifact><id>org.eclipse.jetty.orbit:javax.mail.glassfish:1.4.1.v201005082020</id><source>true</source></artifact>
+										
+										<artifact><id>${jettyGroupID}:jetty-jndi:${jettyVersion}</id><source>true</source></artifact>
+										<artifact><id>${jettyGroupID}:jetty-plus:${jettyVersion}</id><source>true</source></artifact>
+										<artifact><id>${jettyGroupID}:jetty-annotations:${jettyVersion}</id><source>true</source></artifact>
+										
+										<!-- From here jars for using JSP -->
+										<artifact><id>org.mortbay.jasper:apache-el:${mortbayJasperVersion}</id><source>true</source></artifact>
+										<artifact><id>org.mortbay.jasper:apache-jsp:${mortbayJasperVersion}</id><source>true</source></artifact>
+										<artifact><id>${jettyGroupID}:apache-jsp:${jettyVersion}</id><source>true</source></artifact>
+										<artifact><id>org.eclipse.jetty.orbit:org.eclipse.jdt.core:3.8.2.v20130121</id><source>true</source></artifact>
+										<artifact>
+											<id>${jettyGroupID}.osgi:jetty-osgi-boot-jsp:${jettyVersion}</id>
+											<source>true</source>
+											<transitive>false</transitive>
+										</artifact>
+										
+										<!-- Jars Required for Glassfish JSTL -->
+										<artifact><id>org.eclipse.jetty.orbit:javax.servlet.jsp.jstl:1.2.0.v201105211821</id><source>true</source></artifact>
+										
+										<!-- Jars Required for Apache JSTL -->
+										<artifact><id>org.apache.taglibs:taglibs-standard-spec:1.2.1</id><source>true</source></artifact>
+										<artifact><id>org.apache.taglibs:taglibs-standard-impl:1.2.1</id><source>true</source></artifact>
+										
+										<!--  
+										<artifact>
+											<id>xalan:xalan:2.7.1</id>
+											<source>false</source>
+											<transitive>false</transitive>
+											<instructions>
+	                                        	<Bundle-SymbolicName>org.apache.xalan</Bundle-SymbolicName>
+	                                        	<Bundle-Version>2.7.1.v201005080400</Bundle-Version>
+		                                    </instructions>
+										</artifact>
+										<artifact>
+											<id>org.apache.xml:serializer:2.7.1</id>
+											<source>true</source>
+											<transitive>false</transitive>
+											<instructions>
+	                                        	<Bundle-SymbolicName>org.apache.xml.serializer</Bundle-SymbolicName>
+	                                        	<Bundle-Version>2.7.1.v201005080400</Bundle-Version>
+		                                    </instructions>
+										</artifact>
+										-->
+									</artifacts>
+									
+								</feature>
+							</featureDefinitions>
+							
 						</configuration>
 					</execution>
 				</executions>
