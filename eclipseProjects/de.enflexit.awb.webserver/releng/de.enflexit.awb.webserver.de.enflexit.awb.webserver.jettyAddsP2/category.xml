@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+    <category-def name="Jetty-Additional-OSGI-JARS" label="Jetty-Additional-OSGI-JARS"/>
+    <iu>
+        <category name="Jetty-Additional-OSGI-JARS"/>
+        <query>
+            <expression type="match">providedCapabilities.exists(p | p.namespace == 'osgi.bundle')</expression>
+        </query>
+    </iu>
+</site>

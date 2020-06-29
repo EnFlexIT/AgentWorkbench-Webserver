@@ -42,7 +42,8 @@
 					<execution>
 						<id>default-cli</id>
 						<configuration>
-						
+							<categoryFileURL>category.xml</categoryFileURL>
+							
 							<p2>
 							    <artifact>
 							    	<id>org.apache.xalan:2.7.1.v201005080400</id>

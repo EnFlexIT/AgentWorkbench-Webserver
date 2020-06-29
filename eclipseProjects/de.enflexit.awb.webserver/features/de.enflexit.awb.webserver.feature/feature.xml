@@ -20,7 +20,7 @@
    </license>
 
    <url>
-      <update label="Enflex.IT AWB-Web Server Update Site" url="https://p2.enflex.it/awbWebServer/snapshots/"/>
+      <update label="Enflex.IT AWB-Web Server Update Site" url="https://p2.enflex.it/awbWebserver/snapshots/"/>
    </url>
 
    <requires>
