@@ -15,7 +15,7 @@
 		<orbitVersion>R20191115185527</orbitVersion>
 		
 		<tychoVersion>1.3.0</tychoVersion>
-		<url.repository.snapshotDir>/awbWebserver/jetty/${jettyVersion}/</url.repository.snapshotDir>
+		<url.repository.snapshotDir>/awbWebserver/jettyAdds/</url.repository.snapshotDir>
 		<url.repository.snapshotDomain>https://p2.enflex.it</url.repository.snapshotDomain>
 		
 		<repository.subDir>${url.repository.snapshotDir}</repository.subDir>

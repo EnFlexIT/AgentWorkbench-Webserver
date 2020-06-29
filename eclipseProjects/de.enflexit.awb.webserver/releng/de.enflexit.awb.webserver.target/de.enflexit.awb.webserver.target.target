@@ -30,7 +30,6 @@
 		<repository location="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.27.v20200227/"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="file:/D:/20_GIT/01_AWB-WebServer/eclipseProjects/de.enflexit.awb.webserver/releng/de.enflexit.awb.webserver.p2Jetty/target/repository/"/>
 		<unit id="javax.activation" version="1.1.0.v201105071233"/>
 		<unit id="javax.activation.source" version="1.1.0.v201105071233"/>
 		<unit id="javax.annotation-api" version="1.3.0"/>
@@ -73,6 +72,7 @@
 		<unit id="org.objectweb.asm.tree.analysis" version="7.2.0"/>
 		<unit id="org.objectweb.asm.tree.analysis.source" version="7.2.0"/>
 		<unit id="org.objectweb.asm.tree.source" version="7.2.0"/>
+		<repository location="https://p2.enflex.it/awbWebserver/jettyAdds/"/>
 	</location>
 </locations>
 </target>
