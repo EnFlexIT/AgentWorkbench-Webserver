@@ -58,7 +58,7 @@
 							<artifacts>
 								
 								<!-- SPI Fly Bundles -->
-								<artifact><id>org.apache.aries.spifly:org.apache.aries.spifly.dynamic.bundle:1.2</id><source>true</source></artifact>
+								<artifact><id>org.apache.aries.spifly:org.apache.aries.spifly.dynamic.bundle:1.2.4</id><source>true</source></artifact>
 								
 								<!-- Jars Required for Annotations -->
 								<artifact><id>org.ow2.asm:asm:7.2</id><source>true</source></artifact>

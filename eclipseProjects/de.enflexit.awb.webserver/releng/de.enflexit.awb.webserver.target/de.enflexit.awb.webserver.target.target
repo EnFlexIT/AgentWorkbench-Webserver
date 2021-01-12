@@ -27,8 +27,9 @@
 	<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="org.eclipse.jetty.bundles.f.feature.group" version="0.0.0"/>
 		<unit id="org.eclipse.jetty.bundles.f.source.feature.group" version="0.0.0"/>
-		<repository location="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.29.v20200521/"/>
+		<repository location="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.35.v20201120/"/>
 	</location>
+	
 	<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<unit id="javax.activation" version="1.1.0.v201105071233"/>
 		<unit id="javax.activation.source" version="1.1.0.v201105071233"/>
@@ -75,5 +76,9 @@
 		<repository location="https://p2.enflex.it/awbWebserver/jettyAdds/"/>
 	</location>
 
+	<!--
+	<location path="D:\20_GIT\01_AWB-WebServer\eclipseProjects\de.enflexit.awb.webserver\releng\de.enflexit.awb.webserver.de.enflexit.awb.webserver.jettyAddsP2\target\repository\plugins" type="Directory"/>
+	-->
+	
 </locations>
 </target>
