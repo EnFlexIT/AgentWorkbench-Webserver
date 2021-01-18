@@ -14,7 +14,8 @@
 
     <modules>
         <module>de.enflexit.awb.webserver.configuration</module>
-        <module>de.enflexit.awb.webserver.update</module>
+        <module>de.enflexit.awb.webserver.product</module>
         <module>de.enflexit.awb.webserver.target</module>
+        <module>de.enflexit.awb.webserver.update</module>
     </modules>
 </project>

@@ -2,7 +2,7 @@
 <feature
       id="de.enflexit.awb.webserver.feature"
       label="Agent.Workbench - Webserver"
-      version="9.4.20.qualifier"
+      version="0.1.1.qualifier"
       provider-name="EnFlex.IT"
       os="linux,macosx,win32"
       arch="x86,x86_64">
@@ -23,26 +23,43 @@
       <update label="Enflex.IT AWB-Web Server Update Site" url="https://p2.enflex.it/awbWebserver/snapshots/"/>
    </url>
 
+   <includes
+         id="org.eclipse.equinox.core.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="de.enflexit.awb.webserver.jetty.feature"
+         version="0.0.0"/>
+
    <requires>
       <import plugin="org.eclipse.osgi" version="3.13.100" match="greaterOrEqual"/>
       <import plugin="de.enflexit.common" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.agentgui.core" version="2.1.6" match="greaterOrEqual"/>
       <import plugin="org.agentgui.lib.jade" version="4.5.1" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.equinox.http.jetty" version="3.6.100" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.equinox.http.servlet" version="1.5.100" match="greaterOrEqual"/>
-      <import plugin="javax.servlet" version="3.1.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jetty.continuation" version="9.4.11" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.equinox.preferences"/>
       <import plugin="org.eclipse.jetty.http" version="9.4.11" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jetty.io" version="9.4.11" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jetty.security" version="9.4.11" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jetty.server" version="9.4.11" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jetty.servlet" version="9.4.11" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jetty.util" version="9.4.11" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.equinox.preferences"/>
+      <import plugin="org.eclipse.jetty.continuation" version="9.4.11" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.equinox.http.jetty" version="3.6.100" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jetty.webapp"/>
+      <import plugin="org.eclipse.jetty.xml"/>
+      <import plugin="org.eclipse.jetty.osgi.boot"/>
+      <import plugin="org.eclipse.core.runtime" version="3.18.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
          id="de.enflexit.awb.webserver.jetty"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.enflexit.awb.webserver.core"
          download-size="0"
          install-size="0"
          version="0.0.0"

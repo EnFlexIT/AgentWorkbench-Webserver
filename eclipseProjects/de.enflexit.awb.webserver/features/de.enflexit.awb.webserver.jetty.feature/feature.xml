@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="de.enflexit.awb.webserver.jetty.feature"
-      label="AWB-Jetty Base Feature"
-      version="1.0.0.qualifier"
+      label="Agent.Workbench Jetty-Feature"
+      version="9.4.35.qualifier"
       provider-name="EnFlex.IT">
 
    <description url="http://www.example.com/description">
@@ -24,19 +24,13 @@
    <includes
          id="org.eclipse.jetty.bundles.f"
          version="0.0.0"
-         name="Jetty Bundles"/>
+         name="Jetty Bundles"
+         search-location="self"/>
 
    <requires>
       <import plugin="org.eclipse.osgi"/>
       <import plugin="org.apache.xml.serializer" version="2.7.1" match="compatible"/>
    </requires>
-
-   <plugin
-         id="javax.activation"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="javax.activation"
@@ -118,18 +112,6 @@
 
    <plugin
          id="org.apache.aries.spifly.dynamic.bundle.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.apache.felix.framework"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.apache.felix.framework.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
