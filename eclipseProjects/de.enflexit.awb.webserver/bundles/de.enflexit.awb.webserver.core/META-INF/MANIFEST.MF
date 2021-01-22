@@ -12,3 +12,6 @@ Import-Package: org.eclipse.equinox.app,
  org.osgi.framework,
  org.slf4j,
  org.slf4j.helpers
+Require-Bundle: org.eclipse.equinox.console,
+ ch.qos.logback.core,
+ ch.qos.logback.classic

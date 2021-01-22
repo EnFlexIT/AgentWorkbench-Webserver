@@ -23,15 +23,22 @@ public class WebServerApplication implements IApplication {
 	@Override
 	public Object start(IApplicationContext context) throws Exception {
 		
+		// --- Check for available configuration files ----
+		WebServerGlobalInfo.getJettyHomeContentProvider().checkAndProvideFullContent();
+		
+		// --- Do the Logging configuration ---------------
+		LogbackConfiguration.readConfiguration();
+		
 		// --- Remind local bundle ------------------------ 
 		this.localBundle = context.getBrandingBundle();
+		LOG.debug("Agent.Workbench Webserver " + this.localBundle.getVersion().toString());
 		LOG.info("Agent.Workbench Webserver " + this.localBundle.getVersion().toString());
+		LOG.warn("Agent.Workbench Webserver " + this.localBundle.getVersion().toString());
+		
 		
 		// --- Start the OSGI based Jetty -----------------
-		OsgiJetty.start();
-		
-		
-		OsgiJetty.stop();
+//		OsgiJetty.start();
+//		OsgiJetty.stop();
 		
 		return null;
 	}
