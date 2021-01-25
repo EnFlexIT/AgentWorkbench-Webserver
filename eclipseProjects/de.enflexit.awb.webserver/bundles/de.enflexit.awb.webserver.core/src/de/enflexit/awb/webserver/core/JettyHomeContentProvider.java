@@ -54,6 +54,7 @@ public class JettyHomeContentProvider {
 		JETTY_DEPLOY_XML(WebServerGlobalInfo.JETTY_ETC_RELATIVE_PATH, "jetty-deploy.xml"),
 		JETTY_HTTP_XML(WebServerGlobalInfo.JETTY_ETC_RELATIVE_PATH, "jetty-http.xml"),
 		JETTY_SELECTOR_XML(WebServerGlobalInfo.JETTY_ETC_RELATIVE_PATH, "jetty-selector.xml"),
+		WEBDEFAULT_XML(WebServerGlobalInfo.JETTY_ETC_RELATIVE_PATH, "webdefault.xml"),
 		
 		LOGBACK_CONFIGURATION(WebServerGlobalInfo.LOGGING_CONFIGURATION_SUB_PATH, "logback.xml");
 		

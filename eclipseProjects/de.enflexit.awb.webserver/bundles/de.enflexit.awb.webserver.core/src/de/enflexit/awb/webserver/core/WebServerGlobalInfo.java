@@ -65,7 +65,7 @@ public class WebServerGlobalInfo {
 			String pathFound = baseDir.getAbsolutePath();
 			String baseDirPath = null;
 			if (pathFound.endsWith(".jar") && pathFound.contains(File.separator + "plugins" + File.separator)) {
-				// --- OSGI environment ---------------------------------------
+				// --- OSGI runtime environment -------------------------------
 				int cutAt = pathFound.indexOf("plugins" + File.separator);
 				baseDirPath = pathFound.substring(0, cutAt);
 				baseDir = new File(baseDirPath);
