@@ -88,8 +88,6 @@ public class OsgiJetty {
 				ariesSiflyDynamicBundle = bundle;
 			}
 			if (bundle!=null) {
-				
-				// --- Start the current bundle ---------------------
 				try {
 					bundle.start();
 				} catch (BundleException bEx) {

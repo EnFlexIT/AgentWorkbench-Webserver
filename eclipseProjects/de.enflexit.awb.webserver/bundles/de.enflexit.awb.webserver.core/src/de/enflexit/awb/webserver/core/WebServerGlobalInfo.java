@@ -23,8 +23,8 @@ public class WebServerGlobalInfo {
 	
 	public static final String JETTY_HOME_RELATIVE_PATH = "jetty";
 	public static final String JETTY_ETC_RELATIVE_PATH = "etc";
+	public static final String JETTY_RESOURCES_RELATIVE_PATH = "resources";
 	
-	public static final String LOGGING_CONFIGURATION_SUB_PATH = "logging";
 	public static final String LOGGING_CONFIGURATION_FILE = "logback.xml";
 	
 	
@@ -190,7 +190,7 @@ public class WebServerGlobalInfo {
 	 */
 	public static File getLoggingConfigurationDirectory(boolean checkCreation) {
 		File jettyHomeDir = getJettyHomeDirectory();
-		String logConfigDirPath = jettyHomeDir.getAbsolutePath() + File.separator + LOGGING_CONFIGURATION_SUB_PATH;
+		String logConfigDirPath = jettyHomeDir.getAbsolutePath() + File.separator + JETTY_RESOURCES_RELATIVE_PATH;
 		File logConfigDir = new File(logConfigDirPath);
 		if (checkCreation==true) {
 			checkDirectoryCreation(logConfigDir);

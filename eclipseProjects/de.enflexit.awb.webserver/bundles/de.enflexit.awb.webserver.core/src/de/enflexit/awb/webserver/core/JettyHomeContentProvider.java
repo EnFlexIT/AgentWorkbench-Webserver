@@ -56,7 +56,7 @@ public class JettyHomeContentProvider {
 		JETTY_SELECTOR_XML(WebServerGlobalInfo.JETTY_ETC_RELATIVE_PATH, "jetty-selector.xml"),
 		WEBDEFAULT_XML(WebServerGlobalInfo.JETTY_ETC_RELATIVE_PATH, "webdefault.xml"),
 		
-		LOGBACK_CONFIGURATION(WebServerGlobalInfo.LOGGING_CONFIGURATION_SUB_PATH, "logback.xml");
+		LOGBACK_CONFIGURATION(WebServerGlobalInfo.JETTY_RESOURCES_RELATIVE_PATH, "logback.xml");
 		
 		private final String subPath;
 		private final String fileName;
@@ -93,11 +93,11 @@ public class JettyHomeContentProvider {
 			return subPath + File.separator + fileName;
 		}
 	}
+
 	
 	private boolean debug = false;
 	private String jettyHomeDirectoryInBundle;
 	private File jettyHomeDirectory;
-	
 	
 	/**
 	 * Instantiates a new content provider for the Jetty home directory.

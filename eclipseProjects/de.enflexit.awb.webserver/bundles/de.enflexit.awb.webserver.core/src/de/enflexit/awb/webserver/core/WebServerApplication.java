@@ -17,6 +17,40 @@ public class WebServerApplication implements IApplication {
 	
 	private Bundle localBundle;
 	
+	private Object waitLock;
+	private Integer exitState;
+	
+	/**
+	 * Returns the exit state.
+	 * @return the exit state
+	 */
+	private Integer getExitState() {
+		if (exitState==null) {
+			exitState = IApplication.EXIT_OK;
+		}
+		return exitState;
+	}
+	/**
+	 * Sets the exit state.
+	 * @param exitState the new exit state
+	 */
+	private void setExitState(int exitState) {
+		this.exitState = exitState;
+		synchronized (this.getWaitLock()) {
+			this.getWaitLock().notifyAll();
+		}
+	}
+	
+	/**
+	 * Returns the wait lock.
+	 * @return the wait lock
+	 */
+	private Object getWaitLock() {
+		if (waitLock==null) {
+			waitLock = new Object();
+		}
+		return waitLock;
+	}
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
@@ -31,14 +65,21 @@ public class WebServerApplication implements IApplication {
 		WebServerGlobalInfo.getJettyHomeContentProvider().checkAndProvideFullContent();
 		
 		// --- Do the Logging configuration ---------------
+		LOG.info("Starting Agent.Workbench Webserver " + this.localBundle.getVersion().toString() + " ...");
 		LogbackConfiguration.readConfiguration();
-		LOG.warn("Agent.Workbench Webserver " + this.localBundle.getVersion().toString());
 		
 		// --- Start the OSGI based Jetty -----------------
 		OsgiJetty.start();
-		OsgiJetty.stop();
 		
-		return null;
+		// --- Start wait process -------------------------
+		synchronized (this.getWaitLock()) {
+			try {
+				this.getWaitLock().wait();
+			} catch (Exception ex) {
+				LOG.warn(ex);
+			}
+		}
+		return this.getExitState();
 	}
 
 	/* (non-Javadoc)
@@ -47,12 +88,24 @@ public class WebServerApplication implements IApplication {
 	@Override
 	public void stop() {
 		
-		System.out.println(this.localBundle.getSymbolicName() + ": Stop");
-		OsgiJetty.stop();
+		LOG.warn("Stopping Agent.Workbench Webserver " + this.localBundle.getVersion().toString() + " ... ");
 		
+		// --- Stop Jetty ---------------------------------
+		OsgiJetty.stop();
+		// --- Set exit state -----------------------------
+		this.setExitState(IApplication.EXIT_OK);
 	}
-
-	
-	
+	/**
+	 * Restart.
+	 */
+	public void restart() {
+		this.setExitState(IApplication.EXIT_RESTART);
+	}
+	/**
+	 * Relaunch.
+	 */
+	public void relaunch() {
+		this.setExitState(IApplication.EXIT_OK);
+	}
 	
 }

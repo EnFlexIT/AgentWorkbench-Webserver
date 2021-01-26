@@ -93,7 +93,7 @@ public class LogbackConfiguration {
 		context.reset();
 
 		// --- Overwrite the log directory property programmatically
-		// TODO ??
+		// ??
 //		String logDirProperty = WebServerGlobalInfo.getLoggingConfigurationFile(true);
 //		context.putProperty("LOG_DIR", logDirProperty);
 		
