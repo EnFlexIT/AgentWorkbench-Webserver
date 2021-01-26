@@ -17,6 +17,7 @@ public class WebServerApplication implements IApplication {
 	
 	private Bundle localBundle;
 	
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
 	 */

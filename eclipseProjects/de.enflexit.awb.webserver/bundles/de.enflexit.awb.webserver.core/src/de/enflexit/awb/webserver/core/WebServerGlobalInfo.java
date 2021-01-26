@@ -2,9 +2,13 @@ package de.enflexit.awb.webserver.core;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.net.URL;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
+import org.osgi.framework.Bundle;
 
 /**
  * The Class WebServerGlobalInfo provides (static) help methods for the current environment.
@@ -84,6 +88,37 @@ public class WebServerGlobalInfo {
 		return baseDir;
 	}
 
+	/**
+	 * Returns the plugin directory of the current runtime.
+	 * @return the plugin directory of the current runtime
+	 */
+	public static File getPluginDirectory() {
+		
+		// --- Resolve the bundle 'org.eclipse.core.runtime' --------
+		Bundle eqBundle = Platform.getBundle("org.eclipse.core.runtime");
+
+		File pluginDir = null;
+		try {
+			// --- Get URL of runtime bundle ------------------------
+			URL resolvedURL = FileLocator.resolve(eqBundle.getEntry("/"));
+			
+			// --- Extract 'file:' indicator ------------------------
+			String filePathName = resolvedURL.toExternalForm();
+			int cutAt = filePathName.indexOf("file:/") + "file:/".length();
+			if (cutAt>-1) {
+				filePathName = filePathName.substring(cutAt);
+			}
+			
+			// --- Get file object ----------------------------------
+			File eqFile = new File(filePathName);
+			pluginDir = eqFile.getParentFile();
+			
+		} catch (Exception ex) { 
+			ex.printStackTrace();
+		}		
+		return pluginDir;
+	}
+	
 	/**
 	 * Returns the system property jetty home directory. If not yet set in the   
 	 * system properties (VM arguments), the value will automatically be set.

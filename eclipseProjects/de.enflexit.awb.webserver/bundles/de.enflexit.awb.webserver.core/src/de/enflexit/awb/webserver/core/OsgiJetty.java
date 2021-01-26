@@ -2,14 +2,12 @@ package de.enflexit.awb.webserver.core;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
@@ -71,39 +69,31 @@ public class OsgiJetty {
 	private static void startJettyBundles() {
 		
 		TreeMap<String, Bundle> bundleMap = OsgiJetty.getBundleMap();
+
+		// --- Define the bundles to start -------------------------
+		List<String> bundlesToStart = new ArrayList<>();
+		bundlesToStart.add(ARIES_SPIFLY_DYNAMIC_BUNDLE);
+		bundlesToStart.add(JETTY_OSGI_BOOT_BUNDLE);
 		
-		List<String> reqBundleList = OsgiJetty.getRequiredJettyBundles();
-		for (int i = 0; i < reqBundleList.size(); i++) {
-			
-			String bundleName = reqBundleList.get(i);
+		// --- .... and start them ----------------------------------
+		for (int i = 0; i < bundlesToStart.size(); i++) {
+
+			String bundleName = bundlesToStart.get(i);
 			Bundle bundle = bundleMap.get(bundleName);
-			if (bundle==null) {
-				// --- Backup access --------------------------------
-				if (bundleName.equals("org.apache.geronimo.specs.geronimo-jta_1.1_spec_1.1.1.jar")==true) {
-					bundle = bundleMap.get("org.apache.geronimo.specs.geronimo-jta_1.1_spec");
-				} else {
-					System.err.println("[]");
-				}
-			}
 			
+			// --- Remind the bundle --------------------------------
+			if (bundleName.equals(JETTY_OSGI_BOOT_BUNDLE)) {
+				jettyOsgiBootBundel = bundle;
+			} else if (bundleName.equals(ARIES_SPIFLY_DYNAMIC_BUNDLE)) {
+				ariesSiflyDynamicBundle = bundle;
+			}
 			if (bundle!=null) {
 				
-				boolean startBundle = false;
-				// --- Remind the Jetty OSG bundle ------------------
-				if (bundleName.equals(JETTY_OSGI_BOOT_BUNDLE)) {
-					jettyOsgiBootBundel = bundle;
-					startBundle = true;
-				} else if (bundleName.equals(ARIES_SPIFLY_DYNAMIC_BUNDLE)) {
-					ariesSiflyDynamicBundle = bundle;
-					startBundle = true;
-				}
 				// --- Start the current bundle ---------------------
-				if (startBundle==true) {
-					try {
-						bundle.start();
-					} catch (BundleException bEx) {
-						bEx.printStackTrace();
-					}
+				try {
+					bundle.start();
+				} catch (BundleException bEx) {
+					bEx.printStackTrace();
 				}
 				
 			} else {
@@ -129,7 +119,7 @@ public class OsgiJetty {
 			// ----------------------------------------------------------------
 			// --- Install missing jetty bundles ------------------------------
 			// ----------------------------------------------------------------
-			File pluginDir = getPluginDirectory(bundlesLoadedList);
+			File pluginDir = WebServerGlobalInfo.getPluginDirectory();
 			List<Bundle> bundlesLoadedListNew = installJettyBundles(pluginDir);
 			if (bundlesLoadedListNew!=null) {
 				// ------------------------------------------------------------
@@ -188,45 +178,6 @@ public class OsgiJetty {
 		return false;
 	}
 
-	/**
-	 * Returns the plugin directory of the current runtime.
-	 *
-	 * @param bundleArray the current bundle list
-	 * @return the plugin directory of the current runtime
-	 */
-	private static File getPluginDirectory(List<Bundle> bundleList) {
-		
-		// --- Resolve the bundle 'org.eclipse.core.runtime' --------
-		Bundle eqBundle = null;
-		for (int i = 0; i < bundleList.size(); i++) {
-			if (bundleList.get(i).getSymbolicName().equals("org.eclipse.core.runtime")) {
-				eqBundle = bundleList.get(i);
-				break;
-			}
-		}
-		
-		File pluginDir = null;
-		try {
-			// --- Get URL of runtime bundle ------------------------
-			URL resolvedURL = FileLocator.resolve(eqBundle.getEntry("/"));
-			
-			// --- Extract 'file:' indicator ------------------------
-			String filePathName = resolvedURL.toExternalForm();
-			int cutAt = filePathName.indexOf("file:/") + "file:/".length();
-			if (cutAt>-1) {
-				filePathName = filePathName.substring(cutAt);
-			}
-			
-			// --- Get file object ----------------------------------
-			File eqFile = new File(filePathName);
-			pluginDir = eqFile.getParentFile();
-			
-		} catch (Exception ex) { 
-			ex.printStackTrace();
-		}		
-		return pluginDir;
-	}
-	
 	/**
 	 * Resolve jetty bundles.
 	 *
@@ -302,84 +253,12 @@ public class OsgiJetty {
 			});
 			
 			// --- Install these bundles --------------------------------------
-			bundlesInstalled = installBundles(Arrays.asList(jarFiles));
+			bundlesInstalled = BundleInstaller.installBundles(Arrays.asList(jarFiles));
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} 
 		return bundlesInstalled;
-	}
-	
-	/**
-	 * Installs the specified list of jar bundled and adds their bundle instances to the local bundle vector {@link #getBundleVector()}.
-	 * @param bundleJarFile the bundle jar file
-	 */
-	public static List<Bundle> installBundles(List<File> fileList) {
-		List<Bundle> bundlesInstalled = new ArrayList<Bundle>();
-		for (int i = 0; i < fileList.size(); i++) {
-			Bundle bundleInstalled = installBundle(fileList.get(i));
-			if (bundleInstalled!=null) {
-				bundlesInstalled.add(bundleInstalled);
-			}
-		}
-		return bundlesInstalled;
-	}
-	/**
-	 * Installs the specified jar bundle and adds the Bundle instance to the local bundle vector {@link #getBundleVector()}.
-	 * @param bundleJarFile the bundle jar file
-	 */
-	public static Bundle installBundle(File bundleJarFile) {
-		
-		// --- Check the symbolic bundle name of the jar to load ----
-		String sbn = getBundleNameFromFile(bundleJarFile);
-		if (sbn!=null && sbn.isEmpty()==false) {
-			if (Platform.getBundle(sbn)!=null) {
-				LOG.debug("Bundle '" + sbn + "' is already installed, skip installation of jar file!");
-				return null;
-			}
-		}
-		return installBundle("reference:file:" + bundleJarFile.getAbsolutePath());
-	}
-	
-	/**
-	 * Returns the possible bundle name from the specified file.
-	 *
-	 * @param file the file
-	 * @return the bundle name from file
-	 */
-	private static String getBundleNameFromFile(File file) {
-		return getBundleNameFromFileName(file.getName());
-	}
-	/**
-	 * Return the bundle name from file name.
-	 *
-	 * @param fileName the file name
-	 * @return the bundle name from file name
-	 */
-	private static String getBundleNameFromFileName(String fileName) {
-		String bundleName = null;
-		int cutAt = fileName.indexOf("_");
-		if (cutAt>-1) {
-			// --- Separate bundle name & version --- 
-			bundleName = fileName.substring(0, cutAt);
-		}
-		return bundleName;	
-	}
-	
-	/**
-	 * Installs the specified jar bundle and adds the Bundle instance to the local bundle vector {@link #getBundleVector()}.
-	 * @param bundleJarFilePath the bundle jar file path
-	 */
-	public static Bundle installBundle(String bundleJarFilePath) {
-		Bundle bundle = null;
-		try {
-			BundleContext bundleContext = FrameworkUtil.getBundle(OsgiJetty.class).getBundleContext();
-			bundle = bundleContext.installBundle(bundleJarFilePath);
-			
-		} catch (BundleException bEx) {
-			bEx.printStackTrace();
-		}
-		return bundle;
 	}
 	
 	/**
@@ -471,9 +350,6 @@ public class OsgiJetty {
 		}
 		return requiredJettyBundleNames;
 	}
-	
-	
-	
 	/**
 	 * Returns the required jetty bundle version HaspMap with selected version reminder.
 	 * @return the required jetty bundle version
@@ -484,33 +360,11 @@ public class OsgiJetty {
 			requiredJettyBundleVersion.put("javax.annotation", "1.3.");
 			requiredJettyBundleVersion.put("javax.servlet", "3.1.");
 			requiredJettyBundleVersion.put("javax.servlet.jsp", "2.2.");
-			requiredJettyBundleVersion.put("org.eclipse.jetty.", "9.4.35");
 			requiredJettyBundleVersion.put("org.objectweb.asm", "7.2.");
+
+			requiredJettyBundleVersion.put("org.eclipse.jetty.", "9.4.35");
 		}
 		return requiredJettyBundleVersion;
 	}
 	
-	/**
-	 * Returns the state of an OSGI bundle as String.
-	 *
-	 * @param state the state
-	 * @return the string
-	 */
-	public static String toState(int state) {
-        switch (state) {
-        case Bundle.UNINSTALLED:
-            return "UNINSTALLED";
-        case Bundle.INSTALLED:
-            return "INSTALLED";
-        case Bundle.RESOLVED:
-            return "RESOLVED";
-        case Bundle.STARTING:
-            return "STARTING";
-        case Bundle.STOPPING:
-            return "STOPPING";
-        case Bundle.ACTIVE:
-            return "ACTIVE";
-        }
-        return null;
-    }
 }
