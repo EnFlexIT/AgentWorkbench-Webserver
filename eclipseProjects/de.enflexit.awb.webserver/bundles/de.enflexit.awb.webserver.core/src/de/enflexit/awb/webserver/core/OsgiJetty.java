@@ -17,9 +17,9 @@ import org.osgi.framework.BundleException;
 import org.osgi.framework.FrameworkUtil;
 
 /**
- * The Class OsgiJetty can be used to ensure that all required OSGI bundles of Jetty
- * are in the the OSGI State {@link Bundle#ACTIVE} before Jetty will be started.
- * In turn, Jetty can also be stopped.
+ * The Class OsgiJetty can be used to start and stop the OSGI-based Jetty. 
+ * Therefore, it will be ensured that all required OSGI bundles of Jetty
+ * are in the the OSGI State {@link Bundle#INSTALLED} before Jetty will be started.
  *
  * @author Christian Derksen - SOFTEC - ICB - University of Duisburg-Essen
  */
