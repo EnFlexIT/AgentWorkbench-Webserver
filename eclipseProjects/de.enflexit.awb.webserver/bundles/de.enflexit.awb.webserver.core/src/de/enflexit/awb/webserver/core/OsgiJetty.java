@@ -113,7 +113,7 @@ public class OsgiJetty {
 		List<Bundle> bundlesLoadedList = new ArrayList<>(Arrays.asList(bc.getBundles()));
 		
 		// --- Check if the bundle array contains the jetty OSGI bundle -------
-		if (containsJettyOSGIBundle(bundlesLoadedList)==false) {
+		if (containsAllJettyOSGIBundle(bundlesLoadedList)==false) {
 			// ----------------------------------------------------------------
 			// --- Install missing jetty bundles ------------------------------
 			// ----------------------------------------------------------------
@@ -130,7 +130,6 @@ public class OsgiJetty {
 						missingBundles.remove(bundlesLoadedListNew.get(i).getSymbolicName());
 					}
 					// --- Remove bundles that were already loaded ------------
-					missingBundles.remove("org.apache.geronimo.specs.geronimo-jta_1.1_spec_1.1.1.jar");
 					for (int i=0; i < missingBundles.size(); i++) {
 						if (Platform.getBundle(missingBundles.get(i))!=null) {
 							missingBundles.remove(i);
@@ -162,18 +161,23 @@ public class OsgiJetty {
 		return bundleMap;
 	}
 	/**
-	 * Checks if the specified bundle array contains the jetty OSGI bundle.
+	 * Checks if the specified list of bundles contains all jetty OSGI bundle.
 	 *
-	 * @param bundleList the list bundle 
+	 * @param bundleListToCheck the list bundle 
 	 * @return true, if successful
 	 */
-	private static boolean containsJettyOSGIBundle(List<Bundle> bundleList) {
-		for (int i = 0; i < bundleList.size(); i++) {
-			if (bundleList.get(i).getSymbolicName().equals(JETTY_OSGI_BOOT_BUNDLE)) {
-				return true;
-			}
+	private static boolean containsAllJettyOSGIBundle(List<Bundle> bundleListToCheck) {
+		
+		List<String> missingBundles = new ArrayList<>(getRequiredJettyBundles());
+		for (int i = 0; i < bundleListToCheck.size(); i++) {
+			missingBundles.remove(bundleListToCheck.get(i).getSymbolicName());
 		}
-		return false;
+		
+		if (missingBundles.size()>0) {
+			LOG.warn(missingBundles.size() + " bundles need to be installed to operate Jetty.");
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -213,9 +217,6 @@ public class OsgiJetty {
 					} else if (fileName.equals("")==true) {
 						// --- Space for a possible accept/reject -------------
 						
-					} else if (getRequiredJettyBundles().contains(fileName)==true) {
-						return true;
-					
 					} else {
 						// --- Check jar file name ----------------------------
 						int cutAt = fileName.indexOf("_");
@@ -235,6 +236,11 @@ public class OsgiJetty {
 								
 							} else if (bundleNameCandidate.startsWith("org.objectweb.asm")==true) {
 								versionRequired        = getRequiredJettyBundleVersion().get("org.objectweb.asm");
+								
+							} else if (bundleNameCandidate.equals("org.apache.geronimo.specs.geronimo-jta")==true) {
+								cutAt = fileName.lastIndexOf("_");
+								bundleNameCandidate = fileName.substring(0, cutAt);
+								versionCandidate    = fileName.substring(cutAt+1);
 							}
 
 							// --- Check to accept or not ---------------------
@@ -279,10 +285,11 @@ public class OsgiJetty {
 			requiredJettyBundleNames.add("org.objectweb.asm.tree");
 			requiredJettyBundleNames.add("org.objectweb.asm.tree.analysis");
 			
-			requiredJettyBundleNames.add("org.apache.geronimo.specs.geronimo-jta_1.1_spec_1.1.1.jar");
+			requiredJettyBundleNames.add("org.apache.geronimo.specs.geronimo-jta_1.1_spec");
 			
-			requiredJettyBundleNames.add("javax.inject");
+			requiredJettyBundleNames.add("javax.activation");
 			requiredJettyBundleNames.add("javax.annotation");
+			requiredJettyBundleNames.add("javax.inject");
 			requiredJettyBundleNames.add("javax.mail.glassfish");
 			
 			requiredJettyBundleNames.add("javax.servlet");

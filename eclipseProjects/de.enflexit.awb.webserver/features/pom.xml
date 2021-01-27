@@ -25,6 +25,8 @@
 				<version>${tycho-extras-version}</version>
 				<configuration>
 					<excludes>
+						<plugin id="javax.annotation"/>
+						<plugin id="javax.websocket"/>
 						<plugin id="org.apache.xalan"/>
 						<plugin id="org.apache.xml.serializer"/>
 						<feature id="org.eclipse.equinox.core.feature"/>

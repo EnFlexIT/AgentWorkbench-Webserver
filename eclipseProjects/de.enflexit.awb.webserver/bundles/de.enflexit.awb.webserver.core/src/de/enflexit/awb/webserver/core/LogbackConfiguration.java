@@ -34,6 +34,7 @@ import java.net.URL;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.LoggerContext;
@@ -84,7 +85,10 @@ public class LogbackConfiguration {
 	private static void configureLogback() throws JoranException, IOException {
 		
 		// --- Introduced due a bug under Mac OS --------------------
-		if (!(LoggerFactory.getILoggerFactory() instanceof LoggerContext)) return;
+		ILoggerFactory logFactory = LoggerFactory.getILoggerFactory();
+		if (!(logFactory instanceof LoggerContext)) {
+			return;
+		}
 		
 		// --- Configure the logger ---------------------------------
 		LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
