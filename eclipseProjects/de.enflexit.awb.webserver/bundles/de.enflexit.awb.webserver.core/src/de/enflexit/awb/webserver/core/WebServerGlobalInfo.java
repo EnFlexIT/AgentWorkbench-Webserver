@@ -24,6 +24,7 @@ public class WebServerGlobalInfo {
 	public static final String JETTY_HOME_RELATIVE_PATH = "jetty";
 	public static final String JETTY_ETC_RELATIVE_PATH = "etc";
 	public static final String JETTY_RESOURCES_RELATIVE_PATH = "resources";
+	public static final String JETTY_WEBAPPS_RELATIVE_PATH = "webapps";
 	
 	public static final String LOGGING_CONFIGURATION_FILE = "logback.xml";
 	
@@ -207,6 +208,30 @@ public class WebServerGlobalInfo {
 		String logConfigDirPath = logConfigDir.getAbsolutePath() + File.separator + LOGGING_CONFIGURATION_FILE; 
 		return new File(logConfigDirPath);
 	}
+	
+	
+	/**
+	 * Returns the webApp directory.
+	 * @return the webApp directory
+	 */
+	public static File getWebAppDirectory() {
+		return getWebAppDirectory(false);
+	}
+	/**
+	 * Returns the webApp directory.
+	 * @param checkCreation the indicator to check and possibly create the directory
+	 * @return the webApp directory
+	 */
+	public static File getWebAppDirectory(boolean checkCreation) {
+		File jettyHomeDir = getJettyHomeDirectory();
+		String webAppDirPath = jettyHomeDir.getAbsolutePath() + File.separator + JETTY_WEBAPPS_RELATIVE_PATH;
+		File webAppDir = new File(webAppDirPath);
+		if (checkCreation==true) {
+			checkDirectoryCreation(webAppDir);
+		}
+		return webAppDir;
+	}
+	
 	
 	/**
 	 * Checks if the specified directory is created. If not, it will be tried to create the directory.

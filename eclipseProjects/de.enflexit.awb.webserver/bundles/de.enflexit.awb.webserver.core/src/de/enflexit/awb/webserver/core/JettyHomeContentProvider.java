@@ -56,7 +56,12 @@ public class JettyHomeContentProvider {
 		JETTY_SELECTOR_XML(WebServerGlobalInfo.JETTY_ETC_RELATIVE_PATH, "jetty-selector.xml"),
 		WEBDEFAULT_XML(WebServerGlobalInfo.JETTY_ETC_RELATIVE_PATH, "webdefault.xml"),
 		
-		LOGBACK_CONFIGURATION(WebServerGlobalInfo.JETTY_RESOURCES_RELATIVE_PATH, "logback.xml");
+		LOGBACK_CONFIGURATION(WebServerGlobalInfo.JETTY_RESOURCES_RELATIVE_PATH, "logback.xml"),
+		
+		WEBAPP_DIRECTORY(WebServerGlobalInfo.JETTY_WEBAPPS_RELATIVE_PATH, null),
+		
+		SAMPLE_WEBAPP_ASYNCH_REST(WebServerGlobalInfo.JETTY_WEBAPPS_RELATIVE_PATH, "async-rest.war"),
+		SAMPLE_WEBAPP_RAP_DEMO(WebServerGlobalInfo.JETTY_WEBAPPS_RELATIVE_PATH, "rapDemo.war");
 		
 		private final String subPath;
 		private final String fileName;
@@ -118,12 +123,23 @@ public class JettyHomeContentProvider {
 		}
 		return jettyHomeDirectoryInBundle;
 	}
+
 	/**
 	 * Checks and provides the full jetty home content.
 	 */
 	public void checkAndProvideFullContent() {
+		this.checkAndProvideFullContent(true);
+	}
+	/**
+	 * Checks and provides the full jetty home content.
+	 * @param includeExamples the include examples
+	 */
+	public void checkAndProvideFullContent(boolean includeExamples) {
 		for (FileToProvide fileToProvide : FileToProvide.values()) {
-			this.checkAndProvideContent(fileToProvide);
+			boolean isSampleFile = fileToProvide.name().startsWith("SAMPLE");
+			if (isSampleFile==false || (isSampleFile==true && includeExamples==true)) {
+				this.checkAndProvideContent(fileToProvide);
+			}
 		}
 	}
 	/**
@@ -140,7 +156,7 @@ public class JettyHomeContentProvider {
 	 */
 	public void checkAndProvideContent(FileToProvide fileToProvide, boolean overwriteExistingFile) {
 		
-		// --- Try to find the file in the properties ----- 
+		// --- Get file name ------------------------------ 
 		final String fileNameToMatch = fileToProvide.getFileName();
 		
 		// --- In which directory we are? -----------------
@@ -148,12 +164,17 @@ public class JettyHomeContentProvider {
 		if (fileToProvide.getSubPath()!=null) {
 			workDir = new File(this.jettyHomeDirectory.getAbsoluteFile() + File.separator + fileToProvide.getSubPath()); 
 		}
-		File[] fileFound = workDir.listFiles(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				return name.equals(fileNameToMatch);
-			}
-		});
+		
+		// --- Try to find that file (if defined) ---------
+		File[] fileFound = null;
+		if (fileNameToMatch!=null && fileNameToMatch.isEmpty()==false) {
+			fileFound = workDir.listFiles(new FilenameFilter() {
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.equals(fileNameToMatch);
+				}
+			});
+		}
 		
 		// --- Some debug output --------------------------
 		if (this.debug) {
@@ -193,6 +214,9 @@ public class JettyHomeContentProvider {
 			// --- Check if a sub path needs to be considered -------
 			File destinDir = new File(destinJettyHomePath + File.separator + fileToProvide.getSubPath());
 			WebServerGlobalInfo.checkDirectoryCreation(destinDir);
+			if (fileToProvide.getFileName()==null || fileToProvide.getFileName().isEmpty()==true) {
+				return;
+			}
 		}
 		
 		if (this.debug) {
