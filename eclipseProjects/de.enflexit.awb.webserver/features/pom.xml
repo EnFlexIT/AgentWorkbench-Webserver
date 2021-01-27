@@ -13,8 +13,8 @@
 	</parent>
 
 	<modules>
-		<module>de.enflexit.awb.webserver.feature</module>
 		<module>de.enflexit.awb.webserver.jetty.feature</module>
+		<module>de.enflexit.awb.webserver.feature</module>
 	</modules>
 
 	<build>
@@ -25,10 +25,9 @@
 				<version>${tycho-extras-version}</version>
 				<configuration>
 					<excludes>
-						<!-- 
-						<plugin id="org.agentgui.lib.scimark" />
-						<feature id="org.eclipse.e4.rcp" />
-						-->
+						<plugin id="org.apache.xalan"/>
+						<plugin id="org.apache.xml.serializer"/>
+						<feature id="org.eclipse.equinox.core.feature"/>
 					</excludes>
 				</configuration>
 				<executions>

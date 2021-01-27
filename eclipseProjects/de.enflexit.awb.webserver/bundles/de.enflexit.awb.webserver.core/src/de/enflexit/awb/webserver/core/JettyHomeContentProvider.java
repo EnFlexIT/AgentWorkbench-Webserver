@@ -179,23 +179,35 @@ public class JettyHomeContentProvider {
 	 */
 	private void extractFromBundle(FileToProvide fileToProvide) {
 
-		String fileName = fileToProvide.toString(); // * includes subPath, separator and file name *
-		String extJettyHomePath = WebServerGlobalInfo.getJettyHomeDirectory(true).getAbsolutePath();
-		String newfilePath = extJettyHomePath + File.separator + fileName;
+		// --- Define the source ------------------------------------
+		String sourceJettyHomePath = this.getJettyHomeDirectoryInBundle(); 
+		String sourceFilePath = sourceJettyHomePath + "/" + fileToProvide.toString();
+		if (fileToProvide.getSubPath()!=null) {
+			sourceFilePath = sourceJettyHomePath + "/" + fileToProvide.getSubPath() + "/" + fileToProvide.getFileName();
+		}
+		
+		// --- Define the destination -------------------------------
+		String destinJettyHomePath = WebServerGlobalInfo.getJettyHomeDirectory(true).getAbsolutePath();
+		String destinFilePath = destinJettyHomePath + File.separator + fileToProvide.toString(); // * includes subPath, separator and file name *
+		if (fileToProvide.getSubPath()!=null) {
+			// --- Check if a sub path needs to be considered -------
+			File destinDir = new File(destinJettyHomePath + File.separator + fileToProvide.getSubPath());
+			WebServerGlobalInfo.checkDirectoryCreation(destinDir);
+		}
 		
 		if (this.debug) {
-			System.out.println("Extract '" + fileName + "' to " + newfilePath);
+			System.out.println("Extract '" + fileToProvide.toString() + "' to " + destinFilePath);
 		}
 		
 		InputStream is = null;
 		FileOutputStream fos = null;
 		try {
 			Bundle bundle = FrameworkUtil.getBundle(this.getClass());
-			URL fileURL = bundle.getResource(this.getJettyHomeDirectoryInBundle() + "/" + fileName);
+			URL fileURL = bundle.getResource(sourceFilePath);
 			if (fileURL!=null) {
 				// --- Write file to directory ------------
 				is = fileURL.openStream();
-				fos = new FileOutputStream(newfilePath);
+				fos = new FileOutputStream(destinFilePath);
 				byte[] buffer = new byte[1024];
 				int len;
 				while ((len = is.read(buffer)) != -1) {
@@ -204,7 +216,7 @@ public class JettyHomeContentProvider {
 				
 			} else {
 				// --- Could not find fileURL -------------
-				System.err.println(this.getClass().getSimpleName() + " could not find resource for '" + fileName + "'");
+				System.err.println(this.getClass().getSimpleName() + " could not find resource for '" + fileToProvide.toString() + "'");
 			}
 			
 		} catch (IOException ioEx) {

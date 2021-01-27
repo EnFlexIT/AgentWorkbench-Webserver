@@ -43,7 +43,7 @@
 					</profileProperties>
 					<products>
 						<product>
-							<id>org.agentgui</id>
+							<id>de.enflexit.awb.webserver</id>
 							<rootFolder>AgentWorkbenchWS</rootFolder>
 							<rootFolders>
 								<mac>AgentWorkbenchWS.app</mac>

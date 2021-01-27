@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>de.enflexit.awb.webserver.help</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 	<parent>
 		<groupId>de.enflexit.awb.webserver</groupId>
@@ -17,6 +17,34 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>timestamp-property</id>
+						<goals>
+							<goal>timestamp-property</goal>
+						</goals>
+						<phase>validate</phase>
+						<configuration>
+							<name>current.year</name>
+							<pattern>yyyy</pattern>
+						</configuration>
+					</execution>
+					<execution>
+						<id>parse-version</id>
+						<goals>
+							<goal>parse-version</goal>
+						</goals>
+						<configuration>
+							<propertyPrefix>helpBundle</propertyPrefix>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>		
+			
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-document-bundle-plugin</artifactId>
@@ -39,13 +67,16 @@
 								<ignoreError>true</ignoreError>
 								<encoding>UTF-8</encoding>
 								<includes>
-									<include>de.enflexit.awb.webserver*</include>
+									<include>de.enflexit.awb.webserver.*</include>
 								</includes>
 								<additionalArguments>
 									<additionalArgument>-windowtitle "Agent.Workbench - Webserver API"</additionalArgument>
+									<additionalArgument>-doctitle 'Agent.Workbench - Webserver API (Version ${helpBundle.majorVersion}.${helpBundle.minorVersion}.${helpBundle.incrementalVersion})'</additionalArgument>
+									<additionalArgument>-bottom 'Copyright 2009-${current.year} EnFlex.IT and/or its affiliates. All rights reserved.'</additionalArgument>
 									<additionalArgument>-link http://docs.oracle.com/javase/8/docs/api/</additionalArgument>
 									<additionalArgument>-linkoffline ../../${platform.api} http://help.eclipse.org/photon/topic/org.eclipse.platform.doc.isv/reference/api/</additionalArgument>
 									<additionalArgument>-nosince</additionalArgument>
+									<additionalArgument>-quiet</additionalArgument>
 								</additionalArguments>
 							</javadocOptions>
 						</configuration>					

@@ -15,7 +15,6 @@
 
 	<modules>
 		<module>de.enflexit.awb.webserver.core</module>
-		<module>de.enflexit.awb.webserver.jetty</module>
 		<module>de.enflexit.awb.webserver.help</module>
 	</modules>
 </project>

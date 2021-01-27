@@ -4,6 +4,7 @@
       label="Agent.Workbench - Webserver"
       version="0.1.1.qualifier"
       provider-name="EnFlex.IT"
+      plugin="de.enflexit.awb.webserver.core"
       os="linux,macosx,win32"
       arch="x86,x86_64">
 
@@ -31,32 +32,20 @@
          id="de.enflexit.awb.webserver.jetty.feature"
          version="0.0.0"/>
 
-   <requires>
-      <import plugin="org.eclipse.osgi" version="3.13.100" match="greaterOrEqual"/>
-      <import plugin="de.enflexit.common" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.agentgui.core" version="2.1.6" match="greaterOrEqual"/>
-      <import plugin="org.agentgui.lib.jade" version="4.5.1" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.equinox.preferences"/>
-      <import plugin="org.eclipse.jetty.http" version="9.4.11" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jetty.io" version="9.4.11" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jetty.security" version="9.4.11" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jetty.server" version="9.4.11" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jetty.servlet" version="9.4.11" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jetty.util" version="9.4.11" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jetty.continuation" version="9.4.11" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.equinox.http.jetty" version="3.6.100" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jetty.webapp"/>
-      <import plugin="org.eclipse.jetty.xml"/>
-      <import plugin="org.eclipse.jetty.osgi.boot"/>
-      <import plugin="org.eclipse.core.runtime" version="3.18.0" match="greaterOrEqual"/>
-   </requires>
+   <includes
+         id="org.eclipse.platform"
+         version="0.0.0"/>
 
-   <plugin
-         id="de.enflexit.awb.webserver.jetty"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="ch.qos.logback.core"/>
+      <import plugin="ch.qos.logback.classic"/>
+      <import plugin="org.eclipse.equinox.console"/>
+      <import plugin="org.eclipse.equinox.app"/>
+      <import plugin="org.eclipse.jetty.util"/>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.slf4j.api"/>
+   </requires>
 
    <plugin
          id="de.enflexit.awb.webserver.core"

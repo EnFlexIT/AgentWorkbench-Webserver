@@ -1,0 +1,1 @@
+java -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y -jar plugins/org.eclipse.equinox.launcher_1.5.700.v20200207-2156.jar -consoleLog -vmargs 

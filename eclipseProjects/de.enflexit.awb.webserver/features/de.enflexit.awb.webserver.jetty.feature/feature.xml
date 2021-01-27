@@ -3,7 +3,8 @@
       id="de.enflexit.awb.webserver.jetty.feature"
       label="Agent.Workbench Jetty-Feature"
       version="9.4.35.qualifier"
-      provider-name="EnFlex.IT">
+      provider-name="EnFlex.IT"
+      os="linux,macosx,win32">
 
    <description url="http://www.example.com/description">
       The AWB-Jetty Base Feature consists of the Jetty jars that are provided by the Jetty update site plus the jars required to execute Jetty in an OSGI environemnt (see Jetty OSGI-tutorial for details).
@@ -24,7 +25,7 @@
    <includes
          id="org.eclipse.jetty.bundles.f"
          version="0.0.0"
-         name="Jetty Bundles"
+         name=""
          search-location="self"/>
 
    <requires>
@@ -39,31 +40,13 @@
          version="0.0.0"/>
 
    <plugin
-         id="javax.activation.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="javax.annotation-api"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="javax.annotation-api.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="javax.mail.glassfish"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="javax.mail.glassfish.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -87,31 +70,7 @@
          version="0.0.0"/>
 
    <plugin
-         id="javax.servlet.jsp.jstl.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="javax.servlet.jsp.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="javax.servlet.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.apache.aries.spifly.dynamic.bundle"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.apache.aries.spifly.dynamic.bundle.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -123,31 +82,13 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.apache.geronimo.specs.geronimo-jta_1.1_spec.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.apache.taglibs.standard-impl"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
 
    <plugin
-         id="org.apache.taglibs.standard-impl.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.apache.taglibs.taglibs-standard-spec"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.apache.taglibs.taglibs-standard-spec.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -165,25 +106,7 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.codehaus.mojo.animal-sniffer-annotations"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.codehaus.mojo.animal-sniffer-annotations.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.eclipse.jdt.core.compiler.batch"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.jdt.core.compiler.batch.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -195,19 +118,7 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.jetty.schemas.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.mortbay.jasper.apache-el"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.mortbay.jasper.apache-el.source"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
@@ -219,19 +130,7 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.mortbay.jasper.apache-jsp.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.objectweb.asm"
-         download-size="0"
-         install-size="0"
-         version="7.2.0"/>
-
-   <plugin
-         id="org.objectweb.asm.source"
          download-size="0"
          install-size="0"
          version="7.2.0"/>
@@ -243,19 +142,7 @@
          version="7.2.0"/>
 
    <plugin
-         id="org.objectweb.asm.commons.source"
-         download-size="0"
-         install-size="0"
-         version="7.2.0"/>
-
-   <plugin
          id="org.objectweb.asm.tree"
-         download-size="0"
-         install-size="0"
-         version="7.2.0"/>
-
-   <plugin
-         id="org.objectweb.asm.tree.source"
          download-size="0"
          install-size="0"
          version="7.2.0"/>
@@ -265,11 +152,5 @@
          download-size="0"
          install-size="0"
          version="7.2.0"/>
-
-   <plugin
-         id="org.objectweb.asm.tree.analysis.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
 </feature>
