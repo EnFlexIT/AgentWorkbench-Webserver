@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target includeMode="feature" name="de.enflexit.awb.webserver.target" sequenceNumber="70">
+<target includeMode="feature" name="de.enflexit.ws.rap.target" sequenceNumber="70">
 	<locations>
 		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<repository location="http://download.eclipse.org/rt/rap/3.10/e4"/>
-			<unit id="org.eclipse.rap.e4.equinox.target.feature.feature.group" version="0.0.0"/>
-			<unit id="org.eclipse.rap.e4.examples.feature.feature.group" version="0.0.0"/>
-			<unit id="org.eclipse.rap.e4.feature.feature.group" version="0.0.0"/>
-			<unit id="org.eclipse.rap.e4.sdk.feature.feature.group" version="0.0.0"/>
+			<repository location="https://download.eclipse.org/rt/rap/3.15"/>
+			<unit id="org.eclipse.rap.equinox.target.feature.feature.group" version="3.15.0.20201209-1200"/>
+			<unit id="org.eclipse.rap.examples.feature.feature.group" version="3.15.0.20201209-1305"/>
+			<unit id="org.eclipse.rap.feature.feature.group" version="3.15.0.20201021-1259"/>
+			<unit id="org.eclipse.rap.sdk.feature.feature.group" version="3.15.0.20201021-1259"/>
+		</location>
+		
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="http://download.eclipse.org/rt/rap/3.15/e4"/>
+			<unit id="org.eclipse.rap.e4.equinox.target.feature.feature.group" version="3.15.0.20201209-1200"/>
+			<unit id="org.eclipse.rap.e4.examples.feature.feature.group" version="3.15.0.20201209-1305"/>
+			<unit id="org.eclipse.rap.e4.feature.feature.group" version="3.15.0.20201105-1430"/>
+			<unit id="org.eclipse.rap.e4.sdk.feature.feature.group" version="3.15.0.20201105-1430"/>
 		</location>
 	</locations>
 </target>
