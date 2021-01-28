@@ -22,7 +22,7 @@
          </property>
          <property
                name="aboutImage"
-               value="/de.enflexit.awb.webserver.core/icons/awb128.png">
+               value="/de.enflexit.ws.core/icons/awb128.png">
          </property>
          <property
                name="startupProgressRect"
@@ -34,7 +34,7 @@
          </property>
          <property
                name="aboutText"
-               value="Agent Workbench - Webserver (AWB-WS) is a Jettty based application server that enables to configure and execute Agents and Multi-Agent systems in various ways.">
+               value="Enflex.IT - Webserver (EnFlexIT-WS) is a Jettty application server that utilizes OSGI.">
          </property>
          <property
                name="preferenceCustomization"

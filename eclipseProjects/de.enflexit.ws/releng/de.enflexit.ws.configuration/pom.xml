@@ -59,8 +59,8 @@
 				<configuration>
 					<target>
 						<artifact>
-							<groupId>de.enflexit.awb.webserver</groupId>
-							<artifactId>de.enflexit.awb.webserver.target</artifactId>
+							<groupId>de.enflexit.ws</groupId>
+							<artifactId>de.enflexit.ws.target</artifactId>
 							<version>${target-platform-version}</version>
 						</artifact>
 					</target>

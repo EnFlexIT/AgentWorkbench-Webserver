@@ -1,11 +1,11 @@
-package de.enflexit.awb.webserver;
+package de.enflexit.ws.awb;
 
 import org.agentgui.gui.swing.project.ProjectWindowTab;
 
 import agentgui.core.application.Application;
 import agentgui.core.plugin.PlugIn;
 import agentgui.core.project.Project;
-import de.enflexit.awb.webserver.config.ui.JettyControlPanel;
+import de.enflexit.ws.awb.config.ui.JettyControlPanel;
 
 /**
  * The Class AwbWebServerPlugin provides the web server control elements to Agent.Workbench.

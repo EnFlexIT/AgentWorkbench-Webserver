@@ -1,4 +1,4 @@
-package de.enflexit.awb.webserver.config.ui;
+package de.enflexit.ws.awb.config.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,11 +26,11 @@ import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.component.LifeCycle.Listener;
 
 import agentgui.core.project.Project;
-import de.enflexit.awb.webserver.AwbWebServerPlugin;
-import de.enflexit.awb.webserver.JettyManager;
-import de.enflexit.awb.webserver.config.JettyConfiguration;
-import de.enflexit.awb.webserver.config.JettyConfiguration.JettyLifeCycleState;
-import de.enflexit.awb.webserver.config.JettyParameterValue;
+import de.enflexit.ws.awb.AwbWebServerPlugin;
+import de.enflexit.ws.awb.JettyManager;
+import de.enflexit.ws.awb.config.JettyConfiguration;
+import de.enflexit.ws.awb.config.JettyParameterValue;
+import de.enflexit.ws.awb.config.JettyConfiguration.JettyLifeCycleState;
 
 /**
  * The Class JettyControlPanel.

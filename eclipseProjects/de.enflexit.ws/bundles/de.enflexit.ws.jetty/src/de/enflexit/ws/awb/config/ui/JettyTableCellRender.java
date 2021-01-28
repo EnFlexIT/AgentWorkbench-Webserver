@@ -1,4 +1,4 @@
-package de.enflexit.awb.webserver.config.ui;
+package de.enflexit.ws.awb.config.ui;
 
 import java.awt.Component;
 import java.awt.Insets;
@@ -10,9 +10,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import de.enflexit.awb.webserver.config.JettyParameterValue;
 import de.enflexit.common.swing.KeyAdapter4Numbers;
 import de.enflexit.common.swing.TableCellColorHelper;
+import de.enflexit.ws.awb.config.JettyParameterValue;
 
 /**
  * The Class JettyTableCellRender.

@@ -8,10 +8,10 @@ Automatic-Module-Name: org.agentgui.webserver.jetty
 Service-Component: OSGI-INF/classLoadService.xml
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: de.enflexit.awb.webserver,
- de.enflexit.awb.webserver.classLoadService,
- de.enflexit.awb.webserver.config,
- de.enflexit.awb.webserver.config.ui
+Export-Package: de.enflexit.ws.awb,
+ de.enflexit.ws.awb.classLoadService,
+ de.enflexit.ws.awb.config,
+ de.enflexit.ws.awb.config.ui
 Require-Bundle: org.eclipse.osgi,
  de.enflexit.common,
  org.agentgui.core,

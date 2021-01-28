@@ -1,4 +1,4 @@
-package de.enflexit.awb.webserver.config;
+package de.enflexit.ws.awb.config;
 
 import java.awt.Color;
 import java.lang.reflect.Field;

@@ -1,4 +1,4 @@
 /**
  * Contains classes for the configuration of the Jetty.
  */
-package de.enflexit.awb.webserver.config;
+package de.enflexit.ws.awb.config;

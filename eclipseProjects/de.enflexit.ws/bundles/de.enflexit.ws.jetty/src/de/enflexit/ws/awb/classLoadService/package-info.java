@@ -1,4 +1,4 @@
 /**
  * Contains the required classes for the AWB class load service 
  */
-package de.enflexit.awb.webserver.classLoadService;
+package de.enflexit.ws.awb.classLoadService;

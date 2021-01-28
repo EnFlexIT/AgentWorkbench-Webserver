@@ -1,4 +1,4 @@
-package de.enflexit.awb.webserver;
+package de.enflexit.ws.awb;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 import agentgui.core.application.Application;
-import de.enflexit.awb.webserver.config.JettyConfiguration;
+import de.enflexit.ws.awb.config.JettyConfiguration;
 
 /**
  * The Class JettyManager serves as central instance to access runtime information

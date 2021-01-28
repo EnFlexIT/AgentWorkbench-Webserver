@@ -4,7 +4,7 @@
       label="Agent.Workbench - Webserver"
       version="0.1.1.qualifier"
       provider-name="EnFlex.IT"
-      plugin="de.enflexit.awb.webserver.core"
+      plugin="de.enflexit.ws.core"
       os="linux,macosx,win32"
       arch="x86,x86_64">
 
@@ -45,7 +45,7 @@
          version="0.0.0"/>
 
    <plugin
-         id="de.enflexit.awb.webserver.core"
+         id="de.enflexit.ws.core"
          download-size="0"
          install-size="0"
          version="0.0.0"

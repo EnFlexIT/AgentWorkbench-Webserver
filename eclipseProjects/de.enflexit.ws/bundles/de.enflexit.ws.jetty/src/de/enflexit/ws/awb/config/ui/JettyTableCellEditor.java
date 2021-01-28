@@ -1,4 +1,4 @@
-package de.enflexit.awb.webserver.config.ui;
+package de.enflexit.ws.awb.config.ui;
 
 import java.awt.Component;
 import java.awt.Insets;
@@ -17,9 +17,9 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.text.BadLocationException;
 
 import agentgui.core.project.Project;
-import de.enflexit.awb.webserver.config.JettyParameterValue;
 import de.enflexit.common.swing.KeyAdapter4Numbers;
 import de.enflexit.common.swing.TableCellColorHelper;
+import de.enflexit.ws.awb.config.JettyParameterValue;
 
 /**
  * The Class JettyTableCellEditor.
