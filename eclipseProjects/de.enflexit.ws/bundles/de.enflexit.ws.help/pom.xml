@@ -61,17 +61,17 @@
 							<outputDirectory>${project.basedir}/help/api-docs/javadoc</outputDirectory>
 							<tocFile>${project.basedir}/help/api_docs.xml</tocFile>
 							<tocOptions>
-								<mainLabel>Agent.Workbench - Webserver API</mainLabel>
+								<mainLabel>EnFlex.IT - Webserver API</mainLabel>
 							</tocOptions>
 							<javadocOptions>
 								<ignoreError>true</ignoreError>
 								<encoding>UTF-8</encoding>
 								<includes>
-									<include>de.enflexit.awb.webserver.*</include>
+									<include>de.enflexit.ws.*</include>
 								</includes>
 								<additionalArguments>
-									<additionalArgument>-windowtitle "Agent.Workbench - Webserver API"</additionalArgument>
-									<additionalArgument>-doctitle 'Agent.Workbench - Webserver API (Version ${helpBundle.majorVersion}.${helpBundle.minorVersion}.${helpBundle.incrementalVersion})'</additionalArgument>
+									<additionalArgument>-windowtitle "EnFlex-IT - Webserver API"</additionalArgument>
+									<additionalArgument>-doctitle 'EnFlex-IT - Webserver API (Version ${helpBundle.majorVersion}.${helpBundle.minorVersion}.${helpBundle.incrementalVersion})'</additionalArgument>
 									<additionalArgument>-bottom 'Copyright 2009-${current.year} EnFlex.IT and/or its affiliates. All rights reserved.'</additionalArgument>
 									<additionalArgument>-link http://docs.oracle.com/javase/8/docs/api/</additionalArgument>
 									<additionalArgument>-linkoffline ../../${platform.api} http://help.eclipse.org/photon/topic/org.eclipse.platform.doc.isv/reference/api/</additionalArgument>

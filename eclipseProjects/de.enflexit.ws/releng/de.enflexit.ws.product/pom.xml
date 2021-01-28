@@ -43,10 +43,10 @@
 					</profileProperties>
 					<products>
 						<product>
-							<id>de.enflexit.awb.webserver</id>
-							<rootFolder>AgentWorkbenchWS</rootFolder>
+							<id>de.enflexit.ws</id>
+							<rootFolder>EnFlexIT-WS</rootFolder>
 							<rootFolders>
-								<mac>AgentWorkbenchWS.app</mac>
+								<mac>EnFlexIT-WS.app</mac>
 							</rootFolders>
 						</product>
 					</products>
