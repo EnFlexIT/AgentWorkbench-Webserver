@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: AWB Example Servlet
-Bundle-SymbolicName: de.enflexit.awb.webserver.sample.servlet
+Bundle-SymbolicName: de.enflexit.ws.sample.servlet
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: de.enflexit.awb.webserver.sample.servlet
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -10,4 +10,4 @@ Require-Bundle: org.eclipse.jetty.server,
  org.eclipse.jetty.servlet
 Import-Package: org.osgi.framework
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: de.enflexit.awb.webserver.sample.servlet.Activator
+Bundle-Activator: de.enflexit.ws.sample.servlet.Activator

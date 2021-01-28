@@ -26,7 +26,7 @@
  * Boston, MA  02111-1307, USA.
  * **************************************************************
  */
-package de.enflexit.awb.webserver.core;
+package de.enflexit.ws.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
-import de.enflexit.awb.webserver.core.JettyHomeContentProvider.FileToProvide;
+import de.enflexit.ws.core.JettyHomeContentProvider.FileToProvide;
 
 
 /**

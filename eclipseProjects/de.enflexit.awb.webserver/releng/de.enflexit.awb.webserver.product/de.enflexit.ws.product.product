@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Agent.Workbench-Webserver" uid="de.enflexit.awb.webserver" id="de.enflexit.awb.webserver.core.product" application="de.enflexit.awb.webserver.core.application" version="0.1.1.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="EnFlex.IT -Webserver" uid="de.enflexit.ws" id="de.enflexit.ws.core.product" application="de.enflexit.ws.core.application" version="0.1.1.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/de.enflexit.awb.webserver.core/icons/awb128.png"/>
+      <image path="/de.enflexit.ws.core/icons/awb128.png"/>
       <text>
-         Agent Workbench - Webserver (AWB-WS) is a Jettty based application server that enables to configure and execute Agents and Multi-Agent systems in various ways.
+         Enflex.IT - Webserver (EnFlexIT-WS) is a Jettty application server that utilizes OSGI.
       </text>
    </aboutInfo>
 
@@ -21,9 +21,9 @@
    <windowImages i16="icons/awb16.png" i32="icons/awb32.png" i48="icons/awb48.png" i64="icons/awb64.png" i128="icons/awb128.png" i256="icons/awb256.png"/>
 
    <splash
-      location="de.enflexit.awb.webserver.core"
+      location="de.enflexit.ws.core"
       startupProgressRect="5,275,445,15" />
-   <launcher name="AgentWorkbenchWS">
+   <launcher name="EnFlexIT-WS">
       <linux icon="/icons/awb.xpm"/>
       <macosx icon="/icons/awb.icns"/>
       <win useIco="true">
@@ -32,6 +32,7 @@
       </win>
    </launcher>
 
+
    <vm>
    </vm>
 
@@ -39,7 +40,7 @@
    </plugins>
 
    <features>
-      <feature id="de.enflexit.awb.webserver.feature" installMode="root"/>
+      <feature id="de.enflexit.ws.feature" installMode="root"/>
    </features>
 
    <configurations>

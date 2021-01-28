@@ -26,7 +26,7 @@
  * Boston, MA  02111-1307, USA.
  * **************************************************************
  */
-package de.enflexit.awb.webserver.core;
+package de.enflexit.ws.core;
 
 import java.io.File;
 import java.io.FileOutputStream;

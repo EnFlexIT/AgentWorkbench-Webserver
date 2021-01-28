@@ -1,4 +1,4 @@
-package de.enflexit.awb.webserver.sample.servlet;
+package de.enflexit.ws.sample.servlet;
 
 import java.util.Hashtable;
 

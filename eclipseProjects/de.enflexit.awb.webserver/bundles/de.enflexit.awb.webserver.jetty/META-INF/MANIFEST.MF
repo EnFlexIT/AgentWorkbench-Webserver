@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Agent.Workbench Jetty-Bundle
-Bundle-SymbolicName: de.enflexit.awb.webserver.jetty;singleton:=true
+Bundle-SymbolicName: de.enflexit.ws.jetty;singleton:=true
 Bundle-Version: 9.4.24.qualifier
 Bundle-Vendor: EnFlex.IT
 Automatic-Module-Name: org.agentgui.webserver.jetty

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>de.enflexit.awb.webserver.jetty.feature</name>
+	<name>de.enflexit.ws.jetty.feature</name>
 	<comment></comment>
 	<projects>
 	</projects>

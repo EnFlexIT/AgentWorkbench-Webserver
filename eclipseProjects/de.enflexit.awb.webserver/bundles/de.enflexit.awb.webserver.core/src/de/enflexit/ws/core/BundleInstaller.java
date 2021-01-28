@@ -1,4 +1,4 @@
-package de.enflexit.awb.webserver.core;
+package de.enflexit.ws.core;
 
 import java.io.File;
 import java.util.ArrayList;

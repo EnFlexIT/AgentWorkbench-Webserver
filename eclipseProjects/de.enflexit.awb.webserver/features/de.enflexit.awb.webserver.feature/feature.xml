@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.enflexit.awb.webserver.feature"
+      id="de.enflexit.ws.feature"
       label="Agent.Workbench - Webserver"
       version="0.1.1.qualifier"
       provider-name="EnFlex.IT"
@@ -29,10 +29,6 @@
          version="0.0.0"/>
 
    <includes
-         id="de.enflexit.awb.webserver.jetty.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.equinox.p2.core.feature"
          version="0.0.0"/>
 
@@ -42,6 +38,10 @@
 
    <includes
          id="org.eclipse.equinox.core.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="de.enflexit.ws.jetty.feature"
          version="0.0.0"/>
 
    <plugin

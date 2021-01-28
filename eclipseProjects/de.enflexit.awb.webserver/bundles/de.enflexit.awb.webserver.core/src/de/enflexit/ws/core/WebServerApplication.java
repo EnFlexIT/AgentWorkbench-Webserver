@@ -1,4 +1,4 @@
-package de.enflexit.awb.webserver.core;
+package de.enflexit.ws.core;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
@@ -65,7 +65,7 @@ public class WebServerApplication implements IApplication {
 		WebServerGlobalInfo.getJettyHomeContentProvider().checkAndProvideFullContent();
 		
 		// --- Do the Logging configuration ---------------
-		LOG.info("Starting Agent.Workbench Webserver " + this.localBundle.getVersion().toString() + " ...");
+		LOG.info("Starting EnFlex.IT  Webserver (Jetty) " + this.localBundle.getVersion().toString() + " ...");
 		LogbackConfiguration.readConfiguration();
 		
 		// --- Start the OSGI based Jetty -----------------
@@ -88,7 +88,7 @@ public class WebServerApplication implements IApplication {
 	@Override
 	public void stop() {
 		
-		LOG.warn("Stopping Agent.Workbench Webserver " + this.localBundle.getVersion().toString() + " ... ");
+		LOG.warn("Stopping EnFlex.IT Webserver (Jetty) " + this.localBundle.getVersion().toString() + " ... ");
 		
 		// --- Stop Jetty ---------------------------------
 		OsgiJetty.stop();

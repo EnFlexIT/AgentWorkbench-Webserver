@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Agent.Workbench-Webserver Core Bundle
-Bundle-SymbolicName: de.enflexit.awb.webserver.core;singleton:=true
+Bundle-Name: EnFlex.IT-Webserver Core Bundle
+Bundle-SymbolicName: de.enflexit.ws.core;singleton:=true
 Bundle-Version: 0.1.1.qualifier
 Bundle-Vendor: EnFlex.IT
 Automatic-Module-Name: de.enflexit.awb.webserver.core
@@ -16,4 +16,4 @@ Require-Bundle: ch.qos.logback.core,
  ch.qos.logback.classic,
  org.eclipse.core.runtime,
  org.eclipse.equinox.console
-Export-Package: de.enflexit.awb.webserver.core
+Export-Package: de.enflexit.ws.core

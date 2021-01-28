@@ -5,9 +5,9 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>de.enflexit.awb.webserver</groupId>
-	<artifactId>de.enflexit.awb.webserver.p2Jetty</artifactId>
-	<version>9.4.27-SNAPSHOT</version>
+	<groupId>de.enflexit.ws</groupId>
+	<artifactId>de.enflexit.ws.p2Jetty</artifactId>
+	<version>9.4.35-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
