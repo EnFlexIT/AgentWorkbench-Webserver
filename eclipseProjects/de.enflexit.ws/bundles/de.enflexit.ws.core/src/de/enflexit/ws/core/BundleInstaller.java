@@ -22,8 +22,10 @@ public class BundleInstaller {
 	private static final Logger LOG = Log.getLogger(BundleInstaller.class);
 	
 	/**
-	 * Installs the specified list of jar bundled and adds their bundle instances to the local bundle vector {@link #getBundleVector()}.
-	 * @param bundleJarFile the bundle jar file
+	 * Installs the specified list of jar bundles.
+	 *
+	 * @param fileList the list bundle jar files
+	 * @return the list of installed bundles
 	 */
 	public static List<Bundle> installBundles(List<File> fileList) {
 		List<Bundle> bundlesInstalled = new ArrayList<Bundle>();
@@ -35,9 +37,12 @@ public class BundleInstaller {
 		}
 		return bundlesInstalled;
 	}
+	
 	/**
-	 * Installs the specified jar bundle and adds the Bundle instance to the local bundle vector {@link #getBundleVector()}.
+	 * Installs the specified jar bundle.
+	 *
 	 * @param bundleJarFile the bundle jar file
+	 * @return the bundle that was installed
 	 */
 	public static Bundle installBundle(File bundleJarFile) {
 		
@@ -78,8 +83,10 @@ public class BundleInstaller {
 	}
 	
 	/**
-	 * Installs the specified jar bundle and adds the Bundle instance to the local bundle vector {@link #getBundleVector()}.
-	 * @param bundleJarFilePath the bundle jar file path
+	 * Installs the specified jar bundle.
+	 *
+	 * @param bundleJarFilePath the bundle jar file path as string
+	 * @return the bundle that was installed
 	 */
 	public static Bundle installBundle(String bundleJarFilePath) {
 		Bundle bundle = null;
