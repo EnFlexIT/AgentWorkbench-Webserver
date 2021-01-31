@@ -17,9 +17,9 @@ import org.osgi.framework.FrameworkUtil;
  *
  * @author Christian Derksen - SOFTEC - ICB - University of Duisburg-Essen
  */
-public class BundleInstaller {
+public class BundleHandler {
 
-	private static final Logger LOG = Log.getLogger(BundleInstaller.class);
+	private static final Logger LOG = Log.getLogger(BundleHandler.class);
 	
 	/**
 	 * Installs the specified list of jar bundles.
@@ -100,6 +100,52 @@ public class BundleInstaller {
 		return bundle;
 	}
 	
+	/**
+	 * Starts the specified bundle.
+	 *
+	 * @param bundle the bundle to start
+	 * @return true, if successful
+	 */
+	public static boolean startBundle(Bundle bundle) {
+
+		boolean success = false;
+		if (bundle==null) {
+			throw new NullPointerException("Specified bundle is null!");
+		}
+		
+		try {
+			bundle.start();
+			success = true;
+			
+		} catch (BundleException bEx) {
+			bEx.printStackTrace();
+		}
+		return success;
+	}
+	
+	/**
+	 * Stops the specified bundle.
+	 *
+	 * @param bundle the bundle to stop
+	 * @return true, if successful
+	 */
+	public static boolean stopBundle(Bundle bundle) {
+
+		boolean success = false;
+		if (bundle==null) {
+			throw new NullPointerException("Specified bundle is null!");
+		}
+		
+		try {
+			bundle.stop();
+			success = true;
+			
+		} catch (BundleException bEx) {
+			bEx.printStackTrace();
+		}
+		return success;
+	}
+		
 	
 	/**
 	 * Returns the state of an OSGI bundle as String.

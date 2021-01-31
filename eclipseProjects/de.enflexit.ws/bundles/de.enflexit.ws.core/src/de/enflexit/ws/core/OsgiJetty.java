@@ -13,7 +13,6 @@ import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -33,73 +32,78 @@ public class OsgiJetty {
 	private static List<String> requiredJettyBundleNames;
 	private static HashMap<String, String> requiredJettyBundleVersion;
 	
-	private static Bundle jettyOsgiBootBundel;
-	private static Bundle ariesSiflyDynamicBundle;
+	private static List<Bundle> bundlesToStart;
 	
 	/**
 	 * Starts Jetty.
 	 */
 	public static void start() {
-		startJettyBundles();
+		
+		// --- Check if the required bundle are already active. -----
+		if (isRestartBundlesToStart()==true) {
+			// --- If, stop them first ------------------------------
+			stop();
+		}
+		
+		// --- Simply start the bundles -----------------------------
+		for (int i = 0; i < getBundlesToStart().size(); i++) {
+			BundleHandler.startBundle(getBundlesToStart().get(i));
+		}
 	}
 	/**
 	 * Stops Jetty.
 	 */
 	public static void stop() {
-		
-		try {
-			if (jettyOsgiBootBundel!=null) {
-				jettyOsgiBootBundel.stop();
-				jettyOsgiBootBundel = null;
-			}
-			if (ariesSiflyDynamicBundle!=null) {
-				ariesSiflyDynamicBundle.stop();
-				ariesSiflyDynamicBundle = null;
-			}
-			
-		} catch (BundleException bEx) {
-			bEx.printStackTrace();
+		for (int i = getBundlesToStart().size()-1; i>=0; i--) {
+			BundleHandler.stopBundle(getBundlesToStart().get(i));
 		}
 	}
 	
 	/**
-	 * Starts the required jetty bundles, where the bundle 'org.eclipse.jetty.osgi.boot'
-	 * is the last and which will start Jetty.
+	 * Checks if the required bundle need to be restarted.
+	 * @return true, if is restart bundles to start
 	 */
-	private static void startJettyBundles() {
-		
-		TreeMap<String, Bundle> bundleMap = OsgiJetty.getBundleMap();
-
-		// --- Define the bundles to start -------------------------
-		List<String> bundlesToStart = new ArrayList<>();
-		bundlesToStart.add(ARIES_SPIFLY_DYNAMIC_BUNDLE);
-		bundlesToStart.add(JETTY_OSGI_BOOT_BUNDLE);
-		
-		// --- .... and start them ----------------------------------
-		for (int i = 0; i < bundlesToStart.size(); i++) {
-
-			String bundleName = bundlesToStart.get(i);
-			Bundle bundle = bundleMap.get(bundleName);
-			
-			// --- Remind the bundle --------------------------------
-			if (bundleName.equals(JETTY_OSGI_BOOT_BUNDLE)) {
-				jettyOsgiBootBundel = bundle;
-			} else if (bundleName.equals(ARIES_SPIFLY_DYNAMIC_BUNDLE)) {
-				ariesSiflyDynamicBundle = bundle;
-			}
-			if (bundle!=null) {
-				try {
-					bundle.start();
-				} catch (BundleException bEx) {
-					bEx.printStackTrace();
-				}
-				
-			} else {
-				LOG.warn("Could not resolve bundle '" + bundleName + "' => Not installed yet.");
+	private static boolean isRestartBundlesToStart() {
+		for (int i = 0; i < getBundlesToStart().size(); i++) {
+			if (getBundlesToStart().get(i).getState()==Bundle.ACTIVE) {
+				return true;
 			}
 		}
+		return false;
 	}
 	
+	/**
+	 * Returns the bundles to start.
+	 * @return the bundles to start
+	 */
+	private static List<Bundle> getBundlesToStart() {
+		if (bundlesToStart==null) {
+			bundlesToStart = new ArrayList<Bundle>();
+			
+			// --- Get (and possibly install) the required jetty modules ------
+			TreeMap<String, Bundle> bundleMap = OsgiJetty.getBundleMap();
+			
+			// --- Define the bundles to start --------------------------------
+			List<String> bundlesNamesToStart = new ArrayList<>();
+			bundlesNamesToStart.add(ARIES_SPIFLY_DYNAMIC_BUNDLE);
+			bundlesNamesToStart.add(JETTY_OSGI_BOOT_BUNDLE);
+
+			// --- Remind the important bundles ------------------------------- 
+			bundlesToStart = new ArrayList<>();
+			for (int i = 0; i < bundlesNamesToStart.size(); i++) {
+
+				String bundleName = bundlesNamesToStart.get(i);
+				Bundle bundle = bundleMap.get(bundleName);
+
+				if (bundle!=null) {
+					bundlesToStart.add(bundle);
+				} else {
+					LOG.warn("Could not resolve bundle '" + bundleName + "' => Not installed yet.");
+				}
+			}
+		}
+		return bundlesToStart;
+	}
 	/**
 	 * Return the available / installed OSGI bundles in a TreeMap.
 	 * @return the available bundles
@@ -257,7 +261,7 @@ public class OsgiJetty {
 			});
 			
 			// --- Install these bundles --------------------------------------
-			bundlesInstalled = BundleInstaller.installBundles(Arrays.asList(jarFiles));
+			bundlesInstalled = BundleHandler.installBundles(Arrays.asList(jarFiles));
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
