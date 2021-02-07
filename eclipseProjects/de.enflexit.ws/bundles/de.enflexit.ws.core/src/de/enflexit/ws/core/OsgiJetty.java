@@ -376,4 +376,18 @@ public class OsgiJetty {
 		return requiredJettyBundleVersion;
 	}
 	
+	/**
+	 * Prints the eclipse launch configuration for the jetty bundles.
+	 */
+	@SuppressWarnings("unused")
+	private static void printEclipseLaunchConfigurationForJetyBundles() {
+		
+		// --- Example string -----------------------------
+		// <setEntry value="org.slf4j.api@default:default"/>
+		for (int i = 0; i < getRequiredJettyBundles().size(); i++) {
+			String bundleName = getRequiredJettyBundles().get(i);
+			System.out.println("<setEntry value=\"" + bundleName + "@default:default\"/>");
+		}
+	}
+	
 }

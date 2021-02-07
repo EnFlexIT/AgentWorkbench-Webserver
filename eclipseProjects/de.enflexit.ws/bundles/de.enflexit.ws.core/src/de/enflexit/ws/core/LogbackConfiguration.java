@@ -44,8 +44,7 @@ import de.enflexit.ws.core.JettyHomeContentProvider.FileToProvide;
 
 
 /**
- * The Class LogbackConfiguration adjusts the configuration of logback
- * for the Agent.Workbench Webserver.
+ * The Class LogbackConfiguration adjusts the configuration of logback for the Webserver.
  * 
  * @author Christian Derksen - DAWIS - ICB - University of Duisburg - Essen
  */
@@ -88,6 +87,18 @@ public class LogbackConfiguration {
 		ILoggerFactory logFactory = LoggerFactory.getILoggerFactory();
 		if (!(logFactory instanceof LoggerContext)) {
 			return;
+		}
+		
+		// ----------------------------------------------------------
+		// --- Check if the Logback configuration file was set ------
+		// ----------------------------------------------------------
+		String configFileName = System.getProperty("logback.configurationFile");
+		if (configFileName!=null && configFileName.isEmpty()==false) {
+			// --- Check if is file and available -------------------
+			File configFile = new File(configFileName);
+			if (configFile.exists()==true) {
+				return;
+			}
 		}
 		
 		// --- Configure the logger ---------------------------------
