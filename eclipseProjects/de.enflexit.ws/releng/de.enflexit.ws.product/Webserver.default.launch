@@ -14,7 +14,7 @@
     <booleanAttribute key="clearConfig" value="true"/>
     <booleanAttribute key="clearws" value="false"/>
     <booleanAttribute key="clearwslog" value="false"/>
-    <stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/Webserver.minimal"/>
+    <stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/Webserver.default"/>
     <booleanAttribute key="default" value="false"/>
     <booleanAttribute key="default_auto_start" value="true"/>
     <setAttribute key="deselected_workspace_bundles"/>
@@ -23,7 +23,7 @@
     <booleanAttribute key="includeOptional" value="true"/>
     <stringAttribute key="location" value="${workspace_loc}/runtime-de.enflexit.ws"/>
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -console"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
     <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms512M -Xmx4G &#13;&#10;-Djetty.home=${project_loc:/de.enflexit.ws.core}/jetty&#13;&#10;-Dlogback.configurationFile=${project_loc:/de.enflexit.ws.core}/jetty/resources/logback.xml"/>
     <stringAttribute key="pde.version" value="3.3"/>
@@ -34,22 +34,12 @@
         <setEntry value="ch.qos.logback.classic@default:default"/>
         <setEntry value="ch.qos.logback.core@default:default"/>
         <setEntry value="ch.qos.logback.slf4j@default:false"/>
-        <setEntry value="javax.activation.source"/>
         <setEntry value="javax.activation@default:default"/>
-        <setEntry value="javax.annotation-api.source"/>
-        <setEntry value="javax.mail.glassfish.source"/>
         <setEntry value="javax.mail.glassfish@default:default"/>
         <setEntry value="javax.servlet*3.1.0.v201410161800@default:default"/>
-        <setEntry value="javax.servlet.jsp.jstl.source"/>
-        <setEntry value="javax.servlet.jsp.source"/>
-        <setEntry value="javax.servlet.source*3.1.0.v201410161800"/>
-        <setEntry value="org.apache.aries.spifly.dynamic.bundle.source"/>
         <setEntry value="org.apache.felix.gogo.runtime@default:default"/>
         <setEntry value="org.apache.felix.gogo.shell@default:default"/>
         <setEntry value="org.apache.felix.scr@1:true"/>
-        <setEntry value="org.apache.geronimo.specs.geronimo-jta_1.1_spec.source"/>
-        <setEntry value="org.apache.taglibs.standard-impl.source"/>
-        <setEntry value="org.apache.taglibs.taglibs-standard-spec.source"/>
         <setEntry value="org.eclipse.core.contenttype@default:default"/>
         <setEntry value="org.eclipse.core.jobs@default:default"/>
         <setEntry value="org.eclipse.core.runtime@default:true"/>
@@ -59,20 +49,13 @@
         <setEntry value="org.eclipse.equinox.event@1:true"/>
         <setEntry value="org.eclipse.equinox.preferences@default:default"/>
         <setEntry value="org.eclipse.equinox.registry@default:default"/>
-        <setEntry value="org.eclipse.jdt.core.compiler.batch.source"/>
+        <setEntry value="org.eclipse.jdt.core.compiler.batch@default:default"/>
         <setEntry value="org.eclipse.jetty.osgi-servlet-api@default:default"/>
         <setEntry value="org.eclipse.jetty.osgi.alpn.fragment@default:false"/>
-        <setEntry value="org.eclipse.jetty.schemas.source"/>
         <setEntry value="org.eclipse.jetty.util*9.4.35.v20201120@default:default"/>
         <setEntry value="org.eclipse.osgi.services@default:default"/>
         <setEntry value="org.eclipse.osgi.util@default:default"/>
         <setEntry value="org.eclipse.osgi@-1:true"/>
-        <setEntry value="org.mortbay.jasper.apache-el.source"/>
-        <setEntry value="org.mortbay.jasper.apache-jsp.source"/>
-        <setEntry value="org.objectweb.asm.commons.source"/>
-        <setEntry value="org.objectweb.asm.source"/>
-        <setEntry value="org.objectweb.asm.tree.analysis.source"/>
-        <setEntry value="org.objectweb.asm.tree.source"/>
         <setEntry value="org.slf4j.api@default:default"/>
     </setAttribute>
     <setAttribute key="selected_workspace_bundles">

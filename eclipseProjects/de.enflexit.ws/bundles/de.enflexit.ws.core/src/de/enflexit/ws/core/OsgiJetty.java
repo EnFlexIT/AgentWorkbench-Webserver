@@ -40,11 +40,7 @@ public class OsgiJetty {
 	public static void start() {
 		
 		// --- Check if the required bundle are already active. -----
-		if (isRestartBundlesToStart()==true) {
-			// --- If, stop them first ------------------------------
-			stop();
-		}
-		
+		if (isRequiredBundlesAreActive()==true) return;
 		// --- Simply start the bundles -----------------------------
 		for (int i = 0; i < getBundlesToStart().size(); i++) {
 			BundleHandler.startBundle(getBundlesToStart().get(i));
@@ -60,16 +56,16 @@ public class OsgiJetty {
 	}
 	
 	/**
-	 * Checks if the required bundle need to be restarted.
+	 * Checks if the required bundle are already active.
 	 * @return true, if is restart bundles to start
 	 */
-	private static boolean isRestartBundlesToStart() {
+	private static boolean isRequiredBundlesAreActive() {
 		for (int i = 0; i < getBundlesToStart().size(); i++) {
-			if (getBundlesToStart().get(i).getState()==Bundle.ACTIVE) {
-				return true;
+			if (!(getBundlesToStart().get(i).getState()==Bundle.ACTIVE)) {
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	/**
@@ -300,6 +296,9 @@ public class OsgiJetty {
 			requiredJettyBundleNames.add("javax.servlet.jsp");
 			requiredJettyBundleNames.add("javax.servlet.jsp.jstl");
 			requiredJettyBundleNames.add("javax.websocket");
+			
+			requiredJettyBundleNames.add("org.apache.xalan");
+			requiredJettyBundleNames.add("org.apache.xml.serializer");
 			
 			requiredJettyBundleNames.add("org.apache.taglibs.taglibs-standard-spec");
 			requiredJettyBundleNames.add("org.apache.taglibs.standard-impl");
