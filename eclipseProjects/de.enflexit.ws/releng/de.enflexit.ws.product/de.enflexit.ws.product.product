@@ -15,6 +15,8 @@
 
    <launcherArgs>
       <vmArgs>-Xms512M -Xmx4G
+-Djetty.home=jetty 
+-Dlogback.configurationFile=jetty/resources/logback.xml
       </vmArgs>
    </launcherArgs>
 
@@ -31,7 +33,6 @@
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
    </vm>
