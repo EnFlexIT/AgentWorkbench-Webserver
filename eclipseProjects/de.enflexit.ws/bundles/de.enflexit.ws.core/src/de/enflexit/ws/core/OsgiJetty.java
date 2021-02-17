@@ -40,6 +40,8 @@ public class OsgiJetty {
 	public static void start() {
 		
 		// --- Check if the required bundle are already active. -----
+		// TODO for the product: check server start if application was killed !!
+		
 		if (isRequiredBundlesAreActive()==true) return;
 		// --- Simply start the bundles -----------------------------
 		for (int i = 0; i < getBundlesToStart().size(); i++) {
